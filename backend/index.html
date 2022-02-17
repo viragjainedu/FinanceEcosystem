@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+</head>
+<body>
+
+
+    <div class="container">
+        <div class="row header" style="text-align:center;color:green">
+            <h3>API's Admin Panel</h3>
+        </div>
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Link</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Activity</td>
+                    <td>GET</td>
+                    <td><a href="/activity">Click</a></td>
+                  
+                </tr>
+                <tr>
+                    <td>advanceInsightsGET</td>
+                    <td>GET</td>
+                    <td><a href="/advanceInsightsGET">Click</a></td>
+                </tr>
+                <tr>
+                    <td>balance</td>
+                    <td>GET</td>
+                    <td><a href="/balance">Click</a></td>
+                </tr>
+                <tr>
+                    <td>blogs</td>
+                    <td>GET</td>
+                    <td><a href="/blogs">Click</a></td>
+                </tr>
+                <tr>
+                    <td>borrowing</td>
+                    <td>GET</td>
+                    <td><a href="/borrowing">Click</a></td>
+                </tr>
+                <tr>
+                    <td>budgetPlanner</td>
+                    <td>GET</td>
+                    <td><a href="/budgetPlanner">Click</a></td>
+                </tr>
+                <tr>
+                    <td>decentralizedLoan</td>
+                    <td>GET</td>
+                    <td><a href="/decentralizedLoan">Click</a></td>
+                </tr>
+                <tr>
+                    <td>documentVerficiation</td>
+                    <td>GET</td>
+                    <td><a href="/documentVerficiation">Click</a></td>
+                </tr>
+                <tr>
+                    <td>intraBankTransaction</td>
+                    <td>GET</td>
+                    <td><a href="/intraBankTransaction">Click</a></td>
+                </tr>
+                <tr>
+                    <td>news</td>
+                    <td>GET</td>
+                    <td><a href="/news">Click</a></td>
+                </tr>
+                <tr>
+                    <td>p2pLending</td>
+                    <td>GET</td>
+                    <td><a href="/p2pLending">Click</a></td>
+                </tr>
+                <tr>
+                    <td>register</td>
+                    <td>GET</td>
+                    <td><a href="/register">Click</a></td>
+                </tr>
+                <tr>
+                    <td>searchResult</td>
+                    <td>GET</td>
+                    <td><a href="/searchResult">Click</a></td>
+                </tr>
+                <tr>
+                    <td>login</td>
+                    <td>POST</td>
+                    <td><a href="/login">Click</a></td>
+                </tr>
+                <tr>
+                    <td>Register</td>
+                    <td>POST</td>
+                    <td><a href="/register">Click</a></td>
+                </tr>
+            </tbody>
+           
+        </table>
+    </div>
+    
+
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+    </script>
+</body>
+</html>
+
