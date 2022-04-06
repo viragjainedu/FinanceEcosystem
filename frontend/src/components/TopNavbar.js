@@ -1,6 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 function TopNavbar (){
+
+  const signout = (e) => {
+      
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "/Login";
+  };
+
 	return (
         <>
          <nav className="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
@@ -22,7 +30,7 @@ function TopNavbar (){
           <div className="navbar-menu-wrapper d-flex align-items-top"> 
             <ul className="navbar-nav">
               <li className="nav-item font-weight-semibold d-none d-lg-block ms-0">
-                <h1 className="welcome-text">Good Morning, <span className="text-black fw-bold">Virag Jain</span></h1>
+                <h1 className="welcome-text">Good Morning, <span className="text-black fw-bold">{localStorage.getItem('emailReg')}</span></h1>
                 <h3 className="welcome-sub-text">You Statements this week </h3>
               </li>
             </ul>
@@ -165,7 +173,7 @@ function TopNavbar (){
                   <a className="dropdown-item"><i className="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2" /> Messages</a>
                   <Link to="/Activity"><a className="dropdown-item"><i className="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2" /> Activity</a></Link>
                   <a className="dropdown-item"><i className="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2" /> FAQ</a>
-                  <Link to="/Login"><a className="dropdown-item"><i className="dropdown-item-icon mdi mdi-power text-primary me-2" />Sign Out</a></Link>
+                  <a onClick={signout} className="dropdown-item"><i className="dropdown-item-icon mdi mdi-power text-primary me-2" />Sign Out</a>
                 </div>
               </li>
             </ul>

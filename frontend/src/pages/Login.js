@@ -19,6 +19,8 @@ function Login(){
       }).then((response) => {
         console.log(response);
         if(response.data.message){
+          localStorage.setItem("emailReg", emailReg);
+          localStorage.setItem("passwordReg", passwordReg);
           window.location.href = "/";
           console.log(response.data.message)
         }else if (response.data.WrongMessage){
@@ -99,7 +101,6 @@ function Login(){
               <div className="text-center mt-4 fw-light">
                 Don't have an account?{" "}
                 <Link to="/Register" ><p className="text-primary">Create</p></Link>
-                  
               </div>
             </form>
           </div>
