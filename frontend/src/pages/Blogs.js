@@ -1,6 +1,5 @@
 
 import React, { Component } from 'react';
-import './css/style.css';
 import TopNavbar from '../components/TopNavbar'
 import LeftNavbar from '../components/LeftNavbar'
 import RightNavbar from '../components/RightNavbar'
@@ -39,80 +38,7 @@ class App extends Component {
               <div className="content-wrapper">
                 <MainHeader name="Blogs"/>
                   <br></br>
-                  {/* <h3>{this.state.apiResponse}</h3> */}
-                  <link rel="stylesheet" type="text/css" href="style.css" />
-                  <div className="container">
-                    <main className="grid">
-                      <article>
-                        <img src="https://media.istockphoto.com/photos/breaking-news-world-news-with-map-backgorund-picture-id1182477852?k=20&m=1182477852&s=612x612&w=0&h=I3wdSzT_5h1y9dHq_YpZ9AqdIKg8epthr8Guva8FkPA=" alt="" />
-                        <div className="text">
-                          <h5>This is Heading</h5>
-                          <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
-                          </p>
-                        </div>
-                      </article>
-                      <article>
-                        <img src="https://media.istockphoto.com/photos/breaking-news-world-news-with-map-backgorund-picture-id1182477852?k=20&m=1182477852&s=612x612&w=0&h=I3wdSzT_5h1y9dHq_YpZ9AqdIKg8epthr8Guva8FkPA=" alt="" />
-                        <div className="text">
-                          <h5>This is Heading</h5>
-                          <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
-                          </p>
-                        </div>
-                      </article>
-                      <article>
-                        <img src="https://media.istockphoto.com/photos/breaking-news-world-news-with-map-backgorund-picture-id1182477852?k=20&m=1182477852&s=612x612&w=0&h=I3wdSzT_5h1y9dHq_YpZ9AqdIKg8epthr8Guva8FkPA=" alt="" />
-                        <div className="text">
-                          <h5>This is Heading</h5>
-                          <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
-                          </p>
-                        </div>
-                      </article>
-                      <article>
-                        <img src="https://media.istockphoto.com/photos/breaking-news-world-news-with-map-backgorund-picture-id1182477852?k=20&m=1182477852&s=612x612&w=0&h=I3wdSzT_5h1y9dHq_YpZ9AqdIKg8epthr8Guva8FkPA=" alt="" />
-                        <div className="text">
-                          <h5>This is Heading</h5>
-                          <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
-                          </p>
-                        </div>
-                      </article>
-                      <article>
-                        <img src="https://media.istockphoto.com/photos/breaking-news-world-news-with-map-backgorund-picture-id1182477852?k=20&m=1182477852&s=612x612&w=0&h=I3wdSzT_5h1y9dHq_YpZ9AqdIKg8epthr8Guva8FkPA=" alt="" />
-                        <div className="text">
-                          <h5>This is Heading</h5>
-                          <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
-                          </p>
-                        </div>
-                      </article>
-                      <article>
-                        <img src="https://media.istockphoto.com/photos/breaking-news-world-news-with-map-backgorund-picture-id1182477852?k=20&m=1182477852&s=612x612&w=0&h=I3wdSzT_5h1y9dHq_YpZ9AqdIKg8epthr8Guva8FkPA=" alt="" />
-                        <div className="text">
-                          <h5>This is Heading</h5>
-                          <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
-                          </p>
-                        </div>
-                      </article>
-                    </main>
-                  </div>
+                  <h3>{this.state.apiResponse}</h3>
                   <br></br>
               </div>
               
