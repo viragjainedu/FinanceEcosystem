@@ -11,7 +11,7 @@ function Login(){
     
     const login = (e) => {
       
-      e.preventDefault();
+      // e.preventDefault();
 
       Axios.post("http://localhost:9000/login", {
          email: emailReg,
