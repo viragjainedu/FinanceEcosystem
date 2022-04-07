@@ -6,15 +6,13 @@ import RightNavbar from '../components/RightNavbar'
 import MainHeader from '../components/MainHeader'
 import { Link } from 'react-router-dom';
 import CompleteProfile from '../components/CompleteProfile';
+import Axios from 'axios';
 
 class App extends Component {
 
 	constructor(props) {
 		super(props);
-		// this.state = { apiResponse: "" };
-    // this.handleClick = this.handleClick.bind(this);
-    this.state = {  lend_amount: "",request_submitted: false };
-
+    this.state = {  lend_amount: " ",request_submitted: false };
 	}
 	
 	// callAPI() {
@@ -40,12 +38,24 @@ class App extends Component {
 
   handleButtonClicked() {
     var lend_amount = this.state.lend_amount;
-    // this.state.request_submitted = true;
     this.setState({
       request_submitted: true,
       lend_amount: this.state.lend_amount,
     });
-    console.log(this.state)
+    // console.log(this.state)
+
+    //Axios ka post request daalna hai 
+      Axios.post("http://localhost:9000/p2pLending", {
+        request_submitted: true,
+        lend_amount: lend_amount,
+    }).then((response) => {
+      console.log(response);
+      // console.log("Hiiii")
+      if(response.data.message){
+        window.location.href = "/";
+      }
+    });
+
     // window.location.href = "" + lend_amount;
   }
 
