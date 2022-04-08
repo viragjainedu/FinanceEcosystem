@@ -38,7 +38,7 @@ class App extends Component {
               <div className="content-wrapper">
                 <MainHeader name="News"/>
                   <br></br>
-                  <h3>{this.state.apiResponse}</h3>
+                  {/* <h3>{this.state.apiResponse}</h3> */}
                   <div className="container">
                     <main className="grid">
                       <article>
