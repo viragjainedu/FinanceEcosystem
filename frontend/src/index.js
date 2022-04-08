@@ -20,6 +20,10 @@ import DocumentVerification from './pages/DocumentVerification';
 import Activity from './pages/Activity';
 import Blogs from './pages/Blogs';
 import News from './pages/News';  
+import AdminPanel from './pages/AdminPanel';  
+
+import SystemNotifications from './AdminPanelPages/SystemNotifications'
+import LoanApproval from './AdminPanelPages/LoanApproval'
 
 ReactDOM.render(
   <BrowserRouter>
@@ -40,6 +44,11 @@ ReactDOM.render(
       <Route path="News" element={<News />} />
       <Route path="Login" element={<Login />} />
       <Route path="Register" element={<Register />} />
+      <Route path="AdminPanel" element={<AdminPanel />} />
+      
+      <Route path="SystemNotifications" element={<SystemNotifications />} />
+      <Route path="LoanApproval" element={<LoanApproval />} />
+      
       <Route path="404" element={<NotFoundPage />} />
       <Route path="*" element={<NotFoundPage/>}/>  
     </Routes>

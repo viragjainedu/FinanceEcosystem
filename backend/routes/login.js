@@ -16,7 +16,9 @@ router.post('/', (req, res) => {
             if (err) {
                 res.send({err: err});
             }
-    
+            // if (result.length > 0 && result.length[0].isAdmin == 1) {
+            //     res.send({message:result[0]});
+            // }
             if (result.length > 0) {
                 res.send({message:result[0]});
             }

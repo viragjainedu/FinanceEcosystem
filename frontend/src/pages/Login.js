@@ -18,11 +18,22 @@ function Login(){
          password: passwordReg,
       }).then((response) => {
         console.log(response);
+
+
+
         if(response.data.message){
           localStorage.setItem("emailReg", emailReg);
           localStorage.setItem("passwordReg", passwordReg);
-          window.location.href = "/";
+
+          if(response.data.message.isAdmin === 1){
+            localStorage.setItem("emailReg", emailReg);
+            localStorage.setItem("passwordReg", passwordReg);
+            window.location.href = "/AdminPanel";
+          }else{
+            window.location.href = "/";
+          }
           console.log(response.data.message)
+          
         }else if (response.data.WrongMessage){
           setLoginStatus("Incorrect Credentials")
         }else if (response.data.err){
@@ -85,7 +96,7 @@ function Login(){
                     Keep me signed in
                   </label>
                 </div>
-                <a className="auth-link text-black">
+                <a href="Login.js" className="auth-link text-black  ">
                   Forgot password?
                 </a>
               </div>

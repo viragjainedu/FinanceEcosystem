@@ -26,6 +26,8 @@ var p2pLending = require("./routes/p2pLending");
 var register = require("./routes/register");
 var searchResult = require("./routes/searchResult");
 
+var SystemNotifications = require("./routesAdmin/SystemNotifications");
+
 var app = express();
 const jwt = require('jsonwebtoken')
 
@@ -59,6 +61,8 @@ app.use("/news", news);
 app.use("/p2pLending", p2pLending);
 app.use("/register", register);
 app.use("/searchResult", searchResult);
+
+app.use("/SystemNotifications", SystemNotifications);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
