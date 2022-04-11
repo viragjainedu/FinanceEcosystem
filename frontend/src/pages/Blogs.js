@@ -11,13 +11,15 @@ class App extends Component {
   
   constructor(props) {
 		super(props);
-		this.state = { apiResponse: "" };
+		this.state = { blog_link: "", blog_title: "", blog_image_url: "", blog_desc: "" };
 	}
 	
 	callAPI() {
 		fetch("http://localhost:9000/blogs")
 			.then(res => res.text())
-			.then(res => this.setState({ apiResponse: res }));
+			.then(res => {
+        this.setState({ blog_title: res.result.blog_title,  })
+      });
 	}
 	
 	componentWillMount() {
@@ -51,7 +53,7 @@ class App extends Component {
                           />
                           <div className="blog-details">
                             <h2 className="blog-title">
-                              How to incorporate teamwork at your company
+                              {this.state.blog_title}
                             </h2>
                           </div>
                           {/* .blog-details ends */}
