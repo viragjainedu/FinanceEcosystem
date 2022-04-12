@@ -11,13 +11,26 @@ class App extends Component {
    
   constructor(props) {
 		super(props);
-		this.state = { apiResponse: "" };
+		this.state = { news_link: "", news_title: "", news_image_url: "", news_desc: "", 
+                   news_link_1: "", news_title_1: "", news_image_url_1: "", news_desc_1: "",
+		               news_link_2: "", news_title_2: "", news_image_url_2: "", news_desc_2: "",  
+		               news_link_3: "", news_title_3: "", news_image_url_3: "", news_desc_3: "", 
+		               news_link_4: "", news_title_4: "", news_image_url_4: "", news_desc_4: "", 
+		               news_link_5: "", news_title_5: "", news_image_url_5: "", news_desc_5: "", };
 	}
 	
 	callAPI() {
 		fetch("http://localhost:9000/news")
-			.then(res => res.text())
-			.then(res => this.setState({ apiResponse: res }));
+			.then(res => res.json())
+			.then(res => {console.log(res);
+        this.setState({ news_title: res[0].heading, news_link: res[0].news_link, news_image_url: res[0].image_link, news_desc: res[0].description, 
+                        news_title_1: res[1].heading, news_link_1: res[1].news_link, news_image_url_1: res[1].image_link, news_desc_1: res[1].description,
+                        news_title_2: res[2].heading, news_link_2: res[2].news_link, news_image_url_2: res[2].image_link, news_desc_2: res[2].description,
+                        news_title_3: res[3].heading, news_link_3: res[3].news_link, news_image_url_3: res[3].image_link, news_desc_3: res[3].description,
+                        news_title_4: res[4].heading, news_link_4: res[4].news_link, news_image_url_4: res[4].image_link, news_desc_4: res[4].description,
+                        news_title_5: res[5].heading, news_link_5: res[5].news_link, news_image_url_5: res[5].image_link, news_desc_5: res[5].description,
+        })
+      });
 	}
 	
 	componentWillMount() {
@@ -40,74 +53,79 @@ class App extends Component {
                   {/* <h3>{this.state.apiResponse}</h3> */}
                   <div className="container">
                     <main className="grid">
+
                       <article>
-                        <img src="https://media.istockphoto.com/photos/breaking-news-world-news-with-map-backgorund-picture-id1182477852?k=20&m=1182477852&s=612x612&w=0&h=I3wdSzT_5h1y9dHq_YpZ9AqdIKg8epthr8Guva8FkPA=" alt="" />
+                      <a href={this.state.news_link} className='newsLink' target="_blank">
+                        <img src={this.state.news_image_url} alt="" />
                         <div className="text">
-                          <h5>This is Heading</h5>
+                          <h5>{this.state.news_title}</h5>
                           <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
+                          {this.state.news_desc}
                           </p>
                         </div>
+                        </a>
                       </article>
+                      
                       <article>
-                        <img src="https://media.istockphoto.com/photos/breaking-news-world-news-with-map-backgorund-picture-id1182477852?k=20&m=1182477852&s=612x612&w=0&h=I3wdSzT_5h1y9dHq_YpZ9AqdIKg8epthr8Guva8FkPA=" alt="" />
+                      <a href={this.state.news_link_1} className='newsLink' target="_blank">
+                        <img src={this.state.news_image_url_1} alt="" />
                         <div className="text">
-                          <h5>This is Heading</h5>
+                          <h5>{this.state.news_title_1}</h5>
                           <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
+                          {this.state.news_desc_1}
                           </p>
                         </div>
+                        </a>
                       </article>
+
                       <article>
-                        <img src="https://media.istockphoto.com/photos/breaking-news-world-news-with-map-backgorund-picture-id1182477852?k=20&m=1182477852&s=612x612&w=0&h=I3wdSzT_5h1y9dHq_YpZ9AqdIKg8epthr8Guva8FkPA=" alt="" />
+                      <a href={this.state.news_link_2} className='newsLink' target="_blank">
+                        <img src={this.state.news_image_url_2} alt="" />
                         <div className="text">
-                          <h5>This is Heading</h5>
+                          <h5>{this.state.news_title_2}</h5>
                           <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
+                          {this.state.news_desc_2}
                           </p>
                         </div>
+                        </a>
                       </article>
+
                       <article>
-                        <img src="https://media.istockphoto.com/photos/breaking-news-world-news-with-map-backgorund-picture-id1182477852?k=20&m=1182477852&s=612x612&w=0&h=I3wdSzT_5h1y9dHq_YpZ9AqdIKg8epthr8Guva8FkPA=" alt="" />
+                      <a href={this.state.news_link_3} className='newsLink' target="_blank">
+                        <img src={this.state.news_image_url_3} alt="" />
                         <div className="text">
-                          <h5>This is Heading</h5>
+                          <h5>{this.state.news_title_3}</h5>
                           <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
+                          {this.state.news_desc_3}
                           </p>
                         </div>
+                        </a>
                       </article>
+
                       <article>
-                        <img src="https://media.istockphoto.com/photos/breaking-news-world-news-with-map-backgorund-picture-id1182477852?k=20&m=1182477852&s=612x612&w=0&h=I3wdSzT_5h1y9dHq_YpZ9AqdIKg8epthr8Guva8FkPA=" alt="" />
+                      <a href={this.state.news_link_4} className='newsLink' target="_blank">
+                        <img src={this.state.news_image_url_4} alt="" />
                         <div className="text">
-                          <h5>This is Heading</h5>
+                          <h5>{this.state.news_title_4}</h5>
                           <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
+                          {this.state.news_desc_4}
                           </p>
                         </div>
+                        </a>
                       </article>
+
                       <article>
-                        <img src="https://media.istockphoto.com/photos/breaking-news-world-news-with-map-backgorund-picture-id1182477852?k=20&m=1182477852&s=612x612&w=0&h=I3wdSzT_5h1y9dHq_YpZ9AqdIKg8epthr8Guva8FkPA=" alt="" />
+                        <a href={this.state.news_link_5} className='newsLink' target="_blank">
+                        <img src={this.state.news_image_url_5} alt="" />
                         <div className="text">
-                          <h5>This is Heading</h5>
+                          <h5>{this.state.news_title_5}</h5>
                           <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-                            debitis?
+                          {this.state.news_desc_5}
                           </p>
                         </div>
+                        </a>
                       </article>
+
                     </main>
                   </div>
                   <br></br>
