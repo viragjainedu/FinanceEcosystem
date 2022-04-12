@@ -12,9 +12,9 @@ router.get("/", function(req, res, next) {
                 console.log(err);
             }
             // console.log(result);
-            res.send({"result":result})
+            res.send(result)
         }
-      );    
+      );     
 
 });
 
