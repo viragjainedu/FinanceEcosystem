@@ -140,7 +140,7 @@ class App extends Component {
                                         <div className="form-group row">
                                         <label className="col-sm-3 col-form-label">Emp Length</label>
                                         <div className="col-sm-9">
-                                            <input type="text" value={this.state.emp_length} onChange={this.handleInputChanged.bind(this)} name="emp_length" className="form-control" placeholder=''/>
+                                            <input type="number" value={this.state.emp_length} onChange={this.handleInputChanged.bind(this)} name="emp_length" className="form-control" placeholder=''/>
                                         </div>
                                         </div>
                                     </div>
@@ -148,7 +148,7 @@ class App extends Component {
                                         <div className="form-group row">
                                         <label className="col-sm-3 col-form-label">Home Ownership</label>
                                         <div className="col-sm-9">
-                                            <input type="text" value={this.state.home_ownership} onChange={this.handleInputChanged.bind(this)} name="home_ownership" className="form-control" />
+                                            <input type="number" value={this.state.home_ownership} onChange={this.handleInputChanged.bind(this)} name="home_ownership" className="form-control" />
                                         </div>
                                         </div>
                                     </div>
@@ -156,7 +156,7 @@ class App extends Component {
                                         <div className="form-group row">
                                         <label className="col-sm-3 col-form-label">Annual Income</label>
                                         <div className="col-sm-9">
-                                            <input type="text" value={this.state.annual_income} onChange={this.handleInputChanged.bind(this)} name="annual_income" className="form-control" />
+                                            <input type="number" value={this.state.annual_income} onChange={this.handleInputChanged.bind(this)} name="annual_income" className="form-control" />
                                         </div>
                                         </div>
                                     </div>
