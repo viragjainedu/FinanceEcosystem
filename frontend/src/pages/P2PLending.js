@@ -4,33 +4,44 @@ import TopNavbar from '../components/TopNavbar'
 import LeftNavbar from '../components/LeftNavbar'
 import RightNavbar from '../components/RightNavbar'
 import MainHeader from '../components/MainHeader'
-import { Link } from 'react-router-dom';
 import CompleteProfile from '../components/CompleteProfile';
 import Axios from 'axios';
+
 
 class App extends Component {
 
 	constructor(props) {
 		super(props);
-    this.state = {  lend_amount: " ",request_submitted: false };
+    this.state = {  lend_amount: " ",request_submitted: false, ProfileCompleted: false};
 	}
-	
-	// callAPI() {
-	// 	fetch("http://localhost:9000/p2pLending")
-	// 		.then(res => res.text())
-	// 		.then(res => this.setState({ apiResponse: res }));
-	// }
-	
-	// componentWillMount() {
-	// 	this.callAPI();
-	// }
 
-  // handleClick() {
-  //   this.setState();
-  // }
+	 //To check whether user has completed form or not
+   callAPI() {
+
+      Axios.post("http://localhost:9000/p2pLending/isProfileComplete", {
+            email: localStorage.getItem('emailReg'),
+        }).then((response) => {
+          console.log(response);
+          // console.log("Hiiii")
+          if(response.data.result){
+            if(response.data.result === true){
+                this.setState({
+                    ...this.state,
+                    ProfileCompleted : true,
+                });            
+            }
+        }
+      });
+    }
+
+    componentWillMount() {
+      this.callAPI();
+    } 
+
   
   handleInputChanged(event) {
     this.setState({
+      ...this.state,
       lend_amount: event.target.value,
       request_submitted: false
     });
@@ -39,27 +50,31 @@ class App extends Component {
   handleButtonClicked() {
     var lend_amount = this.state.lend_amount;
     this.setState({
+      ...this.state,
       request_submitted: true,
       lend_amount: this.state.lend_amount,
     });
     // console.log(this.state)
+    window.location.href  = `/Payment?amount=${lend_amount}`; 
 
-    //Axios ka post request daalna hai 
-      Axios.post("http://localhost:9000/p2pLending", {
-        request_submitted: true,
-        lend_amount: lend_amount,
-    }).then((response) => {
-      console.log(response);
-      // console.log("Hiiii")
-      if(response.data.message){
-        window.location.href = "/";
-      }
-    });
+
+    // //Axios ka post request daalna hai 
+    //   Axios.post("http://localhost:9000/p2pLending", {
+    //     request_submitted: true,
+    //     lend_amount: lend_amount,
+    // }).then((response) => {
+    //   console.log(response);
+    //   // console.log("Hiiii")
+    //   if(response.data.message){
+    //     window.location.href = "/";
+    //   }
+    // });
 
     // window.location.href = "" + lend_amount;
   }
 
   render() {
+
     let request_submitted = this.state.request_submitted;
 
     const renderRequestSubmittedButton = () => {
@@ -111,8 +126,9 @@ class App extends Component {
                 {/* <br></br>
                 <h3>{this.state.apiResponse}</h3>
                 <br></br> */}
-                   <CompleteProfile/>  
-                  {renderRequestSubmittedButton()}
+                {this.state.ProfileCompleted ? renderRequestSubmittedButton() : ''}
+                <CompleteProfile/>
+
               </div>
               
             </div>

@@ -12,6 +12,46 @@ router.post("/", function(req, res, next) {
     res.send({"Response Recieved":"Yes" , "lend_amount" : lend_amount})
 });
 
+
+router.post("/approve", function(req, res, next) {
+
+    const email = req.body.email;
+    
+    connection.query("UPDATE borrowing_requests set isAprroved = 1 where email = ?",[email],(err,output) => {
+        if(err){
+            console.log(err)
+        }
+        res.send({"success": "ok"});
+    });
+
+});
+
+router.post("/reject", function(req, res, next) {
+
+    const email = req.body.email;
+
+    connection.query("UPDATE borrowing_requests set isAprroved = 0 where email = ?",[email],(err,output) => {
+        if(err){
+            console.log(err)
+        }
+        res.send({"success": "ok"});
+    });
+
+});
+
+router.post("/details", function(req, res, next) {
+
+    const email = req.body.email;
+
+    connection.query("Select * from person where email = ?",[email],(err,output) => {
+        if(err){
+            console.log(err)
+        }
+        res.send(output[0]);
+    });
+
+});
+
 router.post("/CompleteProfile", function(req, res, next) {
     // res.send("This statement is generate by p2pLending API backend");
 
@@ -33,7 +73,20 @@ router.post("/CompleteProfile", function(req, res, next) {
                 console.log(err);
             }
             console.log(result);
-            res.send({"success":"Updated Succesfully"})
+
+
+            //INSERTING IN BORROWING REQUESTS ENDS            
+            connection.query("INSERT INTO borrowing_requests (email,isAprroved) values (?,0)",
+            [email],
+            (err, result)=> {
+                if(err){
+                    console.log(err)
+                }    
+                res.send({"success":"Updated Succesfully"})
+            }
+            );
+            //INSERTING IN BORROWING REQUESTS ENDS
+           
         }
       );
     // res.send({"Profile Recieved":"Yes"})
@@ -67,6 +120,22 @@ router.post("/isProfileComplete", function(req, res, next) {
             else{
                 res.send({WrongMessage:"Wrong email bro"})   
             }
+        }
+    )
+});
+
+var obj = [];
+router.get("/requests", function(req, res, next) {
+    
+    
+    connection.query(
+        "SELECT * FROM borrowing_requests",
+        [],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+            res.send(result)
         }
     )
 });

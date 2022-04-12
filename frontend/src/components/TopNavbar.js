@@ -35,39 +35,7 @@ function TopNavbar (){
               </li>
             </ul>
             <ul className="navbar-nav ms-auto">
-              {/* <li className="nav-item dropdown d-none d-lg-block">
-                <a className="nav-link dropdown-bordered dropdown-toggle dropdown-toggle-split" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false"> Select Category </a>
-                <div className="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
-                  <a className="dropdown-item py-3">
-                    <p className="mb-0 font-weight-medium float-left">Select category</p>
-                  </a>
-                  <div className="dropdown-divider" />
-                  <a className="dropdown-item preview-item">
-                    <div className="preview-item-content flex-grow py-2">
-                      <p className="preview-subject ellipsis font-weight-medium text-dark">Bootstrap Bundle </p>
-                      <p className="fw-light small-text mb-0">This is a Bundle featuring 16 unique dashboards</p>
-                    </div>
-                  </a>
-                  <a className="dropdown-item preview-item">
-                    <div className="preview-item-content flex-grow py-2">
-                      <p className="preview-subject ellipsis font-weight-medium text-dark">Angular Bundle</p>
-                      <p className="fw-light small-text mb-0">Everything you’ll ever need for your Angular projects</p>
-                    </div>
-                  </a>
-                  <a className="dropdown-item preview-item">
-                    <div className="preview-item-content flex-grow py-2">
-                      <p className="preview-subject ellipsis font-weight-medium text-dark">VUE Bundle</p>
-                      <p className="fw-light small-text mb-0">Bundle of 6 Premium Vue Admin Dashboard</p>
-                    </div>
-                  </a>
-                  <a className="dropdown-item preview-item">
-                    <div className="preview-item-content flex-grow py-2">
-                      <p className="preview-subject ellipsis font-weight-medium text-dark">React Bundle</p>
-                      <p className="fw-light small-text mb-0">Bundle of 8 Premium React Admin Dashboard</p>
-                    </div>
-                  </a>
-                </div>
-              </li> */}
+              
               <li className="nav-item d-none d-lg-block">
                 <div id="datepicker-popup" className="input-group date datepicker navbar-date-picker">
                   <span className="input-group-addon input-group-prepend border-right">

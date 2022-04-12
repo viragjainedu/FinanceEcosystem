@@ -11,14 +11,21 @@ class App extends Component {
   
   constructor(props) {
 		super(props);
-		this.state = { blog_link: "", blog_title: "", blog_image_url: "", blog_desc: "" };
+		this.state = { blog_link: "", blog_title: "", blog_image_url: "", blog_desc: "", 
+                   blog_link_1: "", blog_title_1: "", blog_image_url_1: "", blog_desc_1: "", 
+		               blog_link_2: "", blog_title_2: "", blog_image_url_2: "", blog_desc_2: "", 
+		               blog_link_3: "", blog_title_3: "", blog_image_url_3: "", blog_desc_3: "", };
 	}
 	
 	callAPI() {
 		fetch("http://localhost:9000/blogs")
-			.then(res => res.text())
+			.then(res => res.json())
 			.then(res => {console.log(res);
-        this.setState({ blog_title: "Nachiket", blog_link: res[0].blog_link, blog_image_url: res[0].image_link, blog_desc: res[0].description  })
+        this.setState({ blog_title: res[0].heading, blog_link: res[0].blog_link, blog_image_url: res[0].image_link, blog_desc: res[0].description, 
+                        blog_title_1: res[1].heading, blog_link_1: res[1].blog_link, blog_image_url_1: res[1].image_link, blog_desc_1: res[1].description,
+                        blog_title_2: res[2].heading, blog_link_2: res[2].blog_link, blog_image_url_2: res[2].image_link, blog_desc_2: res[2].description,
+                        blog_title_3: res[3].heading, blog_link_3: res[3].blog_link, blog_image_url_3: res[3].image_link, blog_desc_3: res[3].description,
+        })
       });
 	}
 	
@@ -47,7 +54,7 @@ class App extends Component {
                       <div className="blog_card">
                         <div className="card__header">
                           <img
-                            src="https://assets.entrepreneur.com/content/3x2/2000/20170731105857-businessteam-meeting-teamwork.jpeg"
+                            src={this.state.blog_image_url}
                             alt=""
                             className="card__image"
                           />
@@ -60,14 +67,13 @@ class App extends Component {
                         </div>
                         {/* .card_header ends */}
                         <div className="card__body">
-                          <div className="blog-category">Productivity</div>
+                          {/* <div className="blog-category">Productivity</div> */}
                           <div className="blog-excerpt">
                             <p>
-                            {this.state.description}
-
+                            {this.state.blog_desc}
                             </p>
                           </div>
-                          <a href="{this.state.blog_link}" className="button">
+                          <a href={this.state.blog_link} className="button" target="_blank">
                             Read full post
                           </a>
                         </div>
@@ -75,34 +81,31 @@ class App extends Component {
                       </div>
                       {/* .card */}
                     </article>
-
+                    
                     <article>
                       <div className="blog_card">
                         <div className="card__header">
                           <img
-                            src="https://media.istockphoto.com/photos/american-dollar-symbol-standing-on-wood-surface-in-front-of-a-graph-picture-id918508630?k=20&m=918508630&s=612x612&w=0&h=6OXnulMkySUyypcMfVdLdE43uRqhP9otMsQmqekBM94="
+                            src={this.state.blog_image_url_1}
                             alt=""
                             className="card__image"
                           />
                           <div className="blog-details">
                             <h2 className="blog-title">
-                              How to save money while investing
+                              {this.state.blog_title_1}
                             </h2>
                           </div>
                           {/* .blog-details ends */}
                         </div>
                         {/* .card_header ends */}
                         <div className="card__body">
-                          <div className="blog-category">Learning</div>
+                          {/* <div className="blog-category">Productivity</div> */}
                           <div className="blog-excerpt">
                             <p>
-                              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam,
-                              beatae aut nobis illum debitis autem iusto magni doloremque quo
-                              tenetur deserunt ea esse voluptate eveniet unde est perferendis
-                              iste molestiae delectus vitae, corrupti cum consectetur...
+                            {this.state.blog_desc_1}
                             </p>
                           </div>
-                          <a href="" className="button">
+                          <a href={this.state.blog_link_1} className="button" target="_blank">
                             Read full post
                           </a>
                         </div>
@@ -110,34 +113,31 @@ class App extends Component {
                       </div>
                       {/* .card */}
                     </article>
-
+                    
                     <article>
                       <div className="blog_card">
                         <div className="card__header">
                           <img
-                            src="https://assets.entrepreneur.com/content/3x2/2000/20170731105857-businessteam-meeting-teamwork.jpeg"
+                            src={this.state.blog_image_url_2}
                             alt=""
                             className="card__image"
                           />
                           <div className="blog-details">
                             <h2 className="blog-title">
-                              How to incorporate teamwork at your company
+                              {this.state.blog_title_2}
                             </h2>
                           </div>
                           {/* .blog-details ends */}
                         </div>
                         {/* .card_header ends */}
                         <div className="card__body">
-                          <div className="blog-category">Productivity</div>
+                          {/* <div className="blog-category">Productivity</div> */}
                           <div className="blog-excerpt">
                             <p>
-                              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam,
-                              beatae aut nobis illum debitis autem iusto magni doloremque quo
-                              tenetur deserunt ea esse voluptate eveniet unde est perferendis
-                              iste molestiae delectus vitae, corrupti cum consectetur...
+                            {this.state.blog_desc_2}
                             </p>
                           </div>
-                          <a href="" className="button">
+                          <a href={this.state.blog_link_2} className="button" target="_blank">
                             Read full post
                           </a>
                         </div>
@@ -145,34 +145,31 @@ class App extends Component {
                       </div>
                       {/* .card */}
                     </article>
-
+                    
                     <article>
                       <div className="blog_card">
                         <div className="card__header">
                           <img
-                            src="https://assets.entrepreneur.com/content/3x2/2000/20170731105857-businessteam-meeting-teamwork.jpeg"
+                            src={this.state.blog_image_url_3}
                             alt=""
                             className="card__image"
                           />
                           <div className="blog-details">
                             <h2 className="blog-title">
-                              How to incorporate teamwork at your company
+                              {this.state.blog_title_3}
                             </h2>
                           </div>
                           {/* .blog-details ends */}
                         </div>
                         {/* .card_header ends */}
                         <div className="card__body">
-                          <div className="blog-category">Productivity</div>
+                          {/* <div className="blog-category">Productivity</div> */}
                           <div className="blog-excerpt">
                             <p>
-                              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam,
-                              beatae aut nobis illum debitis autem iusto magni doloremque quo
-                              tenetur deserunt ea esse voluptate eveniet unde est perferendis
-                              iste molestiae delectus vitae, corrupti cum consectetur...
+                            {this.state.blog_desc_3}
                             </p>
                           </div>
-                          <a href="" className="button">
+                          <a href={this.state.blog_link_3} className="button" target="_blank">
                             Read full post
                           </a>
                         </div>

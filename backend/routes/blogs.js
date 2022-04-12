@@ -14,7 +14,7 @@ router.get("/", function(req, res, next) {
             // console.log(result);
             res.send(result)
         }
-      );    
+      );     
 
 });
 

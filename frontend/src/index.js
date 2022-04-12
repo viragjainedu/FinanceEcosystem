@@ -20,6 +20,7 @@ import DocumentVerification from './pages/DocumentVerification';
 import Activity from './pages/Activity';
 import Blogs from './pages/Blogs';
 import News from './pages/News';  
+import Payment from './pages/Payment';  
 import AdminPanel from './pages/AdminPanel';  
 
 import SystemNotifications from './AdminPanelPages/SystemNotifications'
@@ -44,6 +45,7 @@ ReactDOM.render(
       <Route path="News" element={<News />} />
       <Route path="Login" element={<Login />} />
       <Route path="Register" element={<Register />} />
+      <Route path="Payment" element={<Payment />} />
       <Route path="AdminPanel" element={<AdminPanel />} />
       
       <Route path="SystemNotifications" element={<SystemNotifications />} />
