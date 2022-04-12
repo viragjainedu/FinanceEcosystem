@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react';
+import MyVueComponent from '../expense-analyser/src/App.vue'
 import TopNavbar from '../components/TopNavbar'
 import LeftNavbar from '../components/LeftNavbar'
 import RightNavbar from '../components/RightNavbar'
@@ -38,7 +39,7 @@ class App extends Component {
               <div className="content-wrapper">
                 <MainHeader name="Budget Planner"/>
                   <br></br>
-                  <h3>{this.state.apiResponse}</h3>
+                  {/* <MyVueComponent /> */}
                   <br></br>
               </div>
               

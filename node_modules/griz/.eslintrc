@@ -1,0 +1,15 @@
+{
+  "parser": "babel-eslint",
+  "env": {"browser": "true", "commonjs": "true"},
+  "extends": "airbnb",
+  "plugins": [
+    "jsx-a11y",
+    "import",
+  ],
+  "rules": {
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"]
+  }
+}

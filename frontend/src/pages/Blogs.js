@@ -17,8 +17,8 @@ class App extends Component {
 	callAPI() {
 		fetch("http://localhost:9000/blogs")
 			.then(res => res.text())
-			.then(res => {
-        this.setState({ blog_title: res.result.blog_title,  })
+			.then(res => {console.log(res);
+        this.setState({ blog_title: "Nachiket", blog_link: res[0].blog_link, blog_image_url: res[0].image_link, blog_desc: res[0].description  })
       });
 	}
 	
@@ -63,13 +63,11 @@ class App extends Component {
                           <div className="blog-category">Productivity</div>
                           <div className="blog-excerpt">
                             <p>
-                              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam,
-                              beatae aut nobis illum debitis autem iusto magni doloremque quo
-                              tenetur deserunt ea esse voluptate eveniet unde est perferendis
-                              iste molestiae delectus vitae, corrupti cum consectetur...
+                            {this.state.description}
+
                             </p>
                           </div>
-                          <a href="" className="button">
+                          <a href="{this.state.blog_link}" className="button">
                             Read full post
                           </a>
                         </div>
