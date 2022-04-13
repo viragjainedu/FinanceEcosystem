@@ -12,7 +12,7 @@ class App extends Component {
 
 	constructor(props) {
 		super(props);
-    this.state = {  lend_amount: " ",request_submitted: false, ProfileCompleted: false};
+    this.state = {  lend_amount: " ",request_submitted: false, ProfileCompleted: false, lending_transactions : []};
 	}
 
 	 //To check whether user has completed form or not
@@ -32,6 +32,20 @@ class App extends Component {
             }
         }
       });
+      
+      Axios.post("http://localhost:9000/p2pLending/lending_transactions", {
+            email: localStorage.getItem('emailReg'),
+        }).then((response) => {
+          console.log(response);
+          // console.log("Hiiii")
+          if(response.data){
+            this.setState({
+                ...this.state,
+                lending_transactions : response.data,
+            });            
+        }
+      });
+
     }
 
     componentWillMount() {
@@ -108,6 +122,46 @@ class App extends Component {
                 </div>
               </div>
             </div>
+
+            <div className="col-lg-12 grid-margin stretch-card">
+        <div className="card">
+          <div className="card-body">
+            <h4 className="card-title">Previous Lending transactions</h4>
+            <p className="card-description">
+              
+            </p>
+            <div className="table-responsive">
+              <table className="table table-striped">
+                <thead>
+                  <tr>
+                    <th>
+                      Amount
+                    </th>
+                    <th>
+                      Time
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.lending_transactions.map((item,i) => 
+                    <tr>
+                      <td className="py-1">
+                       ₹ {item.amount_lent}
+                      </td>
+                      <td className="py-1">
+                        {item.transaction_time}
+                      </td>
+                    </tr>  
+                  )} 
+                
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
             </>
         );
       }

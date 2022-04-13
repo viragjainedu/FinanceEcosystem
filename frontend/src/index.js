@@ -25,35 +25,39 @@ import AdminPanel from './pages/AdminPanel';
 
 import SystemNotifications from './AdminPanelPages/SystemNotifications'
 import LoanApproval from './AdminPanelPages/LoanApproval'
+import ProtectedRoutes from './pages/ProtectedRoutes';
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route exact path="/" element={<Navigate to="/Login" />} />
-      <Route path="/Dashboard" element={<App/>} />
-      <Route path="Balance" element={<Balance />} />
-      <Route path="P2PLending" element={<P2PLending />} />
-      <Route path="Borrowing" element={<Borrowing />} />
-      <Route path="IntraBankTransactions" element={<IntraBankTransactions />} />
-      <Route path="DecentralizedLoans" element={<DecentralizedLoans />} />
-      <Route path="InvestmentAdvisor" element={<InvestmentAdvisor />} />
-      <Route path="AdvancedInsights" element={<AdvancedInsights />} />
-      <Route path="BudgetPlanner" element={<BudgetPlanner />} />
-      <Route path="SearchResult" element={<SearchResult />} />
-      <Route path="DocumentVerification" element={<DocumentVerification />} />
-      <Route path="Activity" element={<Activity />} />
-      <Route path="Blogs" element={<Blogs />} />
-      <Route path="News" element={<News />} />
+      <Route element={<ProtectedRoutes/>}>
+        <Route path="/Dashboard" element={<App/>} />
+        <Route path="Balance" element={<Balance />} />
+        <Route path="P2PLending" element={<P2PLending />} />
+        <Route path="Borrowing" element={<Borrowing />} />
+        <Route path="IntraBankTransactions" element={<IntraBankTransactions />} />
+        <Route path="DecentralizedLoans" element={<DecentralizedLoans />} />
+        <Route path="InvestmentAdvisor" element={<InvestmentAdvisor />} />
+        <Route path="AdvancedInsights" element={<AdvancedInsights />} />
+        <Route path="BudgetPlanner" element={<BudgetPlanner />} />
+        <Route path="SearchResult" element={<SearchResult />} />
+        <Route path="DocumentVerification" element={<DocumentVerification />} />
+        <Route path="Activity" element={<Activity />} />
+        <Route path="Blogs" element={<Blogs />} />
+        <Route path="News" element={<News />} />
+        <Route path="Payment" element={<Payment />} />
+        <Route path="AdminPanel" element={<AdminPanel />} />
+        
+        <Route path="SystemNotifications" element={<SystemNotifications />} />
+        <Route path="LoanApproval" element={<LoanApproval />} />
+        
+        <Route path="404" element={<NotFoundPage />} />
+        <Route path="*" element={<NotFoundPage/>}/>  
+
+      </Route>
       <Route path="Login" element={<Login />} />
       <Route path="Register" element={<Register />} />
-      <Route path="Payment" element={<Payment />} />
-      <Route path="AdminPanel" element={<AdminPanel />} />
-      
-      <Route path="SystemNotifications" element={<SystemNotifications />} />
-      <Route path="LoanApproval" element={<LoanApproval />} />
-      
-      <Route path="404" element={<NotFoundPage />} />
-      <Route path="*" element={<NotFoundPage/>}/>  
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

@@ -5,7 +5,7 @@ import LeftNavbar from '../components/LeftNavbar'
 import RightNavbar from '../components/RightNavbar'
 import MainHeader from '../components/MainHeader'
 import './css/Payment.css';
-import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 
 class App extends Component {
@@ -29,6 +29,21 @@ class App extends Component {
 	componentWillMount() {
 		this.callAPI();
 	}
+
+  handleButtonClicked() {
+    var amount = this.state.amount;
+    
+    //Axios ka post request daalna hai 
+      Axios.post("http://localhost:9000/p2pLending/amount_lending", {
+        email: localStorage.getItem('emailReg'),
+        amount: amount,
+    }).then((response) => {
+      console.log(response);
+      if(response.data.Lending_status){
+        window.location.href = "/P2PLending";
+      }
+    });
+  }
 
   render() {
   return (
@@ -56,11 +71,7 @@ class App extends Component {
                       </div>
                       <div className="d-flex justify-content-between pt-5 align-items-center">
                         <button type="button" className="btn cancel-btn">Cancel</button>
-                        
-                          <Link to={{ pathname: "/P2PLending"}} >
-                          <button type="button" className="btn payment-btn">Make Payment</button>
-                          </Link>
-                         
+                        <button  onClick={this.handleButtonClicked.bind(this)}  type="button" className="btn payment-btn">Make Payment</button>
                       </div>
                     </div>
                   </div>

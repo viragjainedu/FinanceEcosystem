@@ -1,13 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
+
 function TopNavbar (){
 
   const signout = (e) => {
-      
     e.preventDefault();
     localStorage.clear();
     window.location.href = "/Login";
   };
+
+  const [amount, setAmount] = React.useState(null);
+  
+  React.useEffect(() => {
+    Axios.post("http://localhost:9000/p2pLending/total_amount_lent", {
+        email: localStorage.getItem('emailReg'),
+    }).then((response) => {
+      console.log(response);
+      if(response.data){
+        setAmount(response.data.total)            
+     }
+    }); 
+  }, []); 
 
 	return (
         <>
@@ -42,6 +56,11 @@ function TopNavbar (){
                     <span className="icon-calendar input-group-text calendar-icon" />
                   </span>
                   <input type="text" className="form-control" />
+                </div>
+              </li>
+              <li className="nav-item d-none d-lg-block">
+                <div className="input-group date datepicker p-2 navbar-date-picker">
+                  Total Money Lent - {!amount ? 'Loading...' : `${amount}`}          
                 </div>
               </li>
               <li className="nav-item">

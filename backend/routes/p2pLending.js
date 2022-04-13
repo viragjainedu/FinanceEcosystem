@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var connection = require('../connection');
+var moment = require('moment')
 
 
 router.post("/", function(req, res, next) {
@@ -41,6 +42,64 @@ router.post("/CompleteProfile", function(req, res, next) {
         }
       );
     // res.send({"Profile Recieved":"Yes"})
+});
+
+router.post("/amount_lending", function(req, res, next) {
+    
+    const email = req.body.email;
+    const amount = req.body.amount;
+
+    connection.query(
+        "INSERT INTO lending_transactions ( amount_lent , transaction_time ,email_id) values(?,?,?);",
+        [amount,moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),email],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+            else{
+                res.send({"Lending_status" : "Success"});
+            }
+        }
+    )
+});
+
+router.post("/lending_transactions", function(req, res, next) {
+    
+    const email = req.body.email;
+
+    connection.query(
+        "SELECT * FROM lending_transactions WHERE email_id = ?",
+        [email],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+            if (result.length > 0) {
+                res.send(result);
+            }
+            else{
+                res.send({WrongMessage:"Wrong email bro"})   
+            }
+        }
+    )
+});
+
+router.post("/total_amount_lent", function(req, res, next) {
+    
+    const email = req.body.email;
+
+    connection.query(
+        "SELECT SUM(amount_lent) AS 'total' FROM lending_transactions where email_id = ?;",
+        [email],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+            else{
+                res.send({total : result[0].total});
+            }
+        }
+    )
 });
 
 router.post("/isProfileComplete", function(req, res, next) {

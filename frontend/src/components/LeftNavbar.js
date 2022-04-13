@@ -10,7 +10,7 @@ function LeftNavbar (){
               <li className="nav-item">
                 <a className="nav-link" href="/Dashboard">
                   <i className="mdi mdi-grid-large menu-icon" />
-                  <span className="menu-title">Hello, Virag</span>
+                  <span className="menu-title">Hello, {localStorage.getItem('emailReg')}</span>
                 </a>
               </li>
               <li className="nav-item nav-category">Bank Features</li>

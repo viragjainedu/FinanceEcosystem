@@ -100,7 +100,7 @@ class CompleteProfile extends Component {
             if (ProfileCompleted) {
               return (
                 <>
-                  <p>Profile Completed </p> 
+                   
                 </>
                 );
             } else {
