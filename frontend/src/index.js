@@ -1,7 +1,7 @@
 
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 
 import App from './App';
 import Balance from './pages/Balance';
@@ -29,7 +29,8 @@ import LoanApproval from './AdminPanelPages/LoanApproval'
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
-      <Route exact path="/" element={<App />} />
+      <Route exact path="/" element={<Navigate to="/Login" />} />
+      <Route path="/Dashboard" element={<App/>} />
       <Route path="Balance" element={<Balance />} />
       <Route path="P2PLending" element={<P2PLending />} />
       <Route path="Borrowing" element={<Borrowing />} />

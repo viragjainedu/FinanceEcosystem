@@ -19,10 +19,10 @@ function TopNavbar (){
               </button>
             </div>
             <div>
-              <a className="navbar-brand brand-logo" href="/">
+              <a className="navbar-brand brand-logo" href="/Dashboard">
                 <img src="images/finance.png" alt="" />
               </a>
-              <a className="navbar-brand brand-logo-mini" href="/">
+              <a className="navbar-brand brand-logo-mini" href="/Dashboard">
                 <img src="images/finance.png" alt="" />
               </a>
             </div>

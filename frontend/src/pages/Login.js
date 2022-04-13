@@ -30,7 +30,7 @@ function Login(){
             localStorage.setItem("passwordReg", passwordReg);
             window.location.href = "/AdminPanel";
           }else{
-            window.location.href = "/";
+            window.location.href = "/Dashboard";
           }
           console.log(response.data.message)
           
