@@ -21,35 +21,70 @@ function Register(){
   const [emailReg, setEmailReg] = useState("");
   const [passwordReg, setPasswordReg] = useState ("");
   const [registerStatus, setRegisterStatus] = useState("");
+  const [otpReg, setOtpReg] = useState("");
+  const [otpRecieved, setOtpRecieved] = useState(154);
 
-  const register = (e) => {
-
+  const sendOTP = (e) => {
+    
     e.preventDefault();
 
     if(CheckEmail(emailReg)){
       if( CheckPassword(passwordReg)  ){
-        Axios.post('http://localhost:9000/register', {
-          email: emailReg,
-          password: passwordReg,
-          }).then((response) => {
-            
-            console.log(response);
-            
-            if(response.data.message){
-              setRegisterStatus(response.data.message)  
-              console.log(response.data.message)
-            }else if(response.data.success){
-              setRegisterStatus(response.data.success)
-            }else{
-    
-            }
+        
+        setRegisterStatus("Insert OTP - sent to this email(if valid)");
+        
+        Axios.post('http://localhost:9000/sendOTP',{
+          email: emailReg
+        }).then((response) => {
+
+          // console.log(response);
+          setOtpRecieved(response.data);
+
           });
-         }else{
+        } 
+        else{
           setRegisterStatus("at least one lowercase letter, one uppercase letter, one numeric digit, and one special character, 8 to 15 characters ")   
          }    
       }else{
         setRegisterStatus("Invalid Email")
       }
+  }
+
+  const register = (e) => {
+
+    e.preventDefault();
+
+    //if correct otp
+    console.log(otpRecieved)
+    console.log(otpReg)
+
+    if(otpRecieved == otpReg){
+      Axios.post('http://localhost:9000/register', {
+        email: emailReg,
+        password: passwordReg,
+        }).then((response) => {
+          
+          console.log(response);
+          
+          if(response.data.message){
+            setRegisterStatus(response.data.message)  
+            console.log(response.data.message)
+          }else if(response.data.success){
+            setRegisterStatus(response.data.success)
+          }else{
+  
+          }
+        }).then(() => {
+          localStorage.setItem("emailReg", emailReg);
+          localStorage.setItem("passwordReg", passwordReg);
+          window.location.href  = `/Dashboard` 
+        });
+    }
+    else{
+      setRegisterStatus("Please enter correct otp")
+    }
+
+    
     }
         return(
             <>
@@ -87,13 +122,30 @@ function Register(){
                  }}
                 />
               </div>
-              <div className="mt-3">
-                <button className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
-                onClick={register}
-                >
-                  Register
-                </button>
+              <button className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn "
+                onClick={sendOTP}
+              >
+                Send OTP
+              </button>
+              
+              <div className="form-group mt-2">
+                <input
+                  type="number"
+                  className="form-control form-control-lg"
+                  id="exampleInputPassword1"
+                  placeholder="OTP"
+                  onChange={(e) =>{
+                    setOtpReg(e.target.value);
+                 }}
+                />
               </div>
+
+              <button className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
+              onClick={register}
+              >
+                Register
+              </button>
+
               <div className="my-2 d-flex justify-content-between align-items-center">
                 <div className="form-check">
                   <label className="form-check-label text-muted">

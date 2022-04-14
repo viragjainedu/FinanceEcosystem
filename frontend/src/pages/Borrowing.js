@@ -34,6 +34,22 @@ class App extends Component {
                 this.setState({
                     ...this.state,
                     ProfileCompleted : true,
+                },() => {
+                    Axios.post("http://localhost:9000/borrowing/profile_info", {
+                        email: localStorage.getItem('emailReg'),
+                    }).then((response) => {
+                      console.log(response);
+                      if(response.data){
+                        this.setState({
+                            ...this.state,
+                            emp_length : response.data.emp_length,
+                            home_ownership : response.data.home_ownership,
+                            annual_income : response.data.annual_income,
+                            contact : response.data.contact,
+                            purpose : response.data.purpose
+                        });            
+                    }
+                  });
                 });            
             }
           }
@@ -97,16 +113,66 @@ class App extends Component {
                     <RightNavbar/>
                     <LeftNavbar/>
                     <div className="main-panel">
-                    <div className="content-wrapper">
-                        <MainHeader name="Borrowing"/>
-                        <p>Profile Completed</p>
-                    </div>
-                    
+                        <div className="content-wrapper">
+                            <MainHeader name="Borrowing"/>
+                            <div className="col-lg-12 grid-margin stretch-card">
+                            <div className="card">
+                                <div className="card-body">
+                                    <h4 className="card-title">Profile Information</h4><p>We've recieved your profile information and is under our evaluation.</p>
+                                    <p className="card-description">
+                                    
+                                    </p>
+                                    <div className="table-responsive">
+                                    <table className="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                            Employee Length
+                                            </th>
+                                            <th>
+                                            Home Ownership
+                                            </th>
+                                            <th>
+                                            Purpose
+                                            </th>
+                                            <th>
+                                            Contact
+                                            </th>
+                                            <th>
+                                            Annual Income
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            <td className="py-1">
+                                            {this.state.emp_length}
+                                            </td>
+                                            <td className="py-1">
+                                                {this.state.home_ownership}
+                                            </td>
+                                            <td className="py-1">
+                                                {this.state.purpose}
+                                            </td>
+                                            <td className="py-1">
+                                                {this.state.contact}
+                                            </td>
+                                            <td className="py-1">
+                                            ₹  {this.state.annual_income}
+                                            </td>
+                                            </tr>  
+                                        
+                                        </tbody>
+                                    </table>
+                                        
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                </div>
-              <p>Profile Completed </p> 
+            </div>
             </>
             );
         } else {

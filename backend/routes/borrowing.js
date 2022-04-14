@@ -92,6 +92,27 @@ router.post("/CompleteProfile", function(req, res, next) {
     // res.send({"Profile Recieved":"Yes"})
 });
 
+router.post("/profile_info", function(req, res, next) {
+    
+    const email = req.body.email;
+
+    connection.query(
+        "SELECT * FROM person WHERE email = ?",
+        [email],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+            else if (result.length > 0) {
+                res.send(result[0]);
+            }
+            else{
+                res.send({WrongMessage:"Wrong email bro"})   
+            }
+        }
+    )
+});
+
 router.post("/isProfileComplete", function(req, res, next) {
     
     // console.log("Hii");

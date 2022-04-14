@@ -78,7 +78,7 @@ router.post("/lending_transactions", function(req, res, next) {
                 res.send(result);
             }
             else{
-                res.send({WrongMessage:"Wrong email bro"})   
+                res.send([])   
             }
         }
     )

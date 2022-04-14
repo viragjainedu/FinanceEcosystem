@@ -25,6 +25,7 @@ var news = require("./routes/news");
 var p2pLending = require("./routes/p2pLending");
 var register = require("./routes/register");
 var searchResult = require("./routes/searchResult");
+var sendOTP = require("./routes/sendOTP");
 
 var SystemNotifications = require("./routesAdmin/SystemNotifications");
 
@@ -61,6 +62,7 @@ app.use("/news", news);
 app.use("/p2pLending", p2pLending);
 app.use("/register", register);
 app.use("/searchResult", searchResult);
+app.use("/sendOTP", sendOTP);
 
 app.use("/SystemNotifications", SystemNotifications);
 
