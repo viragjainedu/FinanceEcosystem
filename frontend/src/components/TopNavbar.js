@@ -60,7 +60,7 @@ function TopNavbar (){
               </li>
               <li className="nav-item d-none d-lg-block">
                 <div className="input-group date datepicker p-2 navbar-date-picker">
-                  Total Money Lent - {!amount ? 'Loading...' : `${amount}`}          
+                  Total Money Lent - {!amount ? '0' : `${amount}`}          
                 </div>
               </li>
               <li className="nav-item">

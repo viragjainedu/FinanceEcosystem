@@ -19,6 +19,7 @@ class App extends Component {
             contact : "",
             purpose : "",
             message : "",
+            status : 0
         };
 	}
 
@@ -56,8 +57,22 @@ class App extends Component {
         });
 	}
 	
+
+    getStatus() {
+        Axios.post("http://localhost:9000/borrowing/getStatus", {
+            email: localStorage.getItem('emailReg'),
+        }).then((res)=>{
+            // console.log(res.data);
+            this.setState({
+                ...this.state,
+                status : res.data.status
+            })
+        })
+    }
+    
 	componentWillMount() {
 		this.callAPI();
+        this.getStatus();
 	} 
 	
     //All the handle INput functions for forms 
@@ -98,7 +113,56 @@ class App extends Component {
         }
         
     }
-	
+
+    BorrowingChart(){
+        return(
+    <>
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card card-rounded">
+                <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h4 class="card-title card-title-dash">Borrowing Flow Chart</h4>
+                    <p class="mb-0 card-title">Status</p>
+                </div>
+                <ul class="bullet-line-list">
+                    <li>
+                    <div class="d-flex justify-content-between">
+                        <div>Profile Details Submission</div>
+                        <p>{(() => {if(this.state.status > 0) {return 'Completed';}else{return 'Pending'}})()}</p>
+                    </div>
+                    </li>
+                    <li>
+                    <div class="d-flex justify-content-between">
+                        <div>Profile Details Verification</div>
+                        <p>{(() => {if(this.state.status > 1) {return 'Completed';}else{return 'Pending'}})()}</p>
+                    </div>
+                    </li>
+                    <li>
+                    <div class="d-flex justify-content-between">
+                        <div>Loan Amount and Interest Proposal</div>
+                        <p>{(() => {if(this.state.status > 2) {return 'Completed';}else{return 'Pending'}})()}</p>
+                    </div>
+                    </li>
+                    <li>
+                    <div class="d-flex justify-content-between">
+                        <div>Acceptance/Rejection</div>
+                        <p>{(() => {if(this.state.status > 3) {return 'Completed';}else{return 'Pending'}})()}</p>
+                    </div>
+                    </li>                                  
+                </ul>
+                <div class="list align-items-center pt-3">
+                    <div class="wrapper w-100">
+                    <p class="mb-0">
+                    </p>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </>
+        );
+    
+    }
 	
   render() {
     let ProfileCompleted = this.state.ProfileCompleted;
@@ -169,6 +233,7 @@ class App extends Component {
                                 </div>
                                 </div>
                             </div>
+                        {this.BorrowingChart()}
                         </div>
                     </div>
                 </div>
@@ -250,6 +315,7 @@ class App extends Component {
                                 </div>
                             </div>
                         </div>
+                        {this.BorrowingChart()}
                     </div>
                     
                     </div>
@@ -269,3 +335,4 @@ class App extends Component {
 }
 
 export default App;
+

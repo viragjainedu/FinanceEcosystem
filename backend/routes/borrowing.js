@@ -17,7 +17,7 @@ router.post("/approve", function(req, res, next) {
 
     const email = req.body.email;
     
-    connection.query("UPDATE borrowing_requests set isAprroved = 1 where email = ?",[email],(err,output) => {
+    connection.query("UPDATE borrowing_requests set isAprroved = 1 , status = 2 where email = ?",[email],(err,output) => {
         if(err){
             console.log(err)
         }
@@ -30,7 +30,7 @@ router.post("/reject", function(req, res, next) {
 
     const email = req.body.email;
 
-    connection.query("UPDATE borrowing_requests set isAprroved = 0 where email = ?",[email],(err,output) => {
+    connection.query("UPDATE borrowing_requests set isAprroved = 0 , status = 1 where email = ?",[email],(err,output) => {
         if(err){
             console.log(err)
         }
@@ -76,7 +76,7 @@ router.post("/CompleteProfile", function(req, res, next) {
 
 
             //INSERTING IN BORROWING REQUESTS ENDS            
-            connection.query("INSERT INTO borrowing_requests (email,isAprroved) values (?,0)",
+            connection.query("INSERT INTO borrowing_requests (email,isAprroved,status) values (?,0,1)",
             [email],
             (err, result)=> {
                 if(err){
@@ -150,13 +150,28 @@ router.get("/requests", function(req, res, next) {
     
     
     connection.query(
-        "SELECT * FROM borrowing_requests",
+        "SELECT * FROM borrowing_requests where isAprroved = 0;",
         [],
         (err, result)=> {
             if (err) {
                 res.send({err: err});
             }
             res.send(result)
+        }
+    )
+});
+
+router.post("/getStatus", function(req, res, next) {
+    
+    const email = req.body.email
+    connection.query(
+        "SELECT status FROM borrowing_requests where email = ?;",
+        [email],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+            res.send(result[0])
         }
     )
 });

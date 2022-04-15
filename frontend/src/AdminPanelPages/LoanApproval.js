@@ -11,7 +11,7 @@ class App extends Component {
   
   constructor(props) {
 		super(props);
-		this.state = { requests: [],output : [] };
+		this.state = { requests: [],output : [],verified_output:[]};
 	}
 
   callAPI() {
@@ -102,7 +102,7 @@ class App extends Component {
       <div className="col-lg-12 grid-margin stretch-card">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">Borrowing Requests</h4>
+            <h4 className="card-title">Unverified Borrowing Requests</h4>
             <p className="card-description">
               
             </p>
@@ -129,10 +129,10 @@ class App extends Component {
                       Contact
                     </th>
                     <th>
-                      isApproved?
+                      isVerified?
                     </th>
                     <th>
-                      Approve
+                      Verify
                     </th>
                     <th>
                       Reject
@@ -164,7 +164,7 @@ class App extends Component {
                     {this.state.requests.find(o => o.email === item.email).isAprroved ? "True" : "False"}
                   </td>
                   <td>
-                    <button onClick={(email) => this.handleButtonClicked(item.email)} className="btn btn-primary me-2">Approve</button>
+                    <button onClick={(email) => this.handleButtonClicked(item.email)} className="btn btn-primary me-2">Verify</button>
                   </td>
                   <td>
                     <button onClick={(email) => this.handleButtonClickedReject(item.email)} className="btn btn-danger me-2">Reject</button>
@@ -178,7 +178,77 @@ class App extends Component {
               </table>
             </div>
           </div>
+          <div className="card-body">
+            <h4 className="card-title">Verified Borrowing Requests</h4>
+            <p className="card-description">
+              
+            </p>
+            <div className="table-responsive">
+              <table className="table table-striped">
+                <thead>
+                  <tr>
+                    <th>
+                      Email
+                    </th>
+                    <th>
+                      Calculate 
+                    </th>
+                    <th>
+                      Amount 
+                    </th>
+                    <th>
+                      Interest 
+                    </th>
+                    <th>
+                      Months 
+                    </th>
+                    <th>
+                      Send Mail 
+                    </th>
+                    <th>
+                      Reject 
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.output.map((item,i) => 
+                  // {
+                  //   if(item.isAprroved){
+                  //     return(
+                        <tr>
+                        <td className="py-1">
+                          {item.email}
+                        </td>
+                        <td>
+                          <button onClick={(email) => this.handleButtonClickedSendMail(item.email)} className="btn btn-success me-2">Calculate</button>
+                        </td>
+                        <td className="py-1">
+                          
+                        </td>
+                        <td className="py-1">
+                          
+                        </td>
+                        <td className="py-1">
+                          
+                        </td>
+                        <td>
+                          <button onClick={(email) => this.handleButtonClickedSendMail(item.email)} className="btn btn-dark me-2">Send</button>
+                        </td>
+                        <td>
+                        <button onClick={(email) => this.handleButtonClickedReject(item.email)} className="btn btn-danger me-2">Reject</button>
+                        </td>
+                      </tr>
+                  //     );
+                  //   }
+                  // }
+                  )}
+                
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
+        
       </div>
               <p></p>
             </div>
