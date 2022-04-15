@@ -23,7 +23,8 @@ function LeftNavbar (){
                 <div className="collapse" id="ui-basic">
                   <ul className="nav flex-column sub-menu">
                     <li className="nav-item"> <Link to="/SystemNotifications"><a className="nav-link" >System Notifications</a></Link></li>
-                    <li className="nav-item"> <Link to="/LoanApproval"><a className="nav-link" >Loan Approval</a></Link></li>
+                    <li className="nav-item"> <Link to="/LoanApprovalUnverified"><a className="nav-link" >Loan Approval Unverified</a></Link></li>
+                    <li className="nav-item"> <Link to="/LoanApprovalVerified"><a className="nav-link" >Loan Approval Verified</a></Link></li>
                   </ul>
                 </div>
               </li>

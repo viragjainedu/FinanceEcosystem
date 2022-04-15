@@ -44,7 +44,7 @@ function TopNavbar (){
           <div className="navbar-menu-wrapper d-flex align-items-top"> 
             <ul className="navbar-nav">
               <li className="nav-item font-weight-semibold d-none d-lg-block ms-0">
-                <h1 className="welcome-text">Good Morning, <span className="text-black fw-bold">{localStorage.getItem('emailReg')}</span></h1>
+                <h1 className="welcome-text">Good Morning, <span className="text-black fw-bold">{localStorage.getItem('usernameReg')}</span></h1>
                 <h3 className="welcome-sub-text">You Statements this week </h3>
               </li>
             </ul>
@@ -153,8 +153,8 @@ function TopNavbar (){
                 <div className="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                   <div className="dropdown-header text-center">
                     <img className="img-md rounded-circle" src="images/faces/face8.jpg" alt="Profile image" />
-                    <p className="mb-1 mt-3 font-weight-semibold">Virag Jain</p>
-                    <p className="fw-light text-muted mb-0">virag.j@somaiya.edu</p>
+                    <p className="mb-1 mt-3 font-weight-semibold">{localStorage.getItem('usernameReg')}</p>
+                    <p className="fw-light text-muted mb-0">{localStorage.getItem('emailReg')}</p>
                   </div>
                   <a className="dropdown-item"><i className="dropdown-item-icon mdi mdi-account-outline text-primary me-2" /> My Profile <span className="badge badge-pill badge-danger">1</span></a>
                   <a className="dropdown-item"><i className="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2" /> Messages</a>

@@ -58,16 +58,16 @@ router.post("/CompleteProfile", function(req, res, next) {
     const emp_length = req.body.emp_length;
     const annual_income = req.body.annual_income;
     const purpose = req.body.purpose;
-    const home_ownership = req.body.home_ownership;
-    const contact = req.body.purpose;
+    const collateral = req.body.collateral;
+    const contact = req.body.contact;
     const email = req.body.email;
     console.log(req.body.emp_length);
     console.log(req.body);
 
 
     connection.query(
-        "UPDATE person SET emp_length = ?, annual_income = ?, purpose = ?, home_ownership = ?, contact = ? where email = ? ;",
-        [emp_length, annual_income,purpose,home_ownership,contact,email],
+        "UPDATE person SET emp_length = ?, annual_income = ?, purpose = ?,collateral = ?,  contact = ? where email = ? ;",
+        [emp_length, annual_income,purpose,collateral,contact,email],
         (err, result)=> {
             if(err){
                 console.log(err);
@@ -150,7 +150,7 @@ router.get("/requests", function(req, res, next) {
     
     
     connection.query(
-        "SELECT * FROM borrowing_requests where isAprroved = 0;",
+        "SELECT * FROM borrowing_requests;",
         [],
         (err, result)=> {
             if (err) {

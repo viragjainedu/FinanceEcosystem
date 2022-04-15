@@ -20,6 +20,7 @@ function Register(){
   
   const [emailReg, setEmailReg] = useState("");
   const [passwordReg, setPasswordReg] = useState ("");
+  const [usernameReg, setUsernameReg] = useState ("");
   const [registerStatus, setRegisterStatus] = useState("");
   const [otpReg, setOtpReg] = useState("");
   const [otpRecieved, setOtpRecieved] = useState(154);
@@ -30,17 +31,20 @@ function Register(){
 
     if(CheckEmail(emailReg)){
       if( CheckPassword(passwordReg)  ){
+        if(usernameReg != ""){
+          setRegisterStatus("Insert OTP - sent to this email(if valid)");
         
-        setRegisterStatus("Insert OTP - sent to this email(if valid)");
-        
-        Axios.post('http://localhost:9000/sendOTP',{
-          email: emailReg
-        }).then((response) => {
-
-          // console.log(response);
-          setOtpRecieved(response.data);
-
-          });
+          Axios.post('http://localhost:9000/sendOTP',{
+            email: emailReg
+          }).then((response) => {
+  
+            // console.log(response);
+            setOtpRecieved(response.data);
+  
+            });
+          }else{
+            setRegisterStatus("Please Enter Username")
+          }
         } 
         else{
           setRegisterStatus("at least one lowercase letter, one uppercase letter, one numeric digit, and one special character, 8 to 15 characters ")   
@@ -62,6 +66,7 @@ function Register(){
       Axios.post('http://localhost:9000/register', {
         email: emailReg,
         password: passwordReg,
+        username: usernameReg,
         }).then((response) => {
           
           console.log(response);
@@ -77,6 +82,7 @@ function Register(){
         }).then(() => {
           localStorage.setItem("emailReg", emailReg);
           localStorage.setItem("passwordReg", passwordReg);
+          localStorage.setItem("usernameReg", usernameReg);
           window.location.href  = `/Dashboard` 
         });
     }
@@ -108,6 +114,17 @@ function Register(){
                   placeholder="Email"
                   onChange={(e) => {
                     setEmailReg(e.target.value);
+                 }}
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  id="exampleInputPassword1"
+                  placeholder="Username"
+                  onChange={(e) =>{
+                    setUsernameReg(e.target.value);
                  }}
                 />
               </div>

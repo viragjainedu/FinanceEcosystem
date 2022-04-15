@@ -10,6 +10,7 @@ router.post('/', (req, res)=> {
 
     const email = req.body.email;
     const password = req.body.password;
+    const username = req.body.username;
     console.log(email);
 
     connection.query(
@@ -20,8 +21,8 @@ router.post('/', (req, res)=> {
           res.send({message:"Email already exists"})
         }else{
           connection.query(
-            "INSERT INTO person (email, password) VALUES (?,?)",
-            [email, password],
+            "INSERT INTO person (email, password,username) VALUES (?,?,?)",
+            [email, password,username],
             (err, result)=> {
               // console.log(result);
               res.send({"success":"User Registered Succesfully"})

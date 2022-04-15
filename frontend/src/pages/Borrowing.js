@@ -14,9 +14,9 @@ class App extends Component {
         this.state = {
             ProfileCompleted : false,
             emp_length : "",
-            home_ownership : "",
             annual_income : "",
             contact : "",
+            collateral : "",
             purpose : "",
             message : "",
             status : 0
@@ -44,10 +44,10 @@ class App extends Component {
                         this.setState({
                             ...this.state,
                             emp_length : response.data.emp_length,
-                            home_ownership : response.data.home_ownership,
                             annual_income : response.data.annual_income,
                             contact : response.data.contact,
-                            purpose : response.data.purpose
+                            purpose : response.data.purpose,
+                            collateral : response.data.collateral
                         });            
                     }
                   });
@@ -87,13 +87,13 @@ class App extends Component {
         // var first_name = this.state.first_name;
         console.log(this.state)
         
-        if(this.state.emp_length !== "" && this.state.home_ownership !== "" && this.state.purpose !== "" && this.state.contact !== "" && this.state.annual_income !== ""){
+        if(this.state.emp_length !== "" &&  this.state.purpose !== "" && this.state.contact !== "" && this.state.annual_income !== ""){
             //Axios ka post request daalna hai 
             Axios.post("http://localhost:9000/borrowing/CompleteProfile", {
                 emp_length : this.state.emp_length,
-                home_ownership : this.state.home_ownership,
                 purpose : this.state.purpose,
                 contact : this.state.contact,
+                collateral : this.state.collateral,
                 annual_income : this.state.annual_income,
                 email : localStorage.getItem('emailReg'),
             }).then((response) => {
@@ -194,10 +194,10 @@ class App extends Component {
                                             Employee Length
                                             </th>
                                             <th>
-                                            Home Ownership
+                                            Purpose
                                             </th>
                                             <th>
-                                            Purpose
+                                            Collateral
                                             </th>
                                             <th>
                                             Contact
@@ -213,10 +213,10 @@ class App extends Component {
                                             {this.state.emp_length}
                                             </td>
                                             <td className="py-1">
-                                                {this.state.home_ownership}
+                                                {this.state.purpose}
                                             </td>
                                             <td className="py-1">
-                                                {this.state.purpose}
+                                                {this.state.collateral}
                                             </td>
                                             <td className="py-1">
                                                 {this.state.contact}
@@ -277,14 +277,6 @@ class App extends Component {
                                     </div>
                                     <div className="col-md-6">
                                         <div className="form-group row">
-                                        <label className="col-sm-3 col-form-label">Home Ownership</label>
-                                        <div className="col-sm-9">
-                                            <input type="number" value={this.state.home_ownership} onChange={this.handleInputChanged.bind(this)} name="home_ownership" className="form-control" />
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-group row">
                                         <label className="col-sm-3 col-form-label">Annual Income</label>
                                         <div className="col-sm-9">
                                             <input type="number" value={this.state.annual_income} onChange={this.handleInputChanged.bind(this)} name="annual_income" className="form-control" />
@@ -295,7 +287,28 @@ class App extends Component {
                                         <div className="form-group row">
                                         <label className="col-sm-3 col-form-label">Purpose</label>
                                         <div className="col-sm-9">
-                                            <input type="text" value={this.state.purpose} onChange={this.handleInputChanged.bind(this)} name="purpose" className="form-control" />
+                                            <select onChange={this.handleInputChanged.bind(this)} name="purpose" className="form-control">
+                                                <option value="">Select</option>
+                                                <option value="Education">Education</option>
+                                                <option value="House">House</option>
+                                                <option value="Business">Business</option>
+                                                <option value="Medical">Medical</option>
+                                                <option value="Car">Car</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="form-group row">
+                                        <label className="col-sm-3 col-form-label">Collateral type</label>
+                                        <div className="col-sm-9">
+                                            <select onChange={this.handleInputChanged.bind(this)} name="collateral" className="form-control">
+                                                <option value="">Type</option>
+                                                <option value="House">House</option>
+                                                <option value="Commerical">Commerical</option>
+                                                <option value="Other">Other</option>
+                                            </select>
                                         </div>
                                         </div>
                                     </div>

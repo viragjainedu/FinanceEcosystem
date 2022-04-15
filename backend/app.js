@@ -28,6 +28,7 @@ var searchResult = require("./routes/searchResult");
 var sendOTP = require("./routes/sendOTP");
 
 var SystemNotifications = require("./routesAdmin/SystemNotifications");
+var Mails = require("./routesAdmin/Mails");
 
 var app = express();
 const jwt = require('jsonwebtoken')
@@ -65,6 +66,7 @@ app.use("/searchResult", searchResult);
 app.use("/sendOTP", sendOTP);
 
 app.use("/SystemNotifications", SystemNotifications);
+app.use("/Mails", Mails);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

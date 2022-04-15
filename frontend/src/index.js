@@ -24,7 +24,8 @@ import Payment from './pages/Payment';
 import AdminPanel from './pages/AdminPanel';  
 
 import SystemNotifications from './AdminPanelPages/SystemNotifications'
-import LoanApproval from './AdminPanelPages/LoanApproval'
+import LoanApprovalUnverified from './AdminPanelPages/LoanApprovalUnverified'
+import LoanApprovalVerified from './AdminPanelPages/LoanApprovalVerified'
 import ProtectedRoutes from './pages/ProtectedRoutes';
 
 ReactDOM.render(
@@ -50,7 +51,8 @@ ReactDOM.render(
         <Route path="AdminPanel" element={<AdminPanel />} />
         
         <Route path="SystemNotifications" element={<SystemNotifications />} />
-        <Route path="LoanApproval" element={<LoanApproval />} />
+        <Route path="LoanApprovalUnverified" element={<LoanApprovalUnverified />} />
+        <Route path="LoanApprovalVerified" element={<LoanApprovalVerified />} />
         
         <Route path="404" element={<NotFoundPage />} />
         <Route path="*" element={<NotFoundPage/>}/>  
