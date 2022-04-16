@@ -11,36 +11,20 @@ class App extends Component {
   
   constructor(props) {
 		super(props);
-		this.state = { requests: [],output : [],verified_output:[]};
+		this.state = { verified_output:[] };
 	}
 
   callAPI() {
 
-    Axios.get("http://localhost:9000/borrowing/requests", {
+    Axios.get("http://localhost:9000/borrowing/ProposedLoansForVerified", {
       }).then((response) => {
-        // console.log(response);
-        if(response.data){
-          // console.log(response.data.result[0].email)
+        console.log(response);
+        for (let i = 0; i < response.data.length; i++) {
           this.setState({
-              ...this.state,
-              requests : response.data,
-          } , () => {
-            for (let i = 0; i < this.state.requests.length; i++) {
-              Axios.post("http://localhost:9000/borrowing/details", {
-                  email: this.state.requests[i].email,
-              }).then((response) => {
-                console.log(response)
-                this.setState({
-                  ...this.state,
-                  output : [...this.state.output, response.data]
-                })
-                console.log(this.state)
-              });
-              
-            }
-          });       
-          // console.log(this.state)     
-      }
+            ...this.state,
+            verified_output : [...this.state.verified_output , response.data[i]]
+          })    
+        }
     });    
   }
 
@@ -66,8 +50,8 @@ class App extends Component {
 
     // window.location.href = "" + lend_amount;
   }
-  handleButtonClickedSendMail(email) {
 
+  handleButtonClickedSendMail(email) {
     Axios.post(`http://localhost:9000/Mails/SendProposedLoansMail`, {
       email : email,
   }).then((response) => {
@@ -75,6 +59,33 @@ class App extends Component {
     if(response.data.success){
       alert("Mail Sent")
     }
+    else if(response.data.status){
+      alert(response.data.status)
+      window.location.href = "/LoanApprovalVerified";
+    }
+    else{
+      alert("There is some err")
+    }
+
+  });
+
+  }
+
+  handleButtonClickedCalculate(email) {
+    Axios.post(`http://localhost:9000/borrowing/calculate`, {
+      email : email,
+  }).then((response) => {
+    console.log(response);
+
+    var CalculatedVerifiedOutput = []
+    for (let i = 0; i < response.data.length; i++) {
+      CalculatedVerifiedOutput.push(response.data[i])  
+    }
+
+    this.setState({
+      ...this.state,
+      verified_output : CalculatedVerifiedOutput
+    })
   });
 
   }
@@ -110,13 +121,16 @@ class App extends Component {
                       Calculate 
                     </th>
                     <th>
-                      Amount 
+                      3 Months 
                     </th>
                     <th>
-                      Interest 
+                      6 Months 
                     </th>
                     <th>
-                      Months 
+                      12 Months
+                    </th>
+                    <th>
+                      18 Months
                     </th>
                     <th>
                       Send Mail 
@@ -127,10 +141,8 @@ class App extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.output.map((item,i) => 
-                  {
-                    if(this.state.requests.find(o => o.email === item.email).isAprroved ? true : false){
-                      return(
+                  {console.log(this.state.verified_output)}
+                  {this.state.verified_output.map((item,i) => 
                         <tr>
                         <td className="py-1">
                           {item.email}
@@ -139,24 +151,34 @@ class App extends Component {
                         <button onClick={(email) => this.handleButtonClickedCalculate(item.email)} className="btn btn-dark me-2">Calculate</button>
                         </td>
                         <td className="py-1">
-                          
+                          ₹{item.amount1 } at {item.interest1}%
                         </td>
                         <td className="py-1">
-                          
+                          ₹{item.amount2 } at {item.interest2}%                          
                         </td>
                         <td className="py-1">
+                          ₹{item.amount3 } at {item.interest3}%                          
+                        </td>
+                        <td className="py-1">
+                          ₹{item.amount4 } at {item.interest4}%                          
+                        </td>
+                        
+                        {(() => {
+                          if(item.MailSent){return <td className="py-1">Mail Sent</td>}
+                          else{
+                            return (
+                            <td>
+                              <button onClick={(email) => { this.handleButtonClickedSendMail(item.email)}} className="btn btn-success me-2">Send</button>
+                            </td>
+                            )
+                          }
+                        })()}
+
                           
-                        </td>
                         <td>
-                          <button onClick={(email) => {if(window.confirm('Are you sure to send this mail?')){ this.handleButtonClickedSendMail(item.email)};}} className="btn btn-success me-2">Send</button>
-                        </td>
-                        <td>
-                        <button onClick={(email) => {if(window.confirm('Are you sure to send this mail?')){ this.handleButtonClickedReject(item.email)};}} className="btn btn-danger me-2">Reject</button>
+                        <button onClick={(email) => {if(window.confirm('Are you sure to Reject this mail?')){ this.handleButtonClickedReject(item.email)};}} className="btn btn-danger me-2">Reject</button>
                         </td>
                       </tr>
-                      );
-                    }
-                  }
                   )}
                 
                 </tbody>

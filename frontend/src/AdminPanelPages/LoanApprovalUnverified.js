@@ -55,7 +55,7 @@ class App extends Component {
     console.log(email);
 
     //Axios ka post request daalna hai 
-      Axios.post(`http://localhost:9000/borrowing/approve`, {
+      Axios.post(`http://localhost:9000/borrowing/verify`, {
         email : email,
     }).then((response) => {
       console.log(response);

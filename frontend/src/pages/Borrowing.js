@@ -6,6 +6,7 @@ import RightNavbar from '../components/RightNavbar'
 import MainHeader from '../components/MainHeader'
 // import { Link } from 'react-router-dom';
 import Axios from 'axios';
+import ProposedLoans from '../components/ProposedLoans'
 
 class App extends Component {
    
@@ -19,7 +20,8 @@ class App extends Component {
             collateral : "",
             purpose : "",
             message : "",
-            status : 0
+            status : 0,
+            isLoanCalculatedForThisEmail : false
         };
 	}
 
@@ -70,9 +72,23 @@ class App extends Component {
         })
     }
     
+    isLoanCalculatedForThisEmail() {
+        Axios.post("http://localhost:9000/borrowing/isLoanCalculatedForThisEmail", {
+            email: localStorage.getItem('emailReg'),
+        }).then((res)=>{
+            if(res.data.Calculated){
+                this.setState({
+                    ...this.state,
+                    isLoanCalculatedForThisEmail : true       
+                })
+            }
+        })
+    }
+    
 	componentWillMount() {
 		this.callAPI();
         this.getStatus();
+        this.isLoanCalculatedForThisEmail(localStorage.getItem('emailReg'));
 	} 
 	
     //All the handle INput functions for forms 
@@ -179,6 +195,7 @@ class App extends Component {
                     <div className="main-panel">
                         <div className="content-wrapper">
                             <MainHeader name="Borrowing"/>
+                            <br/>
                             <div className="col-lg-12 grid-margin stretch-card">
                             <div className="card">
                                 <div className="card-body">
@@ -232,7 +249,13 @@ class App extends Component {
                                     </div>
                                 </div>
                                 </div>
+                                <br></br>
                             </div>
+                        {(()=>{
+                            if(this.state.isLoanCalculatedForThisEmail){
+                                return <ProposedLoans/>
+                            }
+                        })()}
                         {this.BorrowingChart()}
                         </div>
                     </div>

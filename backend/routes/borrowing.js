@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var connection = require('../connection');
+var moment = require('moment')
 
 
 router.post("/", function(req, res, next) {
@@ -13,7 +14,7 @@ router.post("/", function(req, res, next) {
 });
 
 
-router.post("/approve", function(req, res, next) {
+router.post("/verify", function(req, res, next) {
 
     const email = req.body.email;
     
@@ -21,7 +22,17 @@ router.post("/approve", function(req, res, next) {
         if(err){
             console.log(err)
         }
-        res.send({"success": "ok"});
+        
+        connection.query("INSERT INTO ProposedLoans (email,amount1,interest1,amount2,interest2,amount3,interest3,amount4,interest4,selected,MailSent,Time) values(?,?,?,?,?,?,?,?,?,?,?,?)",
+            [email,0,0,0,0,0,0,0,0,0,0,moment(new Date()).format('YYYY-MM-DD HH:mm:ss')],
+            (err,output) => {
+                if(err){
+                    res.send(err)
+                }
+                res.send({"success": "ok"});
+            }
+        )
+        
     });
 
 });
@@ -34,7 +45,12 @@ router.post("/reject", function(req, res, next) {
         if(err){
             console.log(err)
         }
-        res.send({"success": "ok"});
+        connection.query("Delete from ProposedLoans where email = ?",[email],(err,result) => {
+            if(err){
+                res.send({err:err})
+            }
+            res.send({"success": "ok"});
+        });
     });
 
 });
@@ -174,6 +190,78 @@ router.post("/getStatus", function(req, res, next) {
             res.send(result[0])
         }
     )
+});
+
+router.get("/ProposedLoansForVerified", function(req, res, next) {
+    
+    connection.query(
+        "SELECT * FROM ProposedLoans",[],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+            res.send(result)
+        }
+    )
+});
+
+router.post("/isLoanCalculatedForThisEmail", function(req, res, next) {
+    const email = req.body.email;
+    connection.query(
+        "SELECT * FROM ProposedLoans where email = ?",[email],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+            else{
+                if(result[0].amount1 == 0 && result[0].amount2 == 0 && result[0].amount3 == 0){
+                    res.send({"Calculated":false})
+                }
+                else{
+                    res.send({"Calculated":true})
+                }
+            }
+        }
+    )
+});
+
+router.post("/ProposedLoansForEmail", function(req, res, next) {
+    const email = req.body.email;
+    connection.query(
+        "SELECT * FROM ProposedLoans where email = ?",[email],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+            res.send(result[0])
+        }
+    )
+});
+
+router.post("/calculate", function(req, res, next) {
+    
+    const email = req.body.email
+
+    //logic of calculation start
+    
+    
+    //logic of calculation end
+
+    connection.query(
+        "UPDATE ProposedLoans set amount1 = ?,interest1 =? ,amount2 = ?,interest2 = ?,amount3 = ?,interest3 = ? where email = ?",[1,1,1,1,1,1,email],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }else{
+                connection.query(
+                    "Select * from ProposedLoans",[],(err,output) => {
+                        res.send(output)
+                    }
+                )
+            }
+        }
+    )
+
 });
 
 module.exports = router;

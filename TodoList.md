@@ -17,6 +17,3 @@ News blogs - adminpanel
 Installment vaal part - After Monday
 tables with details of installment 
 active loans and completed loans
-
-
-
