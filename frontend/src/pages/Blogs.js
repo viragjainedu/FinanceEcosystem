@@ -43,144 +43,116 @@ class App extends Component {
           <div className="container-fluid page-body-wrapper">
             <RightNavbar/>
             <LeftNavbar/>
+            {/* src={this.state.blog_image_url}
+            {this.state.blog_title}
+            {this.state.blog_desc}
+            <a href={this.state.blog_link_1} className="button" target="_blank">
+                            Read full post
+                          </a> */}
             <div className="main-panel">
               <div className="content-wrapper">
                 <MainHeader name="Blogs"/>
                   <br></br>
                   {/* <h3>{this.state.apiResponse}</h3> */}
-                  <div className="container">
-
-                    <article>
-                      <div className="blog_card">
-                        <div className="card__header">
-                          <img
-                            src={this.state.blog_image_url}
-                            alt=""
-                            className="card__image"
-                          />
-                          <div className="blog-details">
-                            <h2 className="blog-title">
-                              {this.state.blog_title}
-                            </h2>
-                          </div>
-                          {/* .blog-details ends */}
-                        </div>
-                        {/* .card_header ends */}
-                        <div className="card__body">
-                          {/* <div className="blog-category">Productivity</div> */}
-                          <div className="blog-excerpt">
-                            <p>
-                            {this.state.blog_desc}
-                            </p>
-                          </div>
-                          <a href={this.state.blog_link} className="button" target="_blank">
-                            Read full post
-                          </a>
-                        </div>
-                        {/* .card_body ends */}
-                      </div>
-                      {/* .card */}
-                    </article>
-                    
-                    <article>
-                      <div className="blog_card">
-                        <div className="card__header">
-                          <img
-                            src={this.state.blog_image_url_1}
-                            alt=""
-                            className="card__image"
-                          />
-                          <div className="blog-details">
-                            <h2 className="blog-title">
-                              {this.state.blog_title_1}
-                            </h2>
-                          </div>
-                          {/* .blog-details ends */}
-                        </div>
-                        {/* .card_header ends */}
-                        <div className="card__body">
-                          {/* <div className="blog-category">Productivity</div> */}
-                          <div className="blog-excerpt">
-                            <p>
-                            {this.state.blog_desc_1}
-                            </p>
-                          </div>
-                          <a href={this.state.blog_link_1} className="button" target="_blank">
-                            Read full post
-                          </a>
-                        </div>
-                        {/* .card_body ends */}
-                      </div>
-                      {/* .card */}
-                    </article>
-                    
-                    <article>
-                      <div className="blog_card">
-                        <div className="card__header">
-                          <img
-                            src={this.state.blog_image_url_2}
-                            alt=""
-                            className="card__image"
-                          />
-                          <div className="blog-details">
-                            <h2 className="blog-title">
-                              {this.state.blog_title_2}
-                            </h2>
-                          </div>
-                          {/* .blog-details ends */}
-                        </div>
-                        {/* .card_header ends */}
-                        <div className="card__body">
-                          {/* <div className="blog-category">Productivity</div> */}
-                          <div className="blog-excerpt">
-                            <p>
-                            {this.state.blog_desc_2}
-                            </p>
-                          </div>
-                          <a href={this.state.blog_link_2} className="button" target="_blank">
-                            Read full post
-                          </a>
-                        </div>
-                        {/* .card_body ends */}
-                      </div>
-                      {/* .card */}
-                    </article>
-                    
-                    <article>
-                      <div className="blog_card">
-                        <div className="card__header">
-                          <img
-                            src={this.state.blog_image_url_3}
-                            alt=""
-                            className="card__image"
-                          />
-                          <div className="blog-details">
-                            <h2 className="blog-title">
-                              {this.state.blog_title_3}
-                            </h2>
-                          </div>
-                          {/* .blog-details ends */}
-                        </div>
-                        {/* .card_header ends */}
-                        <div className="card__body">
-                          {/* <div className="blog-category">Productivity</div> */}
-                          <div className="blog-excerpt">
-                            <p>
-                            {this.state.blog_desc_3}
-                            </p>
-                          </div>
-                          <a href={this.state.blog_link_3} className="button" target="_blank">
-                            Read full post
-                          </a>
-                        </div>
-                        {/* .card_body ends */}
-                      </div>
-                      {/* .card */}
-                    </article>
-                    
-                  </div>
-                  {/* .container ends */}
-
+                  <div>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/blog/" />
+        {/* Bootstrap core CSS */}
+        <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <style dangerouslySetInnerHTML={{__html: "\n      .bd-placeholder-img {\n        font-size: 1.125rem;\n        text-anchor: middle;\n        -webkit-user-select: none;\n        -moz-user-select: none;\n        user-select: none;\n      }\n\n      @media (min-width: 768px) {\n        .bd-placeholder-img-lg {\n          font-size: 3.5rem;\n        }\n      }\n    " }} />
+        {/* Custom styles for this template */}
+        <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900&display=swap" rel="stylesheet" />
+        {/* Custom styles for this template */}
+        <link href="blog.css" rel="stylesheet" />
+        
+        <main className="container">
+          
+          <div className="row mb-2">
+            <div className="col-md-6">
+              <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-350 position-relative">
+              <div className="col-auto d-none d-lg-block">
+                <img height="250" width="450" src={this.state.blog_image_url}></img>
+                </div>
+                <div className="col p-4 d-flex flex-column position-static">
+                  <strong className="d-inline-block mb-2 text-primary">World</strong>
+                  <h3 className="mb-0">            {this.state.blog_title}
+</h3>
+                  <p className="card-text mb-auto">            {this.state.blog_desc}
+</p>
+                  <a href={this.state.blog_link} className="stretched-link"></a>
+                </div>
+                
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-350 position-relative">
+              <div className="col-auto d-none d-lg-block">
+                <img height="250" width="450" src={this.state.blog_image_url_1}></img>
+                </div>
+                <div className="col p-4 d-flex flex-column position-static">
+                  <strong className="d-inline-block mb-2 text-primary">World</strong>
+                  <h3 className="mb-0">            {this.state.blog_title_1}
+</h3>
+                  <p className="card-text mb-auto">            {this.state.blog_desc_1}
+</p>
+                  <a href={this.state.blog_link_1} className="stretched-link"></a>
+                </div>
+                
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-350 position-relative">
+              <div className="col-auto d-none d-lg-block">
+                <img height="250" width="450" src={this.state.blog_image_url_2}></img>
+                </div>
+                <div className="col p-4 d-flex flex-column position-static">
+                  <strong className="d-inline-block mb-2 text-primary">World</strong>
+                  <h3 className="mb-0">            {this.state.blog_title_2}
+</h3>
+                  <p className="card-text mb-auto">            {this.state.blog_desc_2}
+</p>
+                  <a href={this.state.blog_link_2} className="stretched-link"></a>
+                </div>
+                
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-350 position-relative">
+              <div className="col-auto d-none d-lg-block">
+                <img height="250" width="450" src={this.state.blog_image_url_3}></img>
+                </div>
+                <div className="col p-4 d-flex flex-column position-static">
+                  <strong className="d-inline-block mb-2 text-primary">World</strong>
+                  <h3 className="mb-0">            {this.state.blog_title_3}
+</h3>
+                  <p className="card-text mb-auto">            {this.state.blog_desc_3}
+</p>
+                  <a href={this.state.blog_link_3} className="stretched-link"></a>
+                </div>
+                
+              </div>
+            </div>
+            {/* <div className="col-md-6">
+              <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div className="col p-4 d-flex flex-column position-static">
+                  <strong className="d-inline-block mb-2 text-success">Design</strong>
+                  <h3 className="mb-0">Post title</h3>
+                  <div className="mb-1 text-muted">Nov 11</div>
+                  <p className="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+                  <a href="{this.state.blog_link_1}" className="stretched-link">Continue reading</a>
+                </div>
+                <div className="col-auto d-none d-lg-block">
+                  <svg className="bd-placeholder-img" width={200} height={250} xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                </div>
+              </div>
+            </div> */}
+          </div>
+          
+        </main>
+        
+      </div>
+   
                   <br></br>
               </div>
               
