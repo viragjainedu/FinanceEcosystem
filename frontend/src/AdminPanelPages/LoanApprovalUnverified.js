@@ -106,7 +106,7 @@ class App extends Component {
                       Email
                     </th>
                     <th>
-                      Emp_length
+                      Employee length
                     </th>
                     <th>
                       Annual Income
@@ -116,6 +116,9 @@ class App extends Component {
                     </th>
                     <th>
                       Collateral
+                    </th>
+                    <th>
+                      Amount Required
                     </th>
                     <th>
                       Purpose
@@ -139,16 +142,19 @@ class App extends Component {
                         {item.email}
                       </td>
                       <td>
-                        {item.emp_length}
+                        {item.emp_length} years
                       </td>
                       <td>
-                      {item.annual_income}
+                      {item.annual_income} lacs
                       </td>
                       <td>
                         {item.contact}
                       </td>
                       <td>
                         {item.collateral}
+                      </td>
+                      <td>
+                        {item.amount_req}
                       </td>
                       <td>
                         {item.purpose}

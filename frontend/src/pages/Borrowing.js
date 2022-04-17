@@ -18,6 +18,9 @@ class App extends Component {
             annual_income : "",
             contact : "",
             collateral : "",
+            collateral_value : "",
+            amount_req : "",
+            age : "",
             purpose : "",
             message : "",
             status : 0,
@@ -49,7 +52,10 @@ class App extends Component {
                             annual_income : response.data.annual_income,
                             contact : response.data.contact,
                             purpose : response.data.purpose,
-                            collateral : response.data.collateral
+                            collateral : response.data.collateral,
+                            amount_req : response.data.amount_req,
+                            collateral_value : response.data.collateral_value,
+                            age : response.data.age
                         });            
                     }
                   });
@@ -110,6 +116,9 @@ class App extends Component {
                 purpose : this.state.purpose,
                 contact : this.state.contact,
                 collateral : this.state.collateral,
+                collateral_value : this.state.collateral_value,
+                amount_req : this.state.amount_req,
+                age : this.state.age,
                 annual_income : this.state.annual_income,
                 email : localStorage.getItem('emailReg'),
             }).then((response) => {
@@ -217,17 +226,26 @@ class App extends Component {
                                             Collateral
                                             </th>
                                             <th>
+                                            Collateral_Value
+                                            </th>
+                                            <th>
+                                            Amount Required
+                                            </th>
+                                            <th>
+                                            Age
+                                            </th>
+                                            <th>
                                             Contact
                                             </th>
                                             <th>
-                                            Annual Income
+                                            Annual Income(in lacs)
                                             </th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                             <td className="py-1">
-                                            {this.state.emp_length}
+                                            {this.state.emp_length} years
                                             </td>
                                             <td className="py-1">
                                                 {this.state.purpose}
@@ -236,10 +254,19 @@ class App extends Component {
                                                 {this.state.collateral}
                                             </td>
                                             <td className="py-1">
+                                            ₹   {this.state.collateral_value} lacs
+                                            </td>
+                                            <td className="py-1">
+                                            ₹   {this.state.amount_req} 
+                                            </td>
+                                            <td className="py-1">
+                                                {this.state.age}
+                                            </td>
+                                            <td className="py-1">
                                                 {this.state.contact}
                                             </td>
                                             <td className="py-1">
-                                            ₹  {this.state.annual_income}
+                                            ₹  {this.state.annual_income} lacs
                                             </td>
                                             </tr>  
                                         
@@ -292,17 +319,17 @@ class App extends Component {
                                     <div className="row">
                                     <div className="col-md-6">
                                         <div className="form-group row">
-                                        <label className="col-sm-3 col-form-label">Emp Length</label>
+                                        <label className="col-sm-3 col-form-label">No of years of Employment</label>
                                         <div className="col-sm-9">
-                                            <input type="number" value={this.state.emp_length} onChange={this.handleInputChanged.bind(this)} name="emp_length" className="form-control" placeholder=''/>
+                                            <input type="number" value={this.state.emp_length} onChange={this.handleInputChanged.bind(this)} name="emp_length" className="form-control" placeholder='0 if not started working yet.'/>
                                         </div>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="form-group row">
-                                        <label className="col-sm-3 col-form-label">Annual Income</label>
+                                        <label className="col-sm-3 col-form-label">Annual Income(In lacs)</label>
                                         <div className="col-sm-9">
-                                            <input type="number" value={this.state.annual_income} onChange={this.handleInputChanged.bind(this)} name="annual_income" className="form-control" />
+                                            <input type="number" value={this.state.annual_income} onChange={this.handleInputChanged.bind(this)} name="annual_income" className="form-control" placeholder='Type 6 if 6 lacs' />
                                         </div>
                                         </div>
                                     </div>
@@ -339,13 +366,36 @@ class App extends Component {
                                         <div className="form-group row">
                                         <label className="col-sm-3 col-form-label">Contact</label>
                                         <div className="col-sm-9">
-                                            <input type="text" value={this.state.contact} onChange={this.handleInputChanged.bind(this)} name="contact" className="form-control" />
+                                            <input type="text" value={this.state.contact} onChange={this.handleInputChanged.bind(this)} name="contact" className="form-control" placeholder='9869101921' />
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="form-group row">
+                                        <label className="col-sm-3 col-form-label">Age</label>
+                                        <div className="col-sm-9">
+                                            <input type="number" value={this.state.age} onChange={this.handleInputChanged.bind(this)} name="age" className="form-control" placeholder='Type 30 for 30 years.' />
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="form-group row">
+                                        <label className="col-sm-3 col-form-label">Collateral Value(in lacs)</label>
+                                        <div className="col-sm-9">
+                                            <input type="number" value={this.state.collateral_value} onChange={this.handleInputChanged.bind(this)} name="collateral_value" className="form-control" placeholder='Type 5 for 5 lacs'/>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="form-group row">
+                                        <label className="col-sm-3 col-form-label">Amount Required</label>
+                                        <div className="col-sm-9">
+                                            <input type="number" value={this.state.amount_req} onChange={this.handleInputChanged.bind(this)} name="amount_req" className="form-control" placeholder='30000'/>
                                         </div>
                                         </div>
                                     </div>
                                     </div>
                                     <button onClick={this.handleButtonClicked.bind(this)} className="btn btn-primary me-2">Submit</button>
-
 
                                 </div>
                                 </div>

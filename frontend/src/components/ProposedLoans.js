@@ -9,6 +9,7 @@ class CompleteProfile extends Component {
 		super(props);
         this.state = {
             Loans : {},
+            message : "Please Choose a Loan"
         };
 	}
 
@@ -23,6 +24,13 @@ class CompleteProfile extends Component {
             this.setState({
                 ...this.state,
                 Loans : response.data,
+            },()=>{
+              if(this.state.Loans.selected !== 0){
+                this.setState({
+                  ...this.state,
+                  message : "Thank you for selecting the Loan. Loan amount will be transacted shortly."
+                })
+              }
             });            
           }
         });
@@ -32,42 +40,20 @@ class CompleteProfile extends Component {
 		this.callAPI();
 	} 
     
-    handleButtonClicked() {
-        // var first_name = this.state.first_name;
-        // console.log(this.state)
-        
-        // if(this.state.first_name !== "" && this.state.last_name !== "" && this.state.DOB !== "" && this.state.gender !== "" && this.state.address1 !== ""
-        //     && this.state.address2 !== "" && this.state.city !== "" && this.state.state !== "" && this.state.country !== "" && this.state.pincode !== ""     
-        // ){
-        //     //Axios ka post request daalna hai 
-        //     Axios.post("http://localhost:9000/p2pLending/CompleteProfile", {
-        //         first_name : this.state.first_name,
-        //         last_name : this.state.last_name,
-        //         gender : this.state.gender,
-        //         DOB : this.state.DOB,
-        //         city : this.state.city,
-        //         state : this.state.state,
-        //         country : this.state.country,
-        //         pincode : this.state.pincode,
-        //         address1 : this.state.address1,
-        //         address2 : this.state.address2,
-        //         email : localStorage.getItem('emailReg'),
-        //     }).then((response) => {
-        //         console.log(response);
-        //         // console.log("Hiiii")
-        //     if(response.data.success){
-        //         console.log("Completed profile");
-        //         window.location.href = "/p2pLending";
-        //     }
-        //     });
-        // }
-        // else{
-        //     this.setState({
-        //         ...this.state,
-        //         message : "Please fill all fields",
-        //     });
-        }    
-	
+  handleButtonClickedAcceptLoans(selectedLoan) {
+
+      //Axios ka post request daalna hai 
+      Axios.post("http://localhost:9000/borrowing/LoanSelection", {
+          selectedLoan : selectedLoan,
+          email : localStorage.getItem('emailReg'),
+      }).then((response) => {
+          console.log(response);
+        if(response.data.status === "Accepted"){
+          window.location.href = "/borrowing";
+        }
+      });
+    }
+    
     render(){
         return (
             <>
@@ -75,9 +61,7 @@ class CompleteProfile extends Component {
         <div className="card">
           <div className="card-body">
             <h4 className="card-title">Loan Proposals</h4>
-            <p className="card-description">
-              
-            </p>
+            
             <div className="table-responsive">
               <table className="table table-striped">
                 <thead>
@@ -97,6 +81,7 @@ class CompleteProfile extends Component {
                   </tr>
                 </thead>
                 <tbody> 
+                      
                         <tr>
                             {console.log(this.state.Loans)}
                             <td>3 Months</td>
@@ -106,9 +91,24 @@ class CompleteProfile extends Component {
                             <td className="py-1">
                             ₹{this.state.Loans.interest1 }
                             </td>  
-                            <td>
-                                <button onClick={(email) => {if(window.confirm('Are you sure to Accept this Loan?')){ this.handleButtonClickedAcceptLoan(this.state.Loans.email)};}} className="btn btn-success me-2">Accept</button>
-                            </td>
+                            {(() => {
+
+                              if(this.state.Loans.selected === 0){
+                                return(
+                                  <td>
+                                    <button onClick={() => {if(window.confirm('Are you sure to Accept this Loan?')){ this.handleButtonClickedAcceptLoans(1)};}} className="btn btn-success me-2">Accept</button>
+                                  </td>
+                                )
+                              }
+                              else if(this.state.Loans.selected === 1){
+                                return (
+                                  <td className="py-1" style={{color: "green"}}>Accpeted</td>
+                                )    
+                              }else{
+                                return <td className="py-1" style={{color: "red"}}>Declined</td>
+                              }
+                            })()}
+
                         </tr>
                         <tr>
                             <td>6 Months</td>
@@ -118,9 +118,24 @@ class CompleteProfile extends Component {
                             <td className="py-1">
                             ₹{this.state.Loans.interest2 }
                             </td>  
-                            <td>
-                                <button onClick={(email) => {if(window.confirm('Are you sure to Accept this Loan?')){ this.handleButtonClickedAcceptLoan(this.state.Loans.email)};}} className="btn btn-success me-2">Accept</button>
-                            </td>
+                            {(() => {
+
+                              if(this.state.Loans.selected === 0){
+                                return(
+                                  <td>
+                                    <button onClick={() => {if(window.confirm('Are you sure to Accept this Loan?')){ this.handleButtonClickedAcceptLoans(2)};}} className="btn btn-success me-2">Accept</button>
+                                  </td>
+                                )
+                              }
+                              else if(this.state.Loans.selected === 2){
+                                return (
+                                  <td className="py-1" style={{color: "green"}}>Accpeted</td>
+                                )    
+                              }else{
+                                return <td className="py-1" style={{color: "red"}}>Declined</td>
+                              }
+                            })()}
+
                         </tr>
                         <tr>
                             <td>12 Months</td>
@@ -130,9 +145,24 @@ class CompleteProfile extends Component {
                             <td className="py-1">
                             ₹{this.state.Loans.interest3 }
                             </td>  
-                            <td>
-                                <button onClick={(email) => {if(window.confirm('Are you sure to Accept this Loan?')){ this.handleButtonClickedAcceptLoan(this.state.Loans.email)};}} className="btn btn-success me-2">Accept</button>
-                            </td>
+                            {(() => {
+
+                              if(this.state.Loans.selected === 0){
+                                return(
+                                  <td>
+                                    <button onClick={() => {if(window.confirm('Are you sure to Accept this Loan?')){ this.handleButtonClickedAcceptLoans(3)};}} className="btn btn-success me-2">Accept</button>
+                                  </td>
+                                )
+                              }
+                              else if(this.state.Loans.selected === 3){
+                                return (
+                                  <td className="py-1" style={{color: "green"}}>Accpeted</td>
+                                )    
+                              }else{
+                                return <td className="py-1" style={{color: "red"}}>Declined</td>
+                              }
+                            })()}
+
                         </tr>
                         <tr>
                             <td>18 Months</td>
@@ -142,13 +172,33 @@ class CompleteProfile extends Component {
                             <td className="py-1">
                             ₹{this.state.Loans.interest4 }
                             </td>  
-                            <td>
-                                <button onClick={(email) => {if(window.confirm('Are you sure to Accept this Loan?')){ this.handleButtonClickedAcceptLoan(this.state.Loans.email)};}} className="btn btn-success me-2">Accept</button>
-                            </td>
+                            {(() => {
+
+                              if(this.state.Loans.selected === 0){
+                                return(
+                                  <td>
+                                    <button onClick={() => {if(window.confirm('Are you sure to Accept this Loan?')){ this.handleButtonClickedAcceptLoans(4)};}} className="btn btn-success me-2">Accept</button>
+                                  </td>
+                                )
+                              }
+                              else if(this.state.Loans.selected === 4){
+                                return (
+                                  <td className="py-1" style={{color: "green"}}>Accpeted</td>
+                                )    
+                              }else{
+                                return <td className="py-1" style={{color: "red"}}>Declined</td>
+                              }
+                            })()}
+
                         </tr>
                   
                 </tbody>
               </table>
+              <div class="d-flex justify-content-end">
+                  <p className="card-description" style={{color : "green"}}>
+                    {this.state.message}
+                  </p>
+                </div>
             </div>
           </div>
         </div>

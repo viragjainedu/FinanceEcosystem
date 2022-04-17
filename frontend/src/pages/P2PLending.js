@@ -113,7 +113,7 @@ class App extends Component {
                     <div className="col">
                       <label>How much you offer to lend</label>
                       <div id="the-basics">
-                        <input className="typeahead" value={this.state.lend_amount} onChange={this.handleInputChanged.bind(this)} type="number" min="10000" max="1000000" step={10000} placeholder="Units of Rs 10000" />
+                        <input className="typeahead" value={this.state.lend_amount} onChange={this.handleInputChanged.bind(this)} type="number" min="10000" max="1000000" step={10000} placeholder="1000" />
                       </div>
                     </div>
                     

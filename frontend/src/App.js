@@ -4,11 +4,62 @@ import TopNavbar from './components/TopNavbar'
 import LeftNavbar from './components/LeftNavbar'
 import RightNavbar from './components/RightNavbar'
 import MainHeader from './components/MainHeader'
-import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 
 class App extends Component {
   
+  constructor(props) {
+		super(props);
+    this.state = {  
+      balance: 0,
+      total_money_lent: 0,
+      total_money_borrowed: 0,
+      total_interest_received: 0 ,
+      total_money_withdrawn:0 ,
+      total_interest_paid: 0,
+      prev_transactions: []
+    };
+	}
+
+  //To check whether user has completed form or not
+  callAPI() {
+    Axios.post("http://localhost:9000/account_stats", {
+          email: localStorage.getItem('emailReg'),
+      }).then((response) => {
+        console.log(response);
+        if(response.data){
+          this.setState({
+            ...this.state,
+            balance : response.data.balance,
+            total_money_lent : response.data.total_money_lent,
+            total_money_borrowed : response.data.total_money_borrowed,
+            total_interest_received : response.data.total_interest_received,
+            total_interest_paid : response.data.total_interest_paid,
+            total_money_withdrawn : response.data.total_money_withdrawn,
+          },()=>{
+              Axios.post("http://localhost:9000/account_stats/prev_transactions", {
+                email: localStorage.getItem('emailReg'),
+                }).then((res) => {
+                  console.log(res);
+                  if(res.data){
+                    this.setState({
+                      ...this.state,
+                      prev_transactions : res.data
+                    })
+
+                }
+              });
+          })
+      }
+    });
+  }
+  
+  
+  componentWillMount() {
+    this.callAPI();
+  } 
+
   render() {
   return (
     <>
@@ -30,22 +81,42 @@ class App extends Component {
       aria-labelledby="overview"
     >
       <div className="row">
-        <div className="col-sm-3">
+        <div className="col-sm-12">
           <div className="statistics-details d-flex align-items-center justify-content-between">
             <div>
               <p className="statistics-title">Balance</p>
-              <h4 className="rate-percentage">Rs 100</h4>
+              <h4 className="rate-percentage">₹ {this.state.balance}</h4>
               <p className="text-danger d-flex">
-                {/* <i className="mdi mdi-menu-down" />
-                <span>-0.5%</span> */}
               </p>
             </div>
             <div>
-              <p className="statistics-title">Transactions Past Week</p>
-              <h4 className="rate-percentage">5</h4>
+              <p className="statistics-title">Total money Lent</p>
+              <h4 className="rate-percentage">₹ {this.state.total_money_lent}</h4>
               <p className="text-success d-flex">
-                {/* <i className="mdi mdi-menu-up" />
-                <span>+0.1%</span> */}
+              </p>
+            </div>
+            <div>
+              <p className="statistics-title">Total money Borrowed</p>
+              <h4 className="rate-percentage">₹ {this.state.total_money_borrowed}</h4>
+              <p className="text-success d-flex">
+              </p>
+            </div>
+            <div>
+              <p className="statistics-title">Total Interest Received</p>
+              <h4 className="rate-percentage">₹ {this.state.total_interest_received}</h4>
+              <p className="text-success d-flex">
+              </p>
+            </div>
+            <div>
+              <p className="statistics-title">Total Interest Paid</p>
+              <h4 className="rate-percentage">₹ {this.state.total_interest_paid}</h4>
+              <p className="text-success d-flex">
+              </p>
+            </div>
+            <div>
+              <p className="statistics-title">Total Money Withdrawn</p>
+              <h4 className="rate-percentage">₹ {this.state.total_money_withdrawn}</h4>
+              <p className="text-success d-flex">
               </p>
             </div>
             
@@ -68,27 +139,23 @@ class App extends Component {
               <thead>
                 <tr>
                   <th>Credit/Debit</th>
-                  <th>Account No</th>
                   <th>Amount</th>
                   <th>Time</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Credit</td>
-                  <td>53275535</td>
-                  <td>Rs 55</td>
-                  <td>5:00 PM</td>
-                 
-                </tr>
+                {
+                this.state.prev_transactions.map((item,i) => 
+                  <tr>
+                    <td>Lent</td>
+                    {console.log(item)}
+                    <td>₹ {item.amount_lent}</td>
+                    <td>{item.transaction_time}</td>
+                  </tr> 
+                )
+                }
                 
-                <tr>
-                  <td>Debit</td>
-                  <td>53275535</td>
-                  <td>Rs 65</td>
-                  <td>6:00 PM</td>
-                  
-                </tr>
+                
               </tbody>
             </table>
           </div>

@@ -22,7 +22,6 @@ router.post("/CompleteProfile", function(req, res, next) {
     const DOB = req.body.DOB;
     const city = req.body.city;
     const state = req.body.state;
-    const country = req.body.country;
     const pincode = req.body.pincode;
     const address1 = req.body.address1;
     const address2 = req.body.address2;
@@ -57,10 +56,18 @@ router.post("/amount_lending", function(req, res, next) {
                 res.send({err: err});
             }
             else{
+
+                // adding the same to total_money_lent
+                connection.query("Select total_money_lent from account_stats where email = ?;",[email],(err,output) => { 
+                    var new_total_money_lent = parseInt(output[0].total_money_lent) + parseInt(amount);
+                    connection.query("update account_stats set total_money_lent = ? where email = ?;",[new_total_money_lent,email],(err,x)=>{})
+                })
+
                 res.send({"Lending_status" : "Success"});
             }
         }
     )
+
 });
 
 router.post("/lending_transactions", function(req, res, next) {

@@ -75,15 +75,83 @@ router.post("/CompleteProfile", function(req, res, next) {
     const annual_income = req.body.annual_income;
     const purpose = req.body.purpose;
     const collateral = req.body.collateral;
+    const age = req.body.age;
+    const collateral_value = req.body.collateral_value;
+    const amount_req = req.body.amount_req;
     const contact = req.body.contact;
     const email = req.body.email;
-    console.log(req.body.emp_length);
     console.log(req.body);
+    console.log("Hiii")
 
+
+    //Credit Score calculation for grade STARTS
+    const x = parseInt(emp_length);
+    const ES = -0.025*x*x + x;
+    const AS = 15 - 0.25*parseInt(age);
+    const IS = Math.log10((100*parseInt(annual_income) )/ 12);
+    var PS = 5;
+    console.log("Hiii2")
+    switch(purpose) {
+        case "Education":
+            PS = 10;
+            break;
+        case "House":
+            PS = 10;
+            break;
+        case "Medical":
+            PS = 7;
+            break;
+        case "Travel":
+            PS = 5;
+            break;
+        case "Other":
+            PS = 5;
+            break;
+        default:
+            PS = 5;
+    }
+    console.log("Hiii3")
+
+    const CV = collateral_value;
+    const Credit_Score = 10*IS + 5*ES + 5*AS + 3*Math.log10(CV) + PS
+    var Loan_Cap = 0.7*CV
+    
+    if(amount_req < Loan_Cap){
+        Loan_Cap = amount_req;
+    }
+
+    var GRADE = 'X';
+    console.log("Hiii3.5")
+    if(Credit_Score >= 85){
+        GRADE = 'A';
+    }
+    else if (Credit_Score >= 70 && Credit_Score < 85){
+        GRADE = 'B';
+    }
+    else if (Credit_Score >= 55 && Credit_Score < 70){
+        GRADE = 'C';
+    }
+    else if (Credit_Score >= 40 && Credit_Score < 55){
+        GRADE = 'D';
+    }
+    else if (Credit_Score >= 25 && Credit_Score < 40){
+        GRADE = 'E';
+    }
+    else if (Credit_Score >= 10 && Credit_Score < 25){
+        GRADE = 'F';
+    }
+    else if (Credit_Score < 10){
+        GRADE = 'G';
+    }
+    console.log("Hiii4")
+
+    console.log(Loan_Cap)
+    console.log(Credit_Score);
+    console.log(GRADE);
 
     connection.query(
-        "UPDATE person SET emp_length = ?, annual_income = ?, purpose = ?,collateral = ?,  contact = ? where email = ? ;",
-        [emp_length, annual_income,purpose,collateral,contact,email],
+        "UPDATE person SET emp_length = ?, annual_income = ?, purpose = ?,collateral = ?,age=?,collateral_value=?,amount_req = ?, contact = ?,GRADE = ?,Loan_Cap = ? where email = ? ;",
+        [emp_length, annual_income,purpose,collateral,age,collateral_value,amount_req,contact,GRADE,Loan_Cap,email],
         (err, result)=> {
             if(err){
                 console.log(err);
@@ -103,6 +171,9 @@ router.post("/CompleteProfile", function(req, res, next) {
             );
             //INSERTING IN BORROWING REQUESTS ENDS
            
+            
+
+            //Credit Score calculation for grade ENDS
         }
       );
     // res.send({"Profile Recieved":"Yes"})
@@ -214,11 +285,14 @@ router.post("/isLoanCalculatedForThisEmail", function(req, res, next) {
                 res.send({err: err});
             }
             else{
-                if(result[0].amount1 == 0 && result[0].amount2 == 0 && result[0].amount3 == 0){
+                if(result.length > 0 ){
+                    if(result[0].amount1 == 0 && result[0].amount2 == 0 && result[0].amount3 == 0 && result[0].MailSent == false){
+                        res.send({"Calculated":false})
+                    }else{
+                        res.send({"Calculated":true})
+                    }
+                }else{
                     res.send({"Calculated":false})
-                }
-                else{
-                    res.send({"Calculated":true})
                 }
             }
         }
@@ -233,17 +307,22 @@ router.post("/ProposedLoansForEmail", function(req, res, next) {
             if (err) {
                 res.send({err: err});
             }
-            res.send(result[0])
+            else if(result.length > 0){
+                res.send(result[0])
+            }else{
+                res.send({})
+            }
         }
     )
 });
+
+
 
 router.post("/calculate", function(req, res, next) {
     
     const email = req.body.email
 
     //logic of calculation start
-    
     
     //logic of calculation end
 
@@ -258,6 +337,27 @@ router.post("/calculate", function(req, res, next) {
                         res.send(output)
                     }
                 )
+            }
+        }
+    )
+
+});
+
+router.post("/LoanSelection", function(req, res, next) {
+    
+    const email = req.body.email
+    const selectedLoan = req.body.selectedLoan
+
+    connection.query(
+        "UPDATE ProposedLoans set selected = ? where email = ?",[selectedLoan,email],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }else{
+
+                connection.query("update borrowing_requests set status = 4 where email = ? ",[email],(err,output)=>{
+                    res.send({status: "Accepted"})
+                })
             }
         }
     )

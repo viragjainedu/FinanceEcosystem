@@ -17,6 +17,7 @@ router.post('/', (req, res) => {
       });
       
       var OTP =  otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false ,lowerCaseAlphabets: false  });
+      console.log(OTP);
       
       var mailOptions = {
         from: 'virag.j@somaiya.edu',

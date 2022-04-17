@@ -10,10 +10,19 @@ backend - loan approval - accept - mail - redirect to borrowing page - accept - 
 
 Admin Panel - 
 <!-- Verified table on different page -->
-Send mail with different options(3,6,12,18)- Groupwise entries of interest rate. 
-Mail with redirect on borrowing page with options displayed and Accept/Decline button.
+<!-- Send mail with different options(3,6,12,18)- Groupwise entries of interest rate.  -->
+<!-- Mail with redirect on borrowing page with options displayed and Accept/Decline button. -->
+After lending at dashboard update balance - total money lent transaction - 
+Clear Left Navbar Features;
+Collateral Papers upload react - Node js Save files
+
+One case - We aint asking user how much he wants to borrow ? 
+
+
+
 News blogs - adminpanel
 
 Installment vaal part - After Monday
 tables with details of installment 
 active loans and completed loans
+

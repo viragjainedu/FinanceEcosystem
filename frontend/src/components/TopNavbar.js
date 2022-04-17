@@ -13,7 +13,7 @@ function TopNavbar (){
   const [amount, setAmount] = React.useState(null);
   
   React.useEffect(() => {
-    Axios.post("http://localhost:9000/p2pLending/total_amount_lent", {
+    Axios.post("http://localhost:9000/account_stats/balance", {
         email: localStorage.getItem('emailReg'),
     }).then((response) => {
       console.log(response);
@@ -60,7 +60,7 @@ function TopNavbar (){
               </li>
               <li className="nav-item d-none d-lg-block">
                 <div className="input-group date datepicker p-2 navbar-date-picker">
-                  Total Money Lent - {!amount ? '0' : `${amount}`}          
+                  Balance - {!amount ? '0' : `${amount}`}          
                 </div>
               </li>
               <li className="nav-item">

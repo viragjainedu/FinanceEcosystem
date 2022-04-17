@@ -24,7 +24,10 @@ router.post('/', (req, res)=> {
             "INSERT INTO person (email, password,username) VALUES (?,?,?)",
             [email, password,username],
             (err, result)=> {
-              // console.log(result);
+
+              connection.query("insert into account_stats (email,balance,total_money_lent,total_money_borrowed,total_interest_received,total_money_withdrawn,total_interest_paid) values (?,?,?,?,?,?,?)",
+              [email,0,0,0,0,0,0,0],(err,res)=>{console.log(err)})
+              
               res.send({"success":"User Registered Succesfully"})
             }
           );

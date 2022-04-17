@@ -111,7 +111,7 @@ class App extends Component {
               
             </p>
             <div className="table-responsive">
-              <table className="table table-striped">
+              <table className="table table-striped" >
                 <thead>
                   <tr>
                     <th>
@@ -137,6 +137,12 @@ class App extends Component {
                     </th>
                     <th>
                       Reject 
+                    </th>
+                    <th>
+                      Selected 
+                    </th>
+                    <th>
+                      Transact 
                     </th>
                   </tr>
                 </thead>
@@ -177,6 +183,24 @@ class App extends Component {
                           
                         <td>
                         <button onClick={(email) => {if(window.confirm('Are you sure to Reject this mail?')){ this.handleButtonClickedReject(item.email)};}} className="btn btn-danger me-2">Reject</button>
+                        </td>
+                        {(() => {
+                          if(item.MailSent && item.selected !== 0 ){
+                            return (
+                              <td className="py-1" style={{color: "green"}}>
+                                Selected {item.selected*3} Months
+                              </td>
+                            )
+                          }else{
+                            return(
+                              <td className="py-1" style={{color: "red"}}>
+                               Not Selected
+                            </td>
+                            )
+                          }
+                        })()}
+                        <td>
+                        <button onClick={(email) => {if(window.confirm('Are you sure to Transact Loan amount?')){ this.handleButtonClickedTransact(item.email)};}} className="btn btn-primary me-2">Transact</button>
                         </td>
                       </tr>
                   )}
