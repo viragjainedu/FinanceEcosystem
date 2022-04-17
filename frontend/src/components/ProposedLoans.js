@@ -89,7 +89,7 @@ class CompleteProfile extends Component {
                             ₹{this.state.Loans.amount1 }
                             </td>
                             <td className="py-1">
-                            ₹{this.state.Loans.interest1 }
+                            {this.state.Loans.interest1 } %
                             </td>  
                             {(() => {
 
@@ -116,7 +116,7 @@ class CompleteProfile extends Component {
                             ₹{this.state.Loans.amount2 }
                             </td>
                             <td className="py-1">
-                            ₹{this.state.Loans.interest2 }
+                            {this.state.Loans.interest2 } %
                             </td>  
                             {(() => {
 
@@ -143,7 +143,7 @@ class CompleteProfile extends Component {
                             ₹{this.state.Loans.amount3 }
                             </td>
                             <td className="py-1">
-                            ₹{this.state.Loans.interest3 }
+                            {this.state.Loans.interest3 } %
                             </td>  
                             {(() => {
 
@@ -170,7 +170,7 @@ class CompleteProfile extends Component {
                             ₹{this.state.Loans.amount4 }
                             </td>
                             <td className="py-1">
-                            ₹{this.state.Loans.interest4 }
+                            {this.state.Loans.interest4 } %
                             </td>  
                             {(() => {
 

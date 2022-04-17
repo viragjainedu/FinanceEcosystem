@@ -37,6 +37,10 @@ router.post("/CompleteProfile", function(req, res, next) {
                 console.log(err);
             }
             // console.log(result);
+            
+            //here add borrwers_Data into table
+            //here add borrwers_Data into table
+
             res.send({"success":"Updated Succesfully"})
         }
       );
@@ -62,6 +66,14 @@ router.post("/amount_lending", function(req, res, next) {
                     var new_total_money_lent = parseInt(output[0].total_money_lent) + parseInt(amount);
                     connection.query("update account_stats set total_money_lent = ? where email = ?;",[new_total_money_lent,email],(err,x)=>{})
                 })
+
+                //add this to lenders data table
+                connection.query("INSERT into lenders_data (email,amount_lent, amount_remaining, fixed_lending_amount) values (?,?,?,?);",
+                    [email,amount,amount,parseInt(amount)/10]
+                    ,(err,res) => {
+
+                    }
+                );
 
                 res.send({"Lending_status" : "Success"});
             }

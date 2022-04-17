@@ -72,7 +72,7 @@ router.post("/CompleteProfile", function(req, res, next) {
     // res.send("This statement is generate by p2pLending API backend");
 
     const emp_length = req.body.emp_length;
-    const annual_income = req.body.annual_income;
+    const annual_income = req.body.annual_income*10;
     const purpose = req.body.purpose;
     const collateral = req.body.collateral;
     const age = req.body.age;
@@ -114,7 +114,7 @@ router.post("/CompleteProfile", function(req, res, next) {
 
     const CV = collateral_value;
     const Credit_Score = 10*IS + 5*ES + 5*AS + 3*Math.log10(CV) + PS
-    var Loan_Cap = 0.7*CV
+    var Loan_Cap = 0.7*CV*100000
     
     if(amount_req < Loan_Cap){
         Loan_Cap = amount_req;
@@ -323,24 +323,61 @@ router.post("/calculate", function(req, res, next) {
     const email = req.body.email
 
     //logic of calculation start
-    
+
+    connection.query("select * from person where email=?",[email],(err,result)=>{
+        if(err){
+            console.log(err);
+        }else if(result.length > 0){
+            console.log(result);
+            var loan_cap = result[0].loan_cap
+            var GRADE = result[0].GRADE
+            console.log(`Loan Cap:${loan_cap}`)
+            console.log(`GRADE:${GRADE}`)
+
+                connection.query("Select * from lenders_data ORDER BY fixed_lending_amount DESC",[],(err,result) => {
+                    if(err){
+                        console.log(err)
+                    }
+                    else if(result.length > 0 ){
+                        var amount_included = 0;
+                        for (let i = 0; i < result.length; i++) {
+                            if(result[i].amount_remaining == 0){
+                                continue;
+                            }else{
+                                if(result[i].fixed_lending_amount + amount_included <= loan_cap){
+                                    amount_included = amount_included + result[i].fixed_lending_amount
+                                }
+                            }
+                        }
+                        var FinalLoanAmount = amount_included;
+                        console.log(`FinalLoanAmount:${FinalLoanAmount}`)
+                        
+                        console.log(`GRADE:${GRADE}`)
+                        connection.query("select * from interest_rates where GRADE = ?",[GRADE],(err,result) => {
+                            if(err){console.log(err)}else{console.log(result)}
+                            connection.query(
+                                "UPDATE ProposedLoans set amount1 = ?,interest1 =? ,amount2 = ?,interest2 = ?,amount3 = ?,interest3 = ?,amount4 = ?,interest4 = ? where email = ?",
+                                [FinalLoanAmount,result[0].months_3 ,FinalLoanAmount,result[0].months_6 ,FinalLoanAmount,result[0].months_12 ,FinalLoanAmount,result[0].months_18 ,email],
+                                (err, result)=> {
+                                    if (err) {
+                                        res.send({err: err});
+                                    }else{
+                                        connection.query(
+                                            "Select * from ProposedLoans",[],(err,output) => {
+                                                res.send(output)
+                                            }
+                                        )
+                                    }
+                                }
+                            )
+                        })                    
+                    }
+                });
+        }
+    });
     //logic of calculation end
 
-    connection.query(
-        "UPDATE ProposedLoans set amount1 = ?,interest1 =? ,amount2 = ?,interest2 = ?,amount3 = ?,interest3 = ? where email = ?",[1,1,1,1,1,1,email],
-        (err, result)=> {
-            if (err) {
-                res.send({err: err});
-            }else{
-                connection.query(
-                    "Select * from ProposedLoans",[],(err,output) => {
-                        res.send(output)
-                    }
-                )
-            }
-        }
-    )
-
+   
 });
 
 router.post("/LoanSelection", function(req, res, next) {

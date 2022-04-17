@@ -109,7 +109,7 @@ class App extends Component {
         // var first_name = this.state.first_name;
         console.log(this.state)
         
-        if(this.state.emp_length !== "" &&  this.state.purpose !== "" && this.state.contact !== "" && this.state.annual_income !== ""){
+        if(this.state.emp_length !== "" &&  this.state.purpose !== "" &&  this.state.age !== "" &&  this.state.amount_req !== ""&&  this.state.collateral_value !== "" &&  this.state.collateral !== "" && this.state.contact !== "" && this.state.annual_income !== ""){
             //Axios ka post request daalna hai 
             Axios.post("http://localhost:9000/borrowing/CompleteProfile", {
                 emp_length : this.state.emp_length,
