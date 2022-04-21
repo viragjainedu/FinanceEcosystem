@@ -172,7 +172,7 @@ class App extends Component {
                           {item.email}
                         </td>
                           {(()=>{
-                            if(item.isCalculated == true){
+                            if(item.isCalculated === true){
                               return (
                                 <td className="py-1">
                                   Calculated Already

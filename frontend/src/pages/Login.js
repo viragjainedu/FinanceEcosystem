@@ -96,7 +96,7 @@ function Login(){
                     Keep me signed in
                   </label>
                 </div>
-                <a href="Login.js" className="auth-link text-black  ">
+                <a href="/ForgotPassword" className="auth-link text-black  ">
                   Forgot password?
                 </a>
               </div>
