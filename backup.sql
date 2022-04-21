@@ -4,6 +4,9 @@ Delete from borrowing_requests where 1;
 Delete from proposedloans where 1;
 Delete from person where email != 'viragjain503@gmail.com';
 Delete from system_notifications where 1; 
+Delete from lenders_data where 1; 
+Delete from borrowers_data where 1; 
+Delete from account_stats where 1; 
 
 
 Create table lenders_data (

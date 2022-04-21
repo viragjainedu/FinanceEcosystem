@@ -68,10 +68,10 @@ router.post("/amount_lending", function(req, res, next) {
                 })
 
                 //add this to lenders data table
-                connection.query("INSERT into lenders_data (email,amount_lent, amount_remaining, fixed_lending_amount) values (?,?,?,?);",
+                connection.query("INSERT into lenders_data (email,amount_lent, amount_remaining, fixed_lending_amount,current_borrower) values (?,?,?,?,0);",
                     [email,amount,amount,parseInt(amount)/10]
                     ,(err,res) => {
-
+                        
                     }
                 );
 

@@ -26,3 +26,8 @@ Installment vaal part - After Monday
 tables with details of installment 
 active loans and completed loans
 
+if(<50%){we can only offer this  much amount}else{you can accept this.}
+Vertical Chart
+OTP timer / Resend
+Validation every place.
+

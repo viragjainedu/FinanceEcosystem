@@ -30,7 +30,7 @@ function TopNavbar (){
           <div className="navbar-menu-wrapper d-flex align-items-top"> 
             <ul className="navbar-nav">
               <li className="nav-item font-weight-semibold d-none d-lg-block ms-0">
-                <h1 className="welcome-text">Good Morning, <span className="text-black fw-bold">{localStorage.getItem('usernamReg')}</span></h1>
+                <h1 className="welcome-text">Hello, <span className="text-black fw-bold">{localStorage.getItem('usernamReg')}</span></h1>
                 <h3 className="welcome-sub-text">You are ADMIN </h3>
               </li>
             </ul>

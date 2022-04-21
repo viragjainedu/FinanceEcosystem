@@ -57,7 +57,7 @@ function Login(){
             </div>
             <h4>Log In</h4>
             <h6 className='text-danger'>{loginStatus}</h6>
-            <form className="pt-3">
+            <div className="pt-3">
               <div className="form-group">
                 <input
                   type="email"
@@ -113,7 +113,7 @@ function Login(){
                 Don't have an account?{" "}
                 <Link to="/Register" ><p className="text-primary">Create</p></Link>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
