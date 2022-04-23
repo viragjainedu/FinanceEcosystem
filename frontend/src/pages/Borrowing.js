@@ -374,7 +374,7 @@ class App extends Component {
                                         <div className="form-group row">
                                         <label className="col-sm-3 col-form-label">Age</label>
                                         <div className="col-sm-9">
-                                            <input type="number" value={this.state.age} onChange={this.handleInputChanged.bind(this)} name="age" className="form-control" placeholder='Type 30 for 30 years.' />
+                                            <input type="number" min={18} max={100} value={this.state.age} onChange={this.handleInputChanged.bind(this)} name="age" className="form-control" placeholder='Type 30 for 30 years.' />
                                         </div>
                                         </div>
                                     </div>

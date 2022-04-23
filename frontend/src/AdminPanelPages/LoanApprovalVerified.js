@@ -93,10 +93,11 @@ class App extends Component {
 
   }
 
-  handleButtonClickedTransact(email,selected) {
+  handleButtonClickedTransact(email,selected,amount) {
     Axios.post(`http://localhost:9000/borrowing/transact`, {
       email : email,
-      selected : selected
+      selected : selected,
+      amount : amount
   }).then((response) => {
     // console.log(response);
     if(response.data.message){
@@ -172,7 +173,7 @@ class App extends Component {
                           {item.email}
                         </td>
                           {(()=>{
-                            if(item.isCalculated === true){
+                            if(item.isCalculated == true){
                               return (
                                 <td className="py-1">
                                   Calculated Already
@@ -214,7 +215,7 @@ class App extends Component {
                           else{
                             return (
                             <td>
-                              <button onClick={(email) => { this.handleButtonClickedSendMail(item.email, item.selected)}} className="btn btn-success me-2">Send</button>
+                              <button onClick={(email) => { this.handleButtonClickedSendMail(item.email)}} className="btn btn-success me-2">Send</button>
                             </td>
                             )
                           }
@@ -239,9 +240,21 @@ class App extends Component {
                             )
                           }
                         })()}
-                        <td>
-                        <button onClick={(email) => {if(window.confirm('Are you sure to Transact Loan amount?')){ this.handleButtonClickedTransact(item.email)};}} className="btn btn-primary me-2">Transact</button>
-                        </td>
+
+                        {(()=>{
+                          if(item.isTransacted){
+                            return(
+                              <td className="py-1">Transacted</td>
+                            )
+                          }
+                          else{
+                            return(
+                              <td>
+                              <button onClick={(email) => {if(window.confirm('Are you sure to Transact Loan amount?')){ this.handleButtonClickedTransact(item.email,item.selected,item.amount1)};}} className="btn btn-primary me-2">Transact</button>
+                              </td>                                    
+                            )
+                          }
+                        })()}
                       </tr>
                   )}
                 

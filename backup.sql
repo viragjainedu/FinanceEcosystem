@@ -1,12 +1,13 @@
 
 Delete from lending_transactions where 1;
+Delete from borrowing_transactions where 1;
 Delete from borrowing_requests where 1;
 Delete from proposedloans where 1;
-Delete from person where email != 'viragjain503@gmail.com';
+Delete from person where email not in ['viragjain503@gmail.com' , 'virag.j@somaiya.edu', 'vikasdharma503@gmail.com', 'viragjain.work@gmail.com' ];
 Delete from system_notifications where 1; 
 Delete from lenders_data where 1; 
 Delete from borrowers_data where 1; 
-Delete from account_stats where 1; 
+Delete from account_stats where email not in ['viragjain503@gmail.com' , 'virag.j@somaiya.edu', 'vikasdharma503@gmail.com', 'viragjain.work@gmail.com' ];
 
 
 Create table lenders_data (
