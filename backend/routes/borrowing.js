@@ -302,29 +302,27 @@ router.post("/isLoanCalculatedForThisEmail", function(req, res, next) {
     )
 });
 
-function getBorrowerNo(arr,email){
-    // console.log(arr)
-    for (let i = 0; i < 10; i++) {
-        if(arr[`b${i}`] ===  email){
-            return i;
-        }
-    }
-    return -1
-}
 
 router.post("/transact", function(req, res, next) {
     const email = req.body.email;
     const selected = req.body.selected;
     const amount_req = req.body.amount;
     connection.query(
-        "select * from lenders_data",[],(err,result) => {
+        "select * from lenders_data ",[],(err,result) => {
             if(err){
                 res.send({err:err})
             }else if(result && result.length > 0 ) {
-                var borrowerNo;
+                var borrowerNo = -1;
                 for (let i = 0; i < result.length; i++) {
-                    borrowerNo = getBorrowerNo(result[i] , email)
-                    console.log(`Borrower : ${borrowerNo}.`)
+                    
+                    //calculating borrowerNo
+                    for (let j = 0; j < 10; j++) {
+                        if(result[i][`b${j}`] ===  email){
+                            borrowerNo  = j;
+                        }
+                    }
+                    
+                    // console.log(`Borrower : ${borrowerNo}.`)
                     if(borrowerNo == -1){
                         continue;
                     }else{
@@ -338,7 +336,7 @@ router.post("/transact", function(req, res, next) {
                                 if(err){console.log(err)}
                                 amount = res[0][`amount${res[0].selected}`]
                                 console.log(amount)
-                                connection.query(`update lenders_data set amount_lent =?, b${result[i].current_borrower-1}_amount = ?,b${result[i].current_borrower-1}_grade = ? where lenders_id= ?`,
+                                connection.query(`update lenders_data set amount_lent =?, b${borrowerNo}_amount = ?,b${borrowerNo}_grade = ? where lenders_id= ?`,
                                     [result[i].amount_lent - result[i].fixed_lending_amount ,amount,grade ,result[i].lenders_id],
                                     (err,output) => {
                                         console.log(`BorrowerNo: ${borrowerNo}`)
@@ -372,6 +370,7 @@ router.post("/transact", function(req, res, next) {
                         if(output){console.log(output)}
                     })
                 })
+                
 
             }else{
                 res.send({err:"No result"})
