@@ -8,6 +8,7 @@ import Balance from './pages/Balance';
 import NotFoundPage from './pages/NotFoundPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
 import P2PLending from './pages/P2PLending';
 import Borrowing from './pages/Borrowing';
 import IntraBankTransactions from './pages/IntraBankTransactions';
@@ -62,6 +63,7 @@ ReactDOM.render(
       </Route>
       <Route path="Login" element={<Login />} />
       <Route path="Register" element={<Register />} />
+      <Route path="ForgotPassword" element={<ForgotPassword />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

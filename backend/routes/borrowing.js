@@ -23,13 +23,14 @@ router.post("/verify", function(req, res, next) {
             console.log(err)
         }
         
-        connection.query("INSERT INTO ProposedLoans (email,amount1,interest1,amount2,interest2,amount3,interest3,amount4,interest4,selected,MailSent,Time) values(?,?,?,?,?,?,?,?,?,?,?,?)",
-            [email,0,0,0,0,0,0,0,0,0,0,moment(new Date()).format('YYYY-MM-DD HH:mm:ss')],
+        connection.query("INSERT INTO ProposedLoans (email,amount1,interest1,amount2,interest2,amount3,interest3,amount4,interest4,selected,MailSent,Time,isTransacted) values(?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            [email,0,0,0,0,0,0,0,0,0,0,moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),0],
             (err,output) => {
                 if(err){
                     res.send(err)
+                }else{
+                    res.send({"success": "ok"});
                 }
-                res.send({"success": "ok"});
             }
         )
         
@@ -48,8 +49,9 @@ router.post("/reject", function(req, res, next) {
         connection.query("Delete from ProposedLoans where email = ?",[email],(err,result) => {
             if(err){
                 res.send({err:err})
+            }else{
+                res.send({"success": "ok"});
             }
-            res.send({"success": "ok"});
         });
     });
 
@@ -72,7 +74,7 @@ router.post("/CompleteProfile", function(req, res, next) {
     // res.send("This statement is generate by p2pLending API backend");
 
     const emp_length = req.body.emp_length;
-    const annual_income = req.body.annual_income*10;
+    const annual_income = req.body.annual_income;
     const purpose = req.body.purpose;
     const collateral = req.body.collateral;
     const age = req.body.age;
@@ -270,8 +272,9 @@ router.get("/ProposedLoansForVerified", function(req, res, next) {
         (err, result)=> {
             if (err) {
                 res.send({err: err});
+            }else{
+                res.send(result)
             }
-            res.send(result)
         }
     )
 });
@@ -299,6 +302,84 @@ router.post("/isLoanCalculatedForThisEmail", function(req, res, next) {
     )
 });
 
+
+router.post("/transact", function(req, res, next) {
+    const email = req.body.email;
+    const selected = req.body.selected;
+    const amount_req = req.body.amount;
+    connection.query(
+        "select * from lenders_data ",[],(err,result) => {
+            if(err){
+                res.send({err:err})
+            }else if(result && result.length > 0 ) {
+                var borrowerNo = -1;
+                for (let i = 0; i < result.length; i++) {
+                    
+                    //calculating borrowerNo
+                    for (let j = 0; j < 10; j++) {
+                        if(result[i][`b${j}`] ===  email){
+                            borrowerNo  = j;
+                        }
+                    }
+                    
+                    // console.log(`Borrower : ${borrowerNo}.`)
+                    if(borrowerNo == -1){
+                        continue;
+                    }else{
+                        var grade;
+                        connection.query("select grade from person where email = ?",[email],(err,res) => {
+                            if(err){console.log(err)}
+                            grade = res[0].grade
+                            console.log(grade)
+                            var amount;
+                            connection.query("select * from proposedloans where email = ?",[email],(err,res) => {
+                                if(err){console.log(err)}
+                                amount = res[0][`amount${res[0].selected}`]
+                                console.log(amount)
+                                connection.query(`update lenders_data set amount_lent =?, b${borrowerNo}_amount = ?,b${borrowerNo}_grade = ? where lenders_id= ?`,
+                                    [result[i].amount_lent - result[i].fixed_lending_amount ,amount,grade ,result[i].lenders_id],
+                                    (err,output) => {
+                                        console.log(`BorrowerNo: ${borrowerNo}`)
+                                        if(err){
+                                            console.log(err)
+                                        }else{
+                                            connection.query('update proposedloans set isTransacted = 1 where email = ?',[email],(err,res)=>{
+                                                if(err){console.log(err)}
+                                                // console.log(res)
+                                                // we've transacted set 1 
+                                            })
+                                        }
+
+                                    }
+                                );
+
+                                })
+                        })
+                    }
+                }
+                //updating borrowing transaction table 
+                connection.query('insert into borrowing_transactions (transaction_time,email_id,amount_borrowed) values(?,?,?)',
+                [moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),email,amount_req],
+                );
+                //updating balance in account stats table 
+                connection.query("select * from account_stats where email = ?",[email],(err,result)=>{
+                    connection.query('update account_stats set balance = ? , total_money_borrowed = ? where email = ?',
+                    [parseInt(result[0].balance) + amount_req , parseInt(result[0].total_money_borrowed) + amount_req,email],
+                    (err,output)=>{
+                        if(err){console.log(err)}
+                        if(output){console.log(output)}
+                    })
+                })
+                
+
+            }else{
+                res.send({err:"No result"})
+            }
+        }
+
+    );
+});
+
 router.post("/ProposedLoansForEmail", function(req, res, next) {
     const email = req.body.email;
     connection.query(
@@ -323,7 +404,6 @@ router.post("/calculate", function(req, res, next) {
     const email = req.body.email
 
     //logic of calculation start
-
     connection.query("select * from person where email=?",[email],(err,result)=>{
         if(err){
             console.log(err);
@@ -346,6 +426,13 @@ router.post("/calculate", function(req, res, next) {
                             }else{
                                 if(result[i].fixed_lending_amount + amount_included <= loan_cap){
                                     amount_included = amount_included + result[i].fixed_lending_amount
+
+                                    connection.query(`UPDATE  lenders_data set amount_remaining = ?, b${result[i].current_borrower} = ?, current_borrower = ? where lenders_id = ?`,
+                                    [result[i].amount_remaining-result[i].fixed_lending_amount ,email,result[i].current_borrower + 1, result[i].lenders_id]),
+                                    (err,out)=>{
+                                        if(err){console.log(err)}
+                                        
+                                    }
                                 }
                             }
                         }
@@ -354,7 +441,8 @@ router.post("/calculate", function(req, res, next) {
                         
                         console.log(`GRADE:${GRADE}`)
                         connection.query("select * from interest_rates where GRADE = ?",[GRADE],(err,result) => {
-                            if(err){console.log(err)}else{console.log(result)}
+                            if(err){console.log(err)}
+                            else{console.log(result)}
                             connection.query(
                                 "UPDATE ProposedLoans set amount1 = ?,interest1 =? ,amount2 = ?,interest2 = ?,amount3 = ?,interest3 = ?,amount4 = ?,interest4 = ? where email = ?",
                                 [FinalLoanAmount,result[0].months_3 ,FinalLoanAmount,result[0].months_6 ,FinalLoanAmount,result[0].months_12 ,FinalLoanAmount,result[0].months_18 ,email],
@@ -362,15 +450,20 @@ router.post("/calculate", function(req, res, next) {
                                     if (err) {
                                         res.send({err: err});
                                     }else{
-                                        connection.query(
-                                            "Select * from ProposedLoans",[],(err,output) => {
-                                                res.send(output)
-                                            }
-                                        )
+                                        connection.query("Update proposedloans set isCalculated = true where email = ?",[email],(err,output)=>{
+                                            connection.query(
+                                                "Select * from ProposedLoans",[],(err,output) => {
+                                                    res.send(output)
+                                                    console.log(output)
+                                                }
+                                            )
+                                        })
                                     }
                                 }
                             )
                         })                    
+                    }else{
+                        res.send({message:'No Lenders available;'})
                     }
                 });
         }

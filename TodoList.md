@@ -26,3 +26,13 @@ Installment vaal part - After Monday
 tables with details of installment 
 active loans and completed loans
 
+if(<50%){we can only offer this  much amount}else{you can accept this.}
+Vertical Chart
+<!-- OTP timer / Resend -->
+<!-- Forgot password -->
+Validation every place.
+
+lending from account balance;
+query for easy accounts creation . 
+
+

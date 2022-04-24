@@ -49,7 +49,7 @@ router.post("/SendProposedLoansMail", function(req, res) {
           res.send({err:err})
         }
         
-        else if(result[0].amount1 == 0 && result[0].amount2 == 0 && result[0].amount3 == 0){
+        else if(result[0].isCalculated == 0){
           res.send({status:"Calculation Remaining"})
         }
         else{

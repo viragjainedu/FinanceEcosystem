@@ -1,9 +1,22 @@
 
-Delete from lending_transactions where 1;
-Delete from borrowing_requests where 1;
-Delete from proposedloans where 1;
-Delete from person where email != 'viragjain503@gmail.com';
-Delete from system_notifications where 1; 
+DROP table lending_transactions ;
+DROP table borrowing_transactions ;
+DROP table borrowing_requests ;
+DROP table proposedloans ;
+DROP table person ;
+DROP table system_notifications ; 
+DROP table lenders_data ; 
+DROP table borrowers_data ; 
+DROP table account_stats ;
+DROP table blogs ;
+DROP table news ;
+DROP table interest_rates ;
+DROP table personal_notifications ;
+
+
+
+INSERT INTO `person` (`email`, `password`, `balance`, `emp_length`, `home_ownership`, `annual_income`, `contact`, `purpose`, `first_name`, `last_name`, `gender`, `DOB`, `pincode`, `state`, `city`, `address1`, `address2`, `GRADE`, `isAdmin`, `collateral`, `username`, `age`, `collateral_value`, `loan_cap`, `amount_req`)
+ VALUES ('virag.j@somaiya.com', 'Dop@12345', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, 'viragjainedu', NULL, NULL, NULL, NULL)
 
 
 Create table lenders_data (

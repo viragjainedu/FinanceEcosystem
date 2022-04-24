@@ -76,16 +76,35 @@ class App extends Component {
       email : email,
   }).then((response) => {
     console.log(response);
-
-    var CalculatedVerifiedOutput = []
-    for (let i = 0; i < response.data.length; i++) {
-      CalculatedVerifiedOutput.push(response.data[i])  
+    if(response.data.message){
+      alert(response.data.message)
+    }else{
+      var CalculatedVerifiedOutput = []
+      for (let i = 0; i < response.data.length; i++) {
+        CalculatedVerifiedOutput.push(response.data[i])  
+      }
+  
+      this.setState({
+        ...this.state,
+        verified_output : CalculatedVerifiedOutput
+      })
     }
+  });
 
-    this.setState({
-      ...this.state,
-      verified_output : CalculatedVerifiedOutput
-    })
+  }
+
+  handleButtonClickedTransact(email,selected,amount) {
+    Axios.post(`http://localhost:9000/borrowing/transact`, {
+      email : email,
+      selected : selected,
+      amount : amount
+  }).then((response) => {
+    // console.log(response);
+    if(response.data.message){
+      alert(response.data.message)
+    }else{
+      
+    }
   });
 
   }
@@ -121,16 +140,16 @@ class App extends Component {
                       Calculate 
                     </th>
                     <th>
-                      3 Months 
+                     Option 1 
                     </th>
                     <th>
-                      6 Months 
+                     Option 2 
                     </th>
                     <th>
-                      12 Months
+                       Option 3
                     </th>
                     <th>
-                      18 Months
+                       Option 4
                     </th>
                     <th>
                       Send Mail 
@@ -153,20 +172,42 @@ class App extends Component {
                         <td className="py-1">
                           {item.email}
                         </td>
-                        <td>
-                        <button onClick={(email) => this.handleButtonClickedCalculate(item.email)} className="btn btn-dark me-2">Calculate</button>
-                        </td>
+                          {(()=>{
+                            if(item.isCalculated == true){
+                              return (
+                                <td className="py-1">
+                                  Calculated Already
+                                </td>    
+                              )
+                            }else{
+                              return(
+                              <td>
+                              <button onClick={(email) => this.handleButtonClickedCalculate(item.email)} className="btn btn-dark me-2">Calculate</button>
+                              </td>
+                              )
+                            }
+                          })()}
                         <td className="py-1">
                           ₹{item.amount1 } at {item.interest1}%
+                          <br></br>
+                          For 3 Months
                         </td>
                         <td className="py-1">
-                          ₹{item.amount2 } at {item.interest2}%                          
+                          ₹{item.amount2 } at {item.interest2}% 
+                          <br></br>
+                          FOr 6 Months
+                         
                         </td>
                         <td className="py-1">
-                          ₹{item.amount3 } at {item.interest3}%                          
+                          ₹{item.amount3 } at {item.interest3}%
+                          <br></br>  
+                          For 12 Months
+                        
                         </td>
                         <td className="py-1">
-                          ₹{item.amount4 } at {item.interest4}%                          
+                          ₹{item.amount4 } at {item.interest4}%
+                          <br></br>
+                          For 18 Months                          
                         </td>
                         
                         {(() => {
@@ -188,7 +229,7 @@ class App extends Component {
                           if(item.MailSent && item.selected !== 0 ){
                             return (
                               <td className="py-1" style={{color: "green"}}>
-                                Selected {item.selected*3} Months
+                                Selected  Option {item.selected}
                               </td>
                             )
                           }else{
@@ -199,9 +240,21 @@ class App extends Component {
                             )
                           }
                         })()}
-                        <td>
-                        <button onClick={(email) => {if(window.confirm('Are you sure to Transact Loan amount?')){ this.handleButtonClickedTransact(item.email)};}} className="btn btn-primary me-2">Transact</button>
-                        </td>
+
+                        {(()=>{
+                          if(item.isTransacted){
+                            return(
+                              <td className="py-1">Transacted</td>
+                            )
+                          }
+                          else{
+                            return(
+                              <td>
+                              <button onClick={(email) => {if(window.confirm('Are you sure to Transact Loan amount?')){ this.handleButtonClickedTransact(item.email,item.selected,item.amount1)};}} className="btn btn-primary me-2">Transact</button>
+                              </td>                                    
+                            )
+                          }
+                        })()}
                       </tr>
                   )}
                 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
+import Clock from '../components/Clock';
 
 function Register(){
 
@@ -22,8 +23,9 @@ function Register(){
   const [passwordReg, setPasswordReg] = useState ("");
   const [usernameReg, setUsernameReg] = useState ("");
   const [registerStatus, setRegisterStatus] = useState("");
+  const [otpButtonStatus, setOtpButtonStatus] = useState("Send OTP");
   const [otpReg, setOtpReg] = useState("");
-  const [otpRecieved, setOtpRecieved] = useState(154);
+  const [otpRecieved, setOtpRecieved] = useState(0);
 
   const sendOTP = (e) => {
     
@@ -37,10 +39,9 @@ function Register(){
           Axios.post('http://localhost:9000/sendOTP',{
             email: emailReg
           }).then((response) => {
-  
-            // console.log(response);
+            
             setOtpRecieved(response.data);
-  
+            setOtpButtonStatus("Resend")
             });
           }else{
             setRegisterStatus("Please Enter Username")
@@ -76,15 +77,15 @@ function Register(){
             console.log(response.data.message)
           }else if(response.data.success){
             setRegisterStatus(response.data.success)
+            localStorage.setItem("emailReg", emailReg);
+            localStorage.setItem("passwordReg", passwordReg);
+            localStorage.setItem("usernameReg", usernameReg);
+            window.location.href  = `/Dashboard` 
+  
           }else{
   
           }
-        }).then(() => {
-          localStorage.setItem("emailReg", emailReg);
-          localStorage.setItem("passwordReg", passwordReg);
-          localStorage.setItem("usernameReg", usernameReg);
-          window.location.href  = `/Dashboard` 
-        });
+        })
     }
     else{
       setRegisterStatus("Please enter correct otp")
@@ -104,6 +105,7 @@ function Register(){
               <img src="../../images/finance.png" alt="logo" />
             </div>
             <h4>Register</h4>
+            
             <h6 className='text-success'>{registerStatus}</h6>
             <form className="pt-3">
               <div className="form-group">
@@ -142,9 +144,17 @@ function Register(){
               <button className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn "
                 onClick={sendOTP}
               >
-                Send OTP
+                {otpButtonStatus}
               </button>
-              
+              {(() => {
+              if(otpRecieved != 0){
+                return (
+                  <Clock/>
+                )
+              }else{
+                return
+              }
+            })()}
               <div className="form-group mt-2">
                 <input
                   type="number"
