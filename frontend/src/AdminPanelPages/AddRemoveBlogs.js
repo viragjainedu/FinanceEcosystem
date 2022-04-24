@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import TopNavbarAdmin from '../AdminPanelComponents/TopNavbarAdmin'
 import LeftNavbarAdmin from '../AdminPanelComponents/LeftNavbarAdmin'
@@ -37,7 +38,7 @@ class AddRemoveBlogs extends Component {
                 // email : localStorage.getItem('emailReg'),
             }).then((response) => {
                 console.log(response);
-                // console.log("Hiiii")
+                console.log("Hiiii")
             if(response.data.success){
                 console.log("Blog Added");
                 // window.location.href = "/p2pLending";
@@ -67,7 +68,7 @@ class AddRemoveBlogs extends Component {
                     <div className="card-body">
                       <h4 className="card-title">Add Blogs</h4>
                       <p className="card-description">
-                        <h6 className='text-danger'>Check</h6>
+                        {/* <h6 className='text-danger'></h6> */}
                       </p>
                         
                         <div className="form-group">

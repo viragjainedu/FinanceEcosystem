@@ -29,9 +29,10 @@ var account_stats = require("./routes/account_stats");
 
 var SystemNotifications = require("./routesAdmin/SystemNotifications");
 var Mails = require("./routesAdmin/Mails");
+var AddRemoveBlogs = require('./routesAdmin/AddRemoveBlogs');
 
 var app = express();
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -66,6 +67,8 @@ app.use("/sendOTP", sendOTP);
 app.use("/account_stats", account_stats);
 
 app.use("/SystemNotifications", SystemNotifications);
+app.use("/AddRemoveBlogs", AddRemoveBlogs);
+
 app.use("/Mails", Mails);
 
 // catch 404 and forward to error handler
