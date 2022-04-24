@@ -138,7 +138,7 @@ class App extends Component {
             <table className="table table-hover">
               <thead>
                 <tr>
-                  <th>Credit/Debit</th>
+                  <th>Lent/Borrowed</th>
                   <th>Amount</th>
                   <th>Time</th>
                 </tr>
@@ -147,9 +147,9 @@ class App extends Component {
                 {
                 this.state.prev_transactions.map((item,i) => 
                   <tr>
-                    <td>Lent</td>
+                    <td>{(()=>{if(item.amount_lent){return 'Lent'}else{return 'Borrowed'}})()}</td>
                     {console.log(item)}
-                    <td>₹ {item.amount_lent}</td>
+                    <td>₹ {item.amount_lent}{item.amount_borrowed}</td>
                     <td>{item.transaction_time}</td>
                   </tr> 
                 )
