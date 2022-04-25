@@ -23,7 +23,11 @@ class App extends Component {
     const search = window.location.search;
     const query = new URLSearchParams(search);
     const amount = query.get('amount');
-      this.setState({ amount: amount })
+    const lock_in_period = query.get('lock_in_period');
+      this.setState({
+        amount: amount,
+        lock_in_period: lock_in_period
+      })
 	}
 	
 	componentWillMount() {
@@ -32,11 +36,13 @@ class App extends Component {
 
   handleButtonClicked() {
     var amount = this.state.amount;
+    var lock_in_period = this.state.lock_in_period;
     
     //Axios ka post request daalna hai 
       Axios.post("http://localhost:9000/p2pLending/amount_lending", {
         email: localStorage.getItem('emailReg'),
         amount: amount,
+        lock_in_period: lock_in_period,
     }).then((response) => {
       console.log(response);
       if(response.data.Lending_status){

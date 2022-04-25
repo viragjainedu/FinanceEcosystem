@@ -33,6 +33,19 @@ Vertical Chart
 Validation every place.
 
 lending from account balance;
-query for easy accounts creation . 
+<!-- query for easy accounts creation .  -->
 
+But borrower has different dates of repayment.
+Collateral that big but lending amount that small  - Stocks, Loans, Gold ..
 
+FICO Score Form - 
+
+<!-- Before 29 -->
+Installments - make Payment system
+Withdraw system
+Reject the loan system - Roll back in lenders data
+FICO Score.
+When can our lender withdraw his money !!  Ans - Lock in Period , GRADE
+From Balance and From Bank account.
+
+Validation.

@@ -18,6 +18,8 @@ function MainHeader (props){
                     <div className="btn-wrapper">
                     <Link to='/P2PLending'><a className="btn btn-otline-dark align-items-center"><i className="icon-people" /> P2P Lending</a></Link>
                     <Link to='/Borrowing'><a className="btn btn-otline-dark align-items-center"><i className="icon-people" /> Borrowing</a></Link>
+                    <Link to='/Installments'><a className="btn btn-otline-dark align-items-center"><i className="icon-people" /> Installments</a></Link>
+                    <Link to='/Interests'><a className="btn btn-otline-dark align-items-center"><i className="icon-people" /> Interests</a></Link>
                     </div>
                 </div>
                 </div>

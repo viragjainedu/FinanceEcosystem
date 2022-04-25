@@ -53,7 +53,7 @@ router.post("/balance", function(req, res, next) {
                 console.log(err);
             }else if(result.length > 0){
                 console.log(result)
-                res.send({total : result[0].total})
+                res.send({total : result[0].balance})
             }else
                 res.send({total:0})
         }

@@ -12,13 +12,12 @@ var testAPIRouter = require("./routes/testAPI");
 var database = require("./routes/database");
 var login = require("./routes/login");
 var advanceInsights = require("./routes/advanceInsights");
-var balance = require("./routes/balance");
 var blogs = require("./routes/blogs");
 var borrowing = require("./routes/borrowing");
-var budgetPlanner = require("./routes/budgetPlanner");
-var decentralizedLoan = require("./routes/decentralizedLoan");
-var documentVerficiation = require("./routes/documentVerficiation");
-var intraBankTransaction = require("./routes/intraBankTransaction");
+// var budgetPlanner = require("./routes/budgetPlanner");
+// var decentralizedLoan = require("./routes/decentralizedLoan");
+// var documentVerficiation = require("./routes/documentVerficiation");
+// var intraBankTransaction = require("./routes/intraBankTransaction");
 var investmentAdvisor = require("./routes/investmentAdvisor");
 var news = require("./routes/news");
 var p2pLending = require("./routes/p2pLending");
@@ -27,12 +26,17 @@ var ForgotPassword = require("./routes/ForgotPassword");
 var searchResult = require("./routes/searchResult");
 var sendOTP = require("./routes/sendOTP");
 var account_stats = require("./routes/account_stats");
+var interests = require("./routes/interests");
+var installments = require("./routes/installments");
 
 var SystemNotifications = require("./routesAdmin/SystemNotifications");
 var Mails = require("./routesAdmin/Mails");
 
 var app = express();
 const jwt = require('jsonwebtoken')
+
+// for node cron tasks
+// require('./tasks/tasks')();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -50,13 +54,12 @@ app.use('/users', usersRouter);
 app.use("/testAPI", testAPIRouter);
 app.use("/database", database);
 app.use("/login", login);
-app.use("/balance", balance);
 app.use("/blogs", blogs);
 app.use("/borrowing", borrowing);
-app.use("/budgetPlanner", budgetPlanner);
-app.use("/decentralizedLoan", decentralizedLoan);
-app.use("/documentVerficiation", documentVerficiation);
-app.use("/intraBankTransaction", intraBankTransaction);
+// app.use("/budgetPlanner", budgetPlanner);
+// app.use("/decentralizedLoan", decentralizedLoan);
+// app.use("/documentVerficiation", documentVerficiation);
+// app.use("/intraBankTransaction", intraBankTransaction);
 app.use("/investmentAdvisor", investmentAdvisor);
 app.use("/advanceInsights", advanceInsights);
 app.use("/news", news);
@@ -66,6 +69,8 @@ app.use("/ForgotPassword", ForgotPassword);
 app.use("/searchResult", searchResult);
 app.use("/sendOTP", sendOTP);
 app.use("/account_stats", account_stats);
+app.use("/installments", installments);
+app.use("/interests", interests);
 
 app.use("/SystemNotifications", SystemNotifications);
 app.use("/Mails", Mails);

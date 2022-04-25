@@ -12,7 +12,13 @@ class App extends Component {
 
 	constructor(props) {
 		super(props);
-    this.state = {  lend_amount: " ",request_submitted: false, ProfileCompleted: false, lending_transactions : []};
+    this.state = {  
+      lend_amount: 0,
+      lock_in_period: 0,
+      request_submitted: false, 
+      ProfileCompleted: false, 
+      lending_transactions : [],
+      message : ""};
 	}
 
 	 //To check whether user has completed form or not
@@ -56,20 +62,29 @@ class App extends Component {
   handleInputChanged(event) {
     this.setState({
       ...this.state,
-      lend_amount: event.target.value,
+      [event.target.name] : event.target.value,
       request_submitted: false
     });
   }
 
   handleButtonClicked() {
     var lend_amount = this.state.lend_amount;
-    this.setState({
-      ...this.state,
-      request_submitted: true,
-      lend_amount: this.state.lend_amount,
-    });
-    // console.log(this.state)
-    window.location.href  = `/Payment?amount=${lend_amount}`; 
+    var lock_in_period = this.state.lock_in_period;
+    if(lock_in_period === 0 && lend_amount === 0 ){
+      this.setState({
+        ...this.state,
+        message : "Please Fill all fields"
+      })
+    }else{
+      this.setState({
+        ...this.state,
+        request_submitted: true,
+        lend_amount: this.state.lend_amount,
+        lock_in_period: this.state.lock_in_period,
+      });
+      // console.log(this.state)
+      window.location.href  = `/Payment?amount=${lend_amount}&lock_in_period=${lock_in_period}`;   
+    }
 
 
     // //Axios ka post request daalna hai 
@@ -106,18 +121,31 @@ class App extends Component {
               <div className="card">
                 <div className="card-body">
                   <h4 className="card-title">Lending</h4>
-                  <p className="card-description">
-                      Complete the request
+                  <p className="card-description text-danger">
+                      {this.state.message}
                   </p>
                   <div className="form-group row">
                     <div className="col">
                       <label>How much you offer to lend</label>
                       <div id="the-basics">
-                        <input className="typeahead" value={this.state.lend_amount} onChange={this.handleInputChanged.bind(this)} type="number" min="10000" max="1000000" step={10000} placeholder="1000" />
+                        <input className="typeahead" name='lend_amount' value={this.state.lend_amount} onChange={this.handleInputChanged.bind(this)} type="number" min="10000" max="1000000" step={10000} placeholder="1000" />
                       </div>
                     </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <div className="col">
+                      <label>No of Months to Lent</label>
+                          <select name='lock_in_period' onChange={this.handleInputChanged.bind(this)}  className="form-control">
+                              <option value="">Select</option>
+                              <option value="3">3 Months</option>
+                              <option value="6">6 Months</option>
+                              <option value="12">12 Months</option>
+                              <option value="18">18 Months</option>
+                          </select>
+                        </div>
+                      </div>
                     
-                  </div>
                   <button onClick={this.handleButtonClicked.bind(this)} className="btn btn-primary me-2">Submit</button>
                 </div>
               </div>
@@ -140,6 +168,9 @@ class App extends Component {
                     <th>
                       Time
                     </th>
+                    <th>
+                      Period
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -150,6 +181,9 @@ class App extends Component {
                       </td>
                       <td className="py-1">
                         {item.transaction_time}
+                      </td>
+                      <td className="py-1">
+                        {item.lock_in_period} Months
                       </td>
                     </tr>  
                   )} 

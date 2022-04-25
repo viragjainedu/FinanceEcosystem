@@ -213,13 +213,13 @@
       });
       document.getElementById('performance-line-legend-dark').innerHTML = salesTopDark.generateLegend();
     }
-    if ($("#datepicker-popup").length) {
-      $('#datepicker-popup').datepicker({
-        enableOnReadonly: true,
-        todayHighlight: true,
-      });
-      $("#datepicker-popup").datepicker("setDate", "0");
-    }
+    // if ($("#datepicker-popup").length) {
+    //   $('#datepicker-popup').datepicker({
+    //     enableOnReadonly: true,
+    //     todayHighlight: true,
+    //   });
+    //   $("#datepicker-popup").datepicker("setDate", "0");
+    // }
     if ($("#status-summary").length) {
       var statusSummaryChartCanvas = document.getElementById("status-summary").getContext('2d');;
       var statusData = {

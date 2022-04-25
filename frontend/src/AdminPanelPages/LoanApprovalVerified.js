@@ -94,10 +94,11 @@ class App extends Component {
   }
 
   handleButtonClickedTransact(email,selected,amount) {
+
     Axios.post(`http://localhost:9000/borrowing/transact`, {
       email : email,
       selected : selected,
-      amount : amount
+      amount : amount,
   }).then((response) => {
     // console.log(response);
     if(response.data.message){
@@ -140,16 +141,13 @@ class App extends Component {
                       Calculate 
                     </th>
                     <th>
-                     Option 1 
+                     No of Months 
                     </th>
                     <th>
-                     Option 2 
+                     Amount 
                     </th>
                     <th>
-                       Option 3
-                    </th>
-                    <th>
-                       Option 4
+                     Interest 
                     </th>
                     <th>
                       Send Mail 
@@ -187,29 +185,18 @@ class App extends Component {
                               )
                             }
                           })()}
-                        <td className="py-1">
-                          ₹{item.amount1 } at {item.interest1}%
-                          <br></br>
-                          For 3 Months
-                        </td>
-                        <td className="py-1">
-                          ₹{item.amount2 } at {item.interest2}% 
-                          <br></br>
-                          FOr 6 Months
-                         
-                        </td>
-                        <td className="py-1">
-                          ₹{item.amount3 } at {item.interest3}%
-                          <br></br>  
-                          For 12 Months
                         
+                        <td className="py-1">
+                          {item.month_req } 
                         </td>
                         <td className="py-1">
-                          ₹{item.amount4 } at {item.interest4}%
-                          <br></br>
-                          For 18 Months                          
+                          ₹{item.amount1 } 
                         </td>
-                        
+
+                        <td className="py-1">
+                          {item.interest1}%
+                        </td>
+
                         {(() => {
                           if(item.MailSent){return <td className="py-1">Mail Sent</td>}
                           else{
@@ -226,7 +213,7 @@ class App extends Component {
                         <button onClick={(email) => {if(window.confirm('Are you sure to Reject this mail?')){ this.handleButtonClickedReject(item.email)};}} className="btn btn-danger me-2">Reject</button>
                         </td>
                         {(() => {
-                          if(item.MailSent && item.selected !== 0 ){
+                          if(item.selected !== 0 ){
                             return (
                               <td className="py-1" style={{color: "green"}}>
                                 Selected  Option {item.selected}

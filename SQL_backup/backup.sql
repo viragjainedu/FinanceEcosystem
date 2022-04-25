@@ -12,12 +12,52 @@ DROP table blogs ;
 DROP table news ;
 DROP table interest_rates ;
 DROP table personal_notifications ;
+DROP table installments;
 
 
+DELETE FROM lending_transactions ;
+DELETE FROM borrowing_transactions ;
+DELETE FROM borrowing_requests ;
+DELETE FROM proposedloans ;
+DELETE FROM person where email not in ('viragjain503@gmail.com') ;
+DELETE FROM system_notifications ; 
+DELETE FROM lenders_data ; 
+DELETE FROM borrowers_data ; 
+DELETE FROM account_stats ;
+DELETE FROM blogs ;
+DELETE FROM news ;
+-- DELETE FROM interest_rates ;
+DELETE FROM personal_notifications ;
+DELETE FROM installments;
 
-INSERT INTO `person` (`email`, `password`, `balance`, `emp_length`, `home_ownership`, `annual_income`, `contact`, `purpose`, `first_name`, `last_name`, `gender`, `DOB`, `pincode`, `state`, `city`, `address1`, `address2`, `GRADE`, `isAdmin`, `collateral`, `username`, `age`, `collateral_value`, `loan_cap`, `amount_req`)
- VALUES ('virag.j@somaiya.com', 'Dop@12345', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, 'viragjainedu', NULL, NULL, NULL, NULL)
 
+source SQL_Backup/Only_5_users (2).sql
+
+Create table installments (
+    installment_id int NOT NULL AUTO_INCREMENT,
+    email varchar(255),
+    amount_borrowed int,
+    date_of_loan_transaction date NOT NULL DEFAULT CURRENT_DATE,
+    no_of_months int,
+    interest_rate float,
+    installment_amount int,
+    installment_no int,
+    date_of_payment date,
+    time_of_payment timestamp NULL ON UPDATE current_timestamp() ,
+    status varchar(20),
+    PRIMARY KEY(installment_id)
+);
+
+Create table interests (
+    interest_id int NOT NULL AUTO_INCREMENT,
+    email varchar(255),
+    amount_lent int,
+    date_of_lending date,
+    -- interest_rate float,
+    date_of_payment date,
+    -- status varchar(20),
+    PRIMARY KEY(interest_id)
+);
 
 Create table lenders_data (
     lenders_id int NOT NULL AUTO_INCREMENT,

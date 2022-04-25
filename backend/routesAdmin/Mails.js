@@ -63,13 +63,7 @@ router.post("/SendProposedLoansMail", function(req, res) {
           });
           
           var htmltext = `
-                          3 Months - ₹${result[0].amount1} at ${result[0].interest1}%
-                          <br>
-                          6 Months - ₹${result[0].amount2} at ${result[0].interest2}%
-                          <br>
-                          12 Months - ₹${result[0].amount3} at ${result[0].interest3}%
-                          <br>
-                          18 Months - ₹${result[0].amount4} at ${result[0].interest4}%
+                         ${result[0].month_req} Months - ₹${result[0].amount1} at ${result[0].interest1}%
                           <br>
                           For more Info - visit http://localhost:3000/borrowing
                           `

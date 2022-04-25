@@ -20,6 +20,7 @@ class App extends Component {
             collateral : "",
             collateral_value : "",
             amount_req : "",
+            month_req : "",
             age : "",
             purpose : "",
             message : "",
@@ -54,6 +55,7 @@ class App extends Component {
                             purpose : response.data.purpose,
                             collateral : response.data.collateral,
                             amount_req : response.data.amount_req,
+                            month_req : response.data.month_req,
                             collateral_value : response.data.collateral_value,
                             age : response.data.age
                         });            
@@ -109,7 +111,7 @@ class App extends Component {
         // var first_name = this.state.first_name;
         console.log(this.state)
         
-        if(this.state.emp_length !== "" &&  this.state.purpose !== "" &&  this.state.age !== "" &&  this.state.amount_req !== ""&&  this.state.collateral_value !== "" &&  this.state.collateral !== "" && this.state.contact !== "" && this.state.annual_income !== ""){
+        if(this.state.emp_length !== "" &&  this.state.purpose !== "" &&  this.state.age !== "" &&  this.state.amount_req !== ""&&  this.state.month_req !== "" &&  this.state.collateral_value !== "" &&  this.state.collateral !== "" && this.state.contact !== "" && this.state.annual_income !== ""){
             //Axios ka post request daalna hai 
             Axios.post("http://localhost:9000/borrowing/CompleteProfile", {
                 emp_length : this.state.emp_length,
@@ -118,6 +120,7 @@ class App extends Component {
                 collateral : this.state.collateral,
                 collateral_value : this.state.collateral_value,
                 amount_req : this.state.amount_req,
+                month_req : this.state.month_req,
                 age : this.state.age,
                 annual_income : this.state.annual_income,
                 email : localStorage.getItem('emailReg'),
@@ -232,6 +235,9 @@ class App extends Component {
                                             Amount Required
                                             </th>
                                             <th>
+                                            No of Months
+                                            </th>
+                                            <th>
                                             Age
                                             </th>
                                             <th>
@@ -258,6 +264,9 @@ class App extends Component {
                                             </td>
                                             <td className="py-1">
                                             ₹   {this.state.amount_req} 
+                                            </td>
+                                            <td className="py-1">
+                                               {this.state.month_req} 
                                             </td>
                                             <td className="py-1">
                                                 {this.state.age}
@@ -374,7 +383,7 @@ class App extends Component {
                                         <div className="form-group row">
                                         <label className="col-sm-3 col-form-label">Age</label>
                                         <div className="col-sm-9">
-                                            <input type="number" min={18} max={100} value={this.state.age} onChange={this.handleInputChanged.bind(this)} name="age" className="form-control" placeholder='Type 30 for 30 years.' />
+                                            <input type="number" min={18} max={100} value={this.state.age} onChange={this.handleInputChanged.bind(this)} name="age" className="form-control" placeholder='Should be above 18' />
                                         </div>
                                         </div>
                                     </div>
@@ -394,6 +403,21 @@ class App extends Component {
                                         </div>
                                         </div>
                                     </div>
+                                    <div className="col-md-6">
+                                        <div className="form-group row">
+                                        <label className="col-sm-3 col-form-label">No Of Months</label>
+                                        <div className="col-sm-9">
+                                            <select onChange={this.handleInputChanged.bind(this)} name="month_req" className="form-control">
+                                                <option value="">No of Months</option>
+                                                <option value="3">3 Months</option>
+                                                <option value="6">6 Months</option>
+                                                <option value="12">12 Months</option>
+                                                <option value="18">18 Months</option>
+                                            </select>
+                                        </div>
+                                        </div>
+                                    </div>
+
                                     </div>
                                     <button onClick={this.handleButtonClicked.bind(this)} className="btn btn-primary me-2">Submit</button>
 

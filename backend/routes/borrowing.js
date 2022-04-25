@@ -22,20 +22,22 @@ router.post("/verify", function(req, res, next) {
         if(err){
             console.log(err)
         }
-        
-        connection.query("INSERT INTO ProposedLoans (email,amount1,interest1,amount2,interest2,amount3,interest3,amount4,interest4,selected,MailSent,Time,isTransacted) values(?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            [email,0,0,0,0,0,0,0,0,0,0,moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),0],
-            (err,output) => {
-                if(err){
-                    res.send(err)
-                }else{
-                    res.send({"success": "ok"});
-                }
+        connection.query("select month_req from person where email = ?",[email],(err,res) => {
+            if(err){console.log(err)}
+            else{
+                connection.query("INSERT INTO ProposedLoans (month_req,email,amount1,interest1,selected,MailSent,Time,isTransacted) values(?,?,?,?,?,?,?,?)",
+                    [res[0].month_req,email,0,0,0,0,moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),0],
+                    (err,output) => {
+                        if(err){
+                            res.send(err)
+                        }else if (output.length > 0 ){
+                            res.send({"success": "ok"});
+                        }
+                    }
+                )
             }
-        )
-        
+        })        
     });
-
 });
 
 router.post("/reject", function(req, res, next) {
@@ -80,10 +82,11 @@ router.post("/CompleteProfile", function(req, res, next) {
     const age = req.body.age;
     const collateral_value = req.body.collateral_value;
     const amount_req = req.body.amount_req;
+    const month_req = req.body.month_req;
     const contact = req.body.contact;
     const email = req.body.email;
-    console.log(req.body);
-    console.log("Hiii")
+    // console.log(req.body);
+    // console.log("Hiii")
 
 
     //Credit Score calculation for grade STARTS
@@ -112,7 +115,7 @@ router.post("/CompleteProfile", function(req, res, next) {
         default:
             PS = 5;
     }
-    console.log("Hiii3")
+    // console.log("Hiii3")
 
     const CV = collateral_value;
     const Credit_Score = 10*IS + 5*ES + 5*AS + 3*Math.log10(CV) + PS
@@ -152,8 +155,8 @@ router.post("/CompleteProfile", function(req, res, next) {
     console.log(GRADE);
 
     connection.query(
-        "UPDATE person SET emp_length = ?, annual_income = ?, purpose = ?,collateral = ?,age=?,collateral_value=?,amount_req = ?, contact = ?,GRADE = ?,Loan_Cap = ? where email = ? ;",
-        [emp_length, annual_income,purpose,collateral,age,collateral_value,amount_req,contact,GRADE,Loan_Cap,email],
+        "UPDATE person SET emp_length = ?, annual_income = ?, purpose = ?,collateral = ?,age=?,collateral_value=?,amount_req = ?,month_req = ?, contact = ?,GRADE = ?,Loan_Cap = ? where email = ? ;",
+        [emp_length, annual_income,purpose,collateral,age,collateral_value,amount_req,month_req,contact,GRADE,Loan_Cap,email],
         (err, result)=> {
             if(err){
                 console.log(err);
@@ -289,7 +292,7 @@ router.post("/isLoanCalculatedForThisEmail", function(req, res, next) {
             }
             else{
                 if(result.length > 0 ){
-                    if(result[0].amount1 == 0 && result[0].amount2 == 0 && result[0].amount3 == 0 && result[0].MailSent == false){
+                    if(result[0].amount1 == 0 && result[0].interest1 == 0 && result[0].MailSent == false){
                         res.send({"Calculated":false})
                     }else{
                         res.send({"Calculated":true})
@@ -307,77 +310,101 @@ router.post("/transact", function(req, res, next) {
     const email = req.body.email;
     const selected = req.body.selected;
     const amount_req = req.body.amount;
-    connection.query(
-        "select * from lenders_data ",[],(err,result) => {
-            if(err){
-                res.send({err:err})
-            }else if(result && result.length > 0 ) {
-                var borrowerNo = -1;
-                for (let i = 0; i < result.length; i++) {
-                    
-                    //calculating borrowerNo
-                    for (let j = 0; j < 10; j++) {
-                        if(result[i][`b${j}`] ===  email){
-                            borrowerNo  = j;
+    // const month_req = req.body.month_req;
+    if(selected === 0){
+        res.send({message:"Please let user accept loan"})
+    }else{
+        connection.query(
+            "select * from lenders_data ",[],(err,result) => {
+                if(err){
+                    res.send({err:err})
+                }else if(result && result.length > 0 ) {
+                    var borrowerNo = -1;
+                    for (let i = 0; i < result.length; i++) {
+                        
+                        //calculating borrowerNo
+                        for (let j = 0; j < 10; j++) {
+                            if(result[i][`b${j}`] ===  email){
+                                borrowerNo  = j;
+                            }
+                        }
+                        
+                        // console.log(`Borrower : ${borrowerNo}.`)
+                        if(borrowerNo == -1){
+                            continue;
+                        }else{
+                            var grade;
+                            connection.query("select grade from person where email = ?",[email],(err,res) => {
+                                if(err){console.log(err)}
+                                grade = res[0].grade
+                                console.log(grade)
+                                var amount;
+                                connection.query("select * from proposedloans where email = ?",[email],(err,res) => {
+                                    if(err){console.log(err)}
+                                    amount = res[0][`amount${res[0].selected}`]
+                                    console.log(amount)
+                                    connection.query(`update lenders_data set amount_lent =?, b${borrowerNo}_amount = ?,b${borrowerNo}_grade = ? where lenders_id= ?`,
+                                        [result[i].amount_lent - result[i].fixed_lending_amount ,amount,grade ,result[i].lenders_id],
+                                        (err,output) => {
+                                            console.log(`BorrowerNo: ${borrowerNo}`)
+                                            if(err){
+                                                console.log(err)
+                                            }else{
+                                                connection.query('update proposedloans set isTransacted = 1 where email = ?',[email],(err,res)=>{
+                                                    if(err){console.log(err)}
+                                                    // console.log(res)
+                                                    // we've transacted set 1 
+                                                })
+                                            }
+    
+                                        }
+                                    );
+    
+                                    })
+                            })
                         }
                     }
-                    
-                    // console.log(`Borrower : ${borrowerNo}.`)
-                    if(borrowerNo == -1){
-                        continue;
-                    }else{
-                        var grade;
-                        connection.query("select grade from person where email = ?",[email],(err,res) => {
+                    //updating borrowing transaction table 
+                    connection.query('insert into borrowing_transactions (transaction_time,email_id,amount_borrowed) values(?,?,?)',
+                    [moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),email,amount_req],
+                    );
+                    //updating balance in account stats table 
+                    connection.query("select * from account_stats where email = ?",[email],(err,result)=>{
+                        connection.query('update account_stats set balance = ? , total_money_borrowed = ? where email = ?',
+                        [parseInt(result[0].balance) + amount_req , parseInt(result[0].total_money_borrowed) + amount_req,email],
+                        (err,output)=>{
                             if(err){console.log(err)}
-                            grade = res[0].grade
-                            console.log(grade)
-                            var amount;
-                            connection.query("select * from proposedloans where email = ?",[email],(err,res) => {
-                                if(err){console.log(err)}
-                                amount = res[0][`amount${res[0].selected}`]
-                                console.log(amount)
-                                connection.query(`update lenders_data set amount_lent =?, b${borrowerNo}_amount = ?,b${borrowerNo}_grade = ? where lenders_id= ?`,
-                                    [result[i].amount_lent - result[i].fixed_lending_amount ,amount,grade ,result[i].lenders_id],
-                                    (err,output) => {
-                                        console.log(`BorrowerNo: ${borrowerNo}`)
-                                        if(err){
-                                            console.log(err)
-                                        }else{
-                                            connection.query('update proposedloans set isTransacted = 1 where email = ?',[email],(err,res)=>{
-                                                if(err){console.log(err)}
-                                                // console.log(res)
-                                                // we've transacted set 1 
-                                            })
-                                        }
-
-                                    }
-                                );
-
-                                })
+                            if(output){console.log(output)}
                         })
-                    }
-                }
-                //updating borrowing transaction table 
-                connection.query('insert into borrowing_transactions (transaction_time,email_id,amount_borrowed) values(?,?,?)',
-                [moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),email,amount_req],
-                );
-                //updating balance in account stats table 
-                connection.query("select * from account_stats where email = ?",[email],(err,result)=>{
-                    connection.query('update account_stats set balance = ? , total_money_borrowed = ? where email = ?',
-                    [parseInt(result[0].balance) + amount_req , parseInt(result[0].total_money_borrowed) + amount_req,email],
-                    (err,output)=>{
-                        if(err){console.log(err)}
-                        if(output){console.log(output)}
                     })
-                })
-                
-
-            }else{
-                res.send({err:"No result"})
+    
+                    //calculating no of months  to insert in installments table
+                    // var no_of_months;
+                    // if(selected ==1){no_of_months = 3}else if(selected == 2){no_of_months=6}else if(selected == 3){no_of_months=12}else if(selected == 4){no_of_months=18}
+                    
+                    //calculating interest_rate to insert in installments table
+                    connection.query(`select * from proposedLoans where email = ? ` , [email], (err,result) => {
+                        if(err){console.log(err)}
+                        for (let i = 1; i <= result[0].month_req; i++) {
+                            //updating installments table 
+                            var interest_rate = result[0][`interest1`]
+                            var installment_amount = Math.ceil((amount_req * interest_rate)/100)
+                            connection.query("insert into installments (email,amount_borrowed,no_of_months,interest_rate,installment_amount,installment_no,date_of_payment,time_of_payment,status) values(?,?,?,?,?,?,?,?,?)",
+                            [email,amount_req,result[0].month_req,interest_rate,installment_amount,i,null,null,'Pending'],(err,output)=>{
+                                if(err){console.log(err)}
+                            })                    
+                        }
+                    })
+                    
+    
+                }else{
+                    res.send({err:"No result"})
+                }
             }
-        }
-
-    );
+    
+        );
+    }
+    
 });
 
 router.post("/ProposedLoansForEmail", function(req, res, next) {
@@ -411,10 +438,12 @@ router.post("/calculate", function(req, res, next) {
             console.log(result);
             var loan_cap = result[0].loan_cap
             var GRADE = result[0].GRADE
+            var month_req = result[0].month_req
             console.log(`Loan Cap:${loan_cap}`)
             console.log(`GRADE:${GRADE}`)
+            console.log(`month_req:${month_req}`)
 
-                connection.query("Select * from lenders_data ORDER BY fixed_lending_amount DESC",[],(err,result) => {
+                connection.query(`Select * from lenders_data where lock_in_period = ${result[0].month_req} ORDER BY fixed_lending_amount DESC`,[],(err,result) => {
                     if(err){
                         console.log(err)
                     }
@@ -439,29 +468,35 @@ router.post("/calculate", function(req, res, next) {
                         var FinalLoanAmount = amount_included;
                         console.log(`FinalLoanAmount:${FinalLoanAmount}`)
                         
-                        console.log(`GRADE:${GRADE}`)
-                        connection.query("select * from interest_rates where GRADE = ?",[GRADE],(err,result) => {
-                            if(err){console.log(err)}
-                            else{console.log(result)}
-                            connection.query(
-                                "UPDATE ProposedLoans set amount1 = ?,interest1 =? ,amount2 = ?,interest2 = ?,amount3 = ?,interest3 = ?,amount4 = ?,interest4 = ? where email = ?",
-                                [FinalLoanAmount,result[0].months_3 ,FinalLoanAmount,result[0].months_6 ,FinalLoanAmount,result[0].months_12 ,FinalLoanAmount,result[0].months_18 ,email],
-                                (err, result)=> {
-                                    if (err) {
-                                        res.send({err: err});
-                                    }else{
-                                        connection.query("Update proposedloans set isCalculated = true where email = ?",[email],(err,output)=>{
-                                            connection.query(
-                                                "Select * from ProposedLoans",[],(err,output) => {
-                                                    res.send(output)
-                                                    console.log(output)
-                                                }
-                                            )
-                                        })
+                        //if no lenders can satisy borrowers needs
+                        if($FinalAmount == 0){
+                            res.send({message:"No Lender could satisfy your borrowing request currently"})
+                        }else{
+                            connection.query("select * from interest_rates where GRADE = ?",[GRADE],(err,result) => {
+                                if(err){console.log(err)}
+                                else{console.log(result)}
+                                var interest = result[0][`months_${month_req}`]
+                                connection.query(
+                                    "UPDATE ProposedLoans set amount1 = ?,interest1 =? where email = ?",
+                                    [FinalLoanAmount,interest,email],
+                                    (err, result)=> {
+                                        if (err) {
+                                            res.send({err: err});
+                                        }else{
+                                            connection.query("Update proposedloans set isCalculated = true where email = ?",[email],(err,output)=>{
+                                                connection.query(
+                                                    "Select * from ProposedLoans",[],(err,output) => {
+                                                        res.send(output)
+                                                        console.log(output)
+                                                    }
+                                                )
+                                            })
+                                        }
                                     }
-                                }
-                            )
-                        })                    
+                                )
+                            })
+                        }
+                    
                     }else{
                         res.send({message:'No Lenders available;'})
                     }

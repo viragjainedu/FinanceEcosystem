@@ -8,7 +8,9 @@ function TopNavbar (){
     localStorage.clear();
     window.location.href = "/Login";
   };
-
+  var today = new Date()
+  const [date, setDate] = React.useState(today.getDate()+ '/' + (today.getMonth() + 1) + '/' + today.getFullYear() );
+  
 	return (
         <>
          <nav className="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
@@ -30,7 +32,7 @@ function TopNavbar (){
           <div className="navbar-menu-wrapper d-flex align-items-top"> 
             <ul className="navbar-nav">
               <li className="nav-item font-weight-semibold d-none d-lg-block ms-0">
-                <h1 className="welcome-text">Hello, <span className="text-black fw-bold">{localStorage.getItem('usernamReg')}</span></h1>
+                <h1 className="welcome-text">Hello, <span className="text-black fw-bold">{localStorage.getItem('usernameReg')}</span></h1>
                 <h3 className="welcome-sub-text">You are ADMIN </h3>
               </li>
             </ul>
@@ -69,14 +71,10 @@ function TopNavbar (){
                 </div>
               </li> */}
               <li className="nav-item d-none d-lg-block">
-                <div id="datepicker-popup" className="input-group date datepicker navbar-date-picker">
-                  <span className="input-group-addon input-group-prepend border-right">
-                    <span className="icon-calendar input-group-text calendar-icon" />
-                  </span>
-                  <input type="text" className="form-control" />
+                <div className="input-group date datepicker p-2 navbar-date-picker">
+                  {!date ? '0' : `${date}`}          
                 </div>
-              </li>
-             
+              </li>             
             
 
               <li className="nav-item dropdown d-none d-lg-block user-dropdown">

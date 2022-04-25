@@ -51,10 +51,11 @@ router.post("/amount_lending", function(req, res, next) {
     
     const email = req.body.email;
     const amount = req.body.amount;
+    const lock_in_period = req.body.lock_in_period;
 
     connection.query(
-        "INSERT INTO lending_transactions ( amount_lent , transaction_time ,email_id) values(?,?,?);",
-        [amount,moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),email],
+        "INSERT INTO lending_transactions (lock_in_period, amount_lent , transaction_time ,email_id) values(?,?,?,?);",
+        [lock_in_period,amount,moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),email],
         (err, result)=> {
             if (err) {
                 res.send({err: err});
@@ -68,10 +69,11 @@ router.post("/amount_lending", function(req, res, next) {
                 })
 
                 //add this to lenders data table
-                connection.query("INSERT into lenders_data (email,amount_lent, amount_remaining, fixed_lending_amount,current_borrower) values (?,?,?,?,0);",
-                    [email,amount,amount,parseInt(amount)/10]
+                connection.query("INSERT into lenders_data (lock_in_period,email,amount_lent, amount_remaining, fixed_lending_amount,current_borrower) values (?,?,?,?,?,0);",
+                    [lock_in_period,email,amount,amount,parseInt(amount)/10]
                     ,(err,res) => {
-                        
+                        console.log(err)
+                        console.log(res)
                     }
                 );
 

@@ -11,19 +11,21 @@ import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import P2PLending from './pages/P2PLending';
 import Borrowing from './pages/Borrowing';
-import IntraBankTransactions from './pages/IntraBankTransactions';
-import DecentralizedLoans from './pages/DecentralizedLoans';
-import InvestmentAdvisor from './pages/InvestmentAdvisor';
-import AdvancedInsights from './pages/AdvancedInsights';
-import BudgetPlanner from './pages/BudgetPlanner';
+// import IntraBankTransactions from './pages/IntraBankTransactions';
+// import DecentralizedLoans from './pages/DecentralizedLoans';
+// import InvestmentAdvisor from './pages/InvestmentAdvisor';
+// import AdvancedInsights from './pages/AdvancedInsights';
+// import BudgetPlanner from './pages/BudgetPlanner';
 import SearchResult from './pages/SearchResult';
-import DocumentVerification from './pages/DocumentVerification';
+// import DocumentVerification from './pages/DocumentVerification';
 import Activity from './pages/Activity';
 import Blogs from './pages/Blogs';
 import News from './pages/News';  
 import Payment from './pages/Payment';  
-import AdminPanel from './pages/AdminPanel';  
+import Installments from './pages/Installments';  
+import Interests from './pages/Interests';  
 
+import AdminPanel from './pages/AdminPanel';  
 import SystemNotifications from './AdminPanelPages/SystemNotifications'
 import LoanApprovalUnverified from './AdminPanelPages/LoanApprovalUnverified'
 import LoanApprovalVerified from './AdminPanelPages/LoanApprovalVerified'
@@ -39,19 +41,22 @@ ReactDOM.render(
         <Route path="Balance" element={<Balance />} />
         <Route path="P2PLending" element={<P2PLending />} />
         <Route path="Borrowing" element={<Borrowing />} />
-        <Route path="IntraBankTransactions" element={<IntraBankTransactions />} />
-        <Route path="DecentralizedLoans" element={<DecentralizedLoans />} />
-        <Route path="InvestmentAdvisor" element={<InvestmentAdvisor />} />
-        <Route path="AdvancedInsights" element={<AdvancedInsights />} />
-        <Route path="BudgetPlanner" element={<BudgetPlanner />} />
+        {/* <Route path="IntraBankTransactions" element={<IntraBankTransactions />} /> */}
+        {/* <Route path="DecentralizedLoans" element={<DecentralizedLoans />} /> */}
+        {/* <Route path="InvestmentAdvisor" element={<InvestmentAdvisor />} /> */}
+        {/* <Route path="AdvancedInsights" element={<AdvancedInsights />} /> */}
+        {/* <Route path="BudgetPlanner" element={<BudgetPlanner />} /> */}
         <Route path="SearchResult" element={<SearchResult />} />
-        <Route path="DocumentVerification" element={<DocumentVerification />} />
+        {/* <Route path="DocumentVerification" element={<DocumentVerification />} /> */}
         <Route path="Activity" element={<Activity />} />
         <Route path="Blogs" element={<Blogs />} />
         <Route path="News" element={<News />} />
         <Route path="Payment" element={<Payment />} />
-        <Route path="AdminPanel" element={<AdminPanel />} />
+        <Route path="Installments" element={<Installments />} />
+        <Route path="Interests" element={<Interests />} />
         
+        
+        <Route path="AdminPanel" element={<AdminPanel />} />
         <Route path="SystemNotifications" element={<SystemNotifications />} />
         <Route path="LoanApprovalUnverified" element={<LoanApprovalUnverified />} />
         <Route path="LoanApprovalVerified" element={<LoanApprovalVerified />} />

@@ -84,7 +84,7 @@ class CompleteProfile extends Component {
                       
                         <tr>
                             {console.log(this.state.Loans)}
-                            <td>3 Months</td>
+                            <td>{this.state.Loans.month_req} Months</td>
                             <td className="py-1">
                             ₹{this.state.Loans.amount1 }
                             </td>
@@ -110,87 +110,7 @@ class CompleteProfile extends Component {
                             })()}
 
                         </tr>
-                        <tr>
-                            <td>6 Months</td>
-                            <td className="py-1">
-                            ₹{this.state.Loans.amount2 }
-                            </td>
-                            <td className="py-1">
-                            {this.state.Loans.interest2 } %
-                            </td>  
-                            {(() => {
-
-                              if(this.state.Loans.selected === 0){
-                                return(
-                                  <td>
-                                    <button onClick={() => {if(window.confirm('Are you sure to Accept this Loan?')){ this.handleButtonClickedAcceptLoans(2)};}} className="btn btn-success me-2">Accept</button>
-                                  </td>
-                                )
-                              }
-                              else if(this.state.Loans.selected === 2){
-                                return (
-                                  <td className="py-1" style={{color: "green"}}>Accpeted</td>
-                                )    
-                              }else{
-                                return <td className="py-1" style={{color: "red"}}>Declined</td>
-                              }
-                            })()}
-
-                        </tr>
-                        <tr>
-                            <td>12 Months</td>
-                            <td className="py-1">
-                            ₹{this.state.Loans.amount3 }
-                            </td>
-                            <td className="py-1">
-                            {this.state.Loans.interest3 } %
-                            </td>  
-                            {(() => {
-
-                              if(this.state.Loans.selected === 0){
-                                return(
-                                  <td>
-                                    <button onClick={() => {if(window.confirm('Are you sure to Accept this Loan?')){ this.handleButtonClickedAcceptLoans(3)};}} className="btn btn-success me-2">Accept</button>
-                                  </td>
-                                )
-                              }
-                              else if(this.state.Loans.selected === 3){
-                                return (
-                                  <td className="py-1" style={{color: "green"}}>Accpeted</td>
-                                )    
-                              }else{
-                                return <td className="py-1" style={{color: "red"}}>Declined</td>
-                              }
-                            })()}
-
-                        </tr>
-                        <tr>
-                            <td>18 Months</td>
-                            <td className="py-1">
-                            ₹{this.state.Loans.amount4 }
-                            </td>
-                            <td className="py-1">
-                            {this.state.Loans.interest4 } %
-                            </td>  
-                            {(() => {
-
-                              if(this.state.Loans.selected === 0){
-                                return(
-                                  <td>
-                                    <button onClick={() => {if(window.confirm('Are you sure to Accept this Loan?')){ this.handleButtonClickedAcceptLoans(4)};}} className="btn btn-success me-2">Accept</button>
-                                  </td>
-                                )
-                              }
-                              else if(this.state.Loans.selected === 4){
-                                return (
-                                  <td className="py-1" style={{color: "green"}}>Accpeted</td>
-                                )    
-                              }else{
-                                return <td className="py-1" style={{color: "red"}}>Declined</td>
-                              }
-                            })()}
-
-                        </tr>
+                        
                   
                 </tbody>
               </table>

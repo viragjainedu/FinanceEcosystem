@@ -4,6 +4,7 @@ import Axios from 'axios';
 
 function TopNavbar (){
 
+
   const signout = (e) => {
     e.preventDefault();
     localStorage.clear();
@@ -11,6 +12,8 @@ function TopNavbar (){
   };
 
   const [amount, setAmount] = React.useState(null);
+  var today = new Date()
+  const [date, setDate] = React.useState(today.getDate()+ '/' + (today.getMonth() + 1) + '/' + today.getFullYear() );
   
   React.useEffect(() => {
     Axios.post("http://localhost:9000/account_stats/balance", {
@@ -50,17 +53,15 @@ function TopNavbar (){
             </ul>
             <ul className="navbar-nav ms-auto">
               
+
               <li className="nav-item d-none d-lg-block">
-                <div id="datepicker-popup" className="input-group date datepicker navbar-date-picker">
-                  <span className="input-group-addon input-group-prepend border-right">
-                    <span className="icon-calendar input-group-text calendar-icon" />
-                  </span>
-                  <input type="text" className="form-control" />
+                <div className="input-group date datepicker p-2 navbar-date-picker">
+                  Balance - {!amount ? '0' : `${amount}`}          
                 </div>
               </li>
               <li className="nav-item d-none d-lg-block">
                 <div className="input-group date datepicker p-2 navbar-date-picker">
-                  Balance - {!amount ? '0' : `${amount}`}          
+                  {!date ? '0' : `${date}`}          
                 </div>
               </li>
               <li className="nav-item">
