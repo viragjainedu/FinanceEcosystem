@@ -53,6 +53,19 @@ class CompleteProfile extends Component {
         }
       });
     }
+  
+  handleButtonClickedRejectLoans(month_req) {
+      //Axios ka post request daalna hai 
+      Axios.post("http://localhost:9000/borrowing/LoanRejection", {
+          email : localStorage.getItem('emailReg'),
+          month_req: month_req
+      }).then((response) => {
+          console.log(response);
+        if(response.data.status === "Rejected"){
+          window.location.href = "/borrowing";
+        }
+      });
+    }
     
     render(){
         return (
@@ -76,7 +89,7 @@ class CompleteProfile extends Component {
                       Interest 
                     </th>
                     <th>
-                      Accept
+                      Option
                     </th>
                   </tr>
                 </thead>
@@ -93,18 +106,21 @@ class CompleteProfile extends Component {
                             </td>  
                             {(() => {
 
-                              if(this.state.Loans.selected === 0){
+                              if(this.state.Loans.selected === 0 && this.state.Loans.rejected === null){
                                 return(
+                                  <>
                                   <td>
                                     <button onClick={() => {if(window.confirm('Are you sure to Accept this Loan?')){ this.handleButtonClickedAcceptLoans(1)};}} className="btn btn-success me-2">Accept</button>
+                                    <button onClick={() => {if(window.confirm('Are you sure to Reject this Loan?')){ this.handleButtonClickedRejectLoans(this.state.Loans.month_req)};}} className="btn btn-danger me-2">Decline</button>
                                   </td>
+                                  </>
                                 )
                               }
                               else if(this.state.Loans.selected === 1){
                                 return (
                                   <td className="py-1" style={{color: "green"}}>Accpeted</td>
                                 )    
-                              }else{
+                              }else if(this.state.Loans.rejected === 1){
                                 return <td className="py-1" style={{color: "red"}}>Declined</td>
                               }
                             })()}

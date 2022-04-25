@@ -49,3 +49,4 @@ When can our lender withdraw his money !!  Ans - Lock in Period , GRADE
 From Balance and From Bank account.
 
 Validation.
+<!-- error - current borrower error after rejection it will cause problem -->

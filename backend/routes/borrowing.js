@@ -22,13 +22,14 @@ router.post("/verify", function(req, res, next) {
         if(err){
             console.log(err)
         }
-        connection.query("select month_req from person where email = ?",[email],(err,res) => {
+        connection.query("select month_req from person where email = ?",[email],(err,result) => {
             if(err){console.log(err)}
             else{
-                connection.query("INSERT INTO ProposedLoans (month_req,email,amount1,interest1,selected,MailSent,Time,isTransacted) values(?,?,?,?,?,?,?,?)",
-                    [res[0].month_req,email,0,0,0,0,moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),0],
+                connection.query("INSERT INTO ProposedLoans (month_req,email,amount1,interest1,selected,rejected,MailSent,Time,isTransacted) values(?,?,?,?,?,?,?,?,?)",
+                    [result[0].month_req,email,0,0,0,null,0,moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),0],
                     (err,output) => {
                         if(err){
+                            console.log(err)
                             res.send(err)
                         }else if (output.length > 0 ){
                             res.send({"success": "ok"});
@@ -309,10 +310,13 @@ router.post("/isLoanCalculatedForThisEmail", function(req, res, next) {
 router.post("/transact", function(req, res, next) {
     const email = req.body.email;
     const selected = req.body.selected;
+    const rejected = req.body.rejected;
     const amount_req = req.body.amount;
     // const month_req = req.body.month_req;
-    if(selected === 0){
+    if(selected === 0 && rejected === null){
         res.send({message:"Please let user accept loan"})
+    }else if(rejected ===1){
+        res.send({message:"User has rejected the loan"})
     }else{
         connection.query(
             "select * from lenders_data ",[],(err,result) => {
@@ -325,7 +329,8 @@ router.post("/transact", function(req, res, next) {
                         //calculating borrowerNo
                         for (let j = 0; j < 10; j++) {
                             if(result[i][`b${j}`] ===  email){
-                                borrowerNo  = j;
+                                borrowerNo = j;
+                                break;
                             }
                         }
                         
@@ -456,8 +461,16 @@ router.post("/calculate", function(req, res, next) {
                                 if(result[i].fixed_lending_amount + amount_included <= loan_cap){
                                     amount_included = amount_included + result[i].fixed_lending_amount
 
-                                    connection.query(`UPDATE  lenders_data set amount_remaining = ?, b${result[i].current_borrower} = ?, current_borrower = ? where lenders_id = ?`,
-                                    [result[i].amount_remaining-result[i].fixed_lending_amount ,email,result[i].current_borrower + 1, result[i].lenders_id]),
+                                    var leastBorrowerNo = 0;
+                                    //calculating borrowerNo
+                                    for (let j = 0; j < 10; j++) {
+                                        if(result[i][`b${j}`] ===  null){
+                                            leastBorrowerNo = j;
+                                            break;
+                                        }
+                                    }
+                                    connection.query(`UPDATE  lenders_data set amount_remaining = ?, b${leastBorrowerNo} = ?  where lenders_id = ?`,
+                                    [result[i].amount_remaining-result[i].fixed_lending_amount ,email, result[i].lenders_id]),
                                     (err,out)=>{
                                         if(err){console.log(err)}
                                         
@@ -469,7 +482,7 @@ router.post("/calculate", function(req, res, next) {
                         console.log(`FinalLoanAmount:${FinalLoanAmount}`)
                         
                         //if no lenders can satisy borrowers needs
-                        if($FinalAmount == 0){
+                        if(FinalLoanAmount === 0){
                             res.send({message:"No Lender could satisfy your borrowing request currently"})
                         }else{
                             connection.query("select * from interest_rates where GRADE = ?",[GRADE],(err,result) => {
@@ -508,6 +521,51 @@ router.post("/calculate", function(req, res, next) {
    
 });
 
+router.post("/LoanRejection", function(req, res, next) {
+    
+    const email = req.body.email;
+    const month_req = req.body.month_req;
+
+    connection.query(`Select * from lenders_data where lock_in_period = ${month_req};`,[],(err,result)=>{
+        if(err){
+            console.log(err)
+        }else if(result.length > 0 ){
+            for (let i = 0; i < result.length; i++) {
+
+                var leastBorrowerNo = 0;
+                //calculating borrowerNo
+                for (let j = 0; j < 10; j++) {
+                    if(result[i][`b${j}`] ===  email){
+                        leastBorrowerNo = j;
+                        break;
+                    }
+                }
+                connection.query(`UPDATE  lenders_data set amount_remaining = ?, b${leastBorrowerNo} = ?  where lenders_id = ?`,
+                [result[i].fixed_lending_amount+result[i].amount_remaining ,null, result[i].lenders_id]),
+                (err,out)=>{
+                    if(err){console.log(err)}
+                            
+                    }
+            }
+        
+        }
+    })
+
+    connection.query(
+        "UPDATE ProposedLoans set rejected = 1 where email = ?",[email],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }else{
+
+                connection.query("update borrowing_requests set status = 4 where email = ? ",[email],(err,output)=>{
+                    res.send({status: "Rejected"})
+                })
+            }
+        }
+    )
+
+});
 router.post("/LoanSelection", function(req, res, next) {
     
     const email = req.body.email
