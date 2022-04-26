@@ -1,7 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var connection = require('../connection');
-var moment = require('moment')
+var moment = require('moment');
+const { connect } = require("../connection");
 
 
 router.post("/", function(req, res, next) {
@@ -52,35 +53,83 @@ router.post("/amount_lending", function(req, res, next) {
     const email = req.body.email;
     const amount = req.body.amount;
     const lock_in_period = req.body.lock_in_period;
-
-    connection.query(
-        "INSERT INTO lending_transactions (lock_in_period, amount_lent , transaction_time ,email_id) values(?,?,?,?);",
-        [lock_in_period,amount,moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),email],
-        (err, result)=> {
-            if (err) {
-                res.send({err: err});
-            }
-            else{
-
-                // adding the same to total_money_lent
-                connection.query("Select total_money_lent from account_stats where email = ?;",[email],(err,output) => { 
-                    var new_total_money_lent = parseInt(output[0].total_money_lent) + parseInt(amount);
-                    connection.query("update account_stats set total_money_lent = ? where email = ?;",[new_total_money_lent,email],(err,x)=>{})
-                })
-
-                //add this to lenders data table
-                connection.query("INSERT into lenders_data (lock_in_period,email,amount_lent, amount_remaining, fixed_lending_amount,current_borrower) values (?,?,?,?,?,0);",
-                    [lock_in_period,email,amount,amount,parseInt(amount)/10]
-                    ,(err,res) => {
-                        console.log(err)
-                        console.log(res)
+    const debitFrom = req.body.debitFrom;
+    
+    // if(debitFrom balance)
+    if(debitFrom === 'balance'){
+        connection.query("Select balance from account_stats where email = ?;",[email],(err,output) => { 
+            if(err){console.log(err)}
+            var new_balance = parseInt(output[0].balance) - parseInt(amount);
+            if(new_balance < 0){
+                res.send("You do not have enough balance")
+            }else{
+                connection.query("update account_stats set balance = ? where email = ?;",[new_balance,email],(err,x)=>{if(err){console.log(err)}})
+                
+                //common portion
+                connection.query(
+                    "INSERT INTO lending_transactions (lock_in_period, amount_lent , transaction_time ,email_id) values(?,?,?,?);",
+                    [lock_in_period,amount,moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),email],
+                    (err, result)=> {
+                        if (err) {
+                            res.send({err: err});
+                        }
+                        else{
+            
+                            // adding the same to total_money_lent
+                            connection.query("Select total_money_lent from account_stats where email = ?;",[email],(err,output) => { 
+                                if(err){console.log(err)}
+                                var new_total_money_lent = parseInt(output[0].total_money_lent) + parseInt(amount);
+                                connection.query("update account_stats set total_money_lent = ? where email = ?;",[new_total_money_lent,email],(err,x)=>{})
+                            })
+            
+                            //add this to lenders data table
+                            connection.query("INSERT into lenders_data (lock_in_period,email,amount_lent, amount_remaining, fixed_lending_amount,current_borrower) values (?,?,?,?,?,0);",
+                                [lock_in_period,email,amount,amount,parseInt(amount)/10]
+                                ,(err,res) => {
+                                    console.log(err)
+                                }
+                            );
+            
+                            res.send({"Lending_status" : "Success"});
+                        }
                     }
-                );
-
-                res.send({"Lending_status" : "Success"});
+                )
+            
             }
-        }
-    )
+        })
+    }else{
+        //common portion
+        connection.query(
+            "INSERT INTO lending_transactions (lock_in_period, amount_lent , transaction_time ,email_id) values(?,?,?,?);",
+            [lock_in_period,amount,moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),email],
+            (err, result)=> {
+                if (err) {
+                    res.send({err: err});
+                }
+                else{
+    
+                    // adding the same to total_money_lent
+                    connection.query("Select total_money_lent from account_stats where email = ?;",[email],(err,output) => { 
+                        if(err){console.log(err)}
+                        var new_total_money_lent = parseInt(output[0].total_money_lent) + parseInt(amount);
+                        connection.query("update account_stats set total_money_lent = ? where email = ?;",[new_total_money_lent,email],(err,x)=>{})
+                    })
+    
+                    //add this to lenders data table
+                    connection.query("INSERT into lenders_data (lock_in_period,email,amount_lent, amount_remaining, fixed_lending_amount,current_borrower) values (?,?,?,?,?,0);",
+                        [lock_in_period,email,amount,amount,parseInt(amount)/10]
+                        ,(err,res) => {
+                            console.log(err)
+                            console.log(res)
+                        }
+                    );
+    
+                    res.send({"Lending_status" : "Success"});
+                }
+            }
+        )
+    
+    }
 
 });
 

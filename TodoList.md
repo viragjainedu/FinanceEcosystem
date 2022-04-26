@@ -43,10 +43,13 @@ FICO Score Form -
 <!-- Before 29 -->
 Installments - make Payment system
 Withdraw system
-Reject the loan system - Roll back in lenders data
+<!-- Reject the loan system - Roll back in lenders data -->
 FICO Score.
-When can our lender withdraw his money !!  Ans - Lock in Period , GRADE
+<!-- When can our lender withdraw his money !!  Ans - Lock in Period , GRADE -->
 From Balance and From Bank account.
 
 Validation.
 <!-- error - current borrower error after rejection it will cause problem -->
+Backend page - for acitve loans
+advance insights.
+Roll Back code

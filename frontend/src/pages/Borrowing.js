@@ -322,7 +322,7 @@ class App extends Component {
                                 <h4 className="card-title">Enter Required Information</h4>
                                 <div className="form-sample">
                                     <p className="card-description">
-                                    Personal info
+                                        Please fill FICO form. Link Here 
                                     </p>
                                     <h6 className='text-danger'>{this.state.message}</h6>
                                     <div className="row">

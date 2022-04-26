@@ -18,7 +18,9 @@ class App extends Component {
       request_submitted: false, 
       ProfileCompleted: false, 
       lending_transactions : [],
-      message : ""};
+      message : "",
+      debitFrom : ""
+    };
 	}
 
 	 //To check whether user has completed form or not
@@ -68,22 +70,19 @@ class App extends Component {
   }
 
   handleButtonClicked() {
-    var lend_amount = this.state.lend_amount;
-    var lock_in_period = this.state.lock_in_period;
-    if(lock_in_period === 0 && lend_amount === 0 ){
+    
+    if(this.state.lock_in_period !== 0 && this.state.lend_amount !== 0  && this.state.debitFrom !== "" ){
+      this.setState({
+        ...this.state,
+        request_submitted: true,
+      });
+      // console.log(this.state)
+      window.location.href  = `/Payment?amount=${this.state.lend_amount}&lock_in_period=${this.state.lock_in_period}&debitFrom=${this.state.debitFrom}`;         
+    }else{
       this.setState({
         ...this.state,
         message : "Please Fill all fields"
       })
-    }else{
-      this.setState({
-        ...this.state,
-        request_submitted: true,
-        lend_amount: this.state.lend_amount,
-        lock_in_period: this.state.lock_in_period,
-      });
-      // console.log(this.state)
-      window.location.href  = `/Payment?amount=${lend_amount}&lock_in_period=${lock_in_period}`;   
     }
 
 
@@ -142,6 +141,16 @@ class App extends Component {
                               <option value="6">6 Months</option>
                               <option value="12">12 Months</option>
                               <option value="18">18 Months</option>
+                          </select>
+                        </div>
+                      </div>
+                    <div className="form-group row">
+                      <div className="col">
+                      <label>Debit Money From</label>
+                          <select name='debitFrom' onChange={this.handleInputChanged.bind(this)}  className="form-control">
+                              <option value="">Debit From</option>
+                              <option value="bank">Bank Account</option>
+                              <option value="balance">Balance</option>
                           </select>
                         </div>
                       </div>

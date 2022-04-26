@@ -73,6 +73,7 @@ app.use("/account_stats", account_stats);
 app.use("/installments", installments);
 app.use("/interests", interests);
 
+
 app.use("/SystemNotifications", SystemNotifications);
 app.use("/AddRemoveBlogs", AddRemoveBlogs);
 

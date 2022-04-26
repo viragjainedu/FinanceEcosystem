@@ -323,9 +323,9 @@ router.post("/transact", function(req, res, next) {
                 if(err){
                     res.send({err:err})
                 }else if(result && result.length > 0 ) {
-                    var borrowerNo = -1;
                     for (let i = 0; i < result.length; i++) {
                         
+                        var borrowerNo = -1;
                         //calculating borrowerNo
                         for (let j = 0; j < 10; j++) {
                             if(result[i][`b${j}`] ===  email){
@@ -335,9 +335,11 @@ router.post("/transact", function(req, res, next) {
                         }
                         
                         // console.log(`Borrower : ${borrowerNo}.`)
-                        if(borrowerNo == -1){
+                        if(borrowerNo === -1){
                             continue;
-                        }else{
+                        }
+                        else if(borrowerNo !== -1){
+                            console.log(`Borrower No is : ${borrowerNo}`)
                             var grade;
                             connection.query("select grade from person where email = ?",[email],(err,res) => {
                                 if(err){console.log(err)}
@@ -347,23 +349,35 @@ router.post("/transact", function(req, res, next) {
                                 connection.query("select * from proposedloans where email = ?",[email],(err,res) => {
                                     if(err){console.log(err)}
                                     amount = res[0][`amount${res[0].selected}`]
-                                    console.log(amount)
-                                    connection.query(`update lenders_data set amount_lent =?, b${borrowerNo}_amount = ?,b${borrowerNo}_grade = ? where lenders_id= ?`,
-                                        [result[i].amount_lent - result[i].fixed_lending_amount ,amount,grade ,result[i].lenders_id],
-                                        (err,output) => {
-                                            console.log(`BorrowerNo: ${borrowerNo}`)
-                                            if(err){
-                                                console.log(err)
-                                            }else{
-                                                connection.query('update proposedloans set isTransacted = 1 where email = ?',[email],(err,res)=>{
-                                                    if(err){console.log(err)}
-                                                    // console.log(res)
-                                                    // we've transacted set 1 
-                                                })
-                                            }
-    
+                                    // console.log(amount)
+                                    // console.log(`B.No is - ${borrowerNo}`)
+                        
+                                    //calculating borrowerNo
+                                    for (let j = 0; j < 10; j++) {
+                                        if(result[i][`b${j}`] ===  email){
+                                            borrowerNo = j;
+                                            break;
                                         }
+                                    }
+                                    if(borrowerNo !== -1){
+                                        connection.query(`update lenders_data set amount_lent =?, b${borrowerNo}_amount = ?,b${borrowerNo}_grade = ? where lenders_id= ?`,
+                                            [result[i].amount_lent - result[i].fixed_lending_amount ,amount,grade ,result[i].lenders_id],
+                                            (err,output) => {
+                                                console.log(`BorrowerNo: ${borrowerNo}`)
+                                                if(err){
+                                                    console.log(err)
+                                                }else{
+                                                    connection.query('update proposedloans set isTransacted = 1 where email = ?',[email],(err,res)=>{
+                                                        if(err){console.log(err)}
+                                                        // console.log(res)
+                                                        // we've transacted set 1 
+                                                    })
+                                                }
+        
+                                            }
                                     );
+    
+                                    }
     
                                     })
                             })
@@ -373,13 +387,16 @@ router.post("/transact", function(req, res, next) {
                     connection.query('insert into borrowing_transactions (transaction_time,email_id,amount_borrowed) values(?,?,?)',
                     [moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),email,amount_req],
                     );
+
                     //updating balance in account stats table 
                     connection.query("select * from account_stats where email = ?",[email],(err,result)=>{
                         connection.query('update account_stats set balance = ? , total_money_borrowed = ? where email = ?',
                         [parseInt(result[0].balance) + amount_req , parseInt(result[0].total_money_borrowed) + amount_req,email],
                         (err,output)=>{
                             if(err){console.log(err)}
-                            if(output){console.log(output)}
+                            if(output){
+                                // console.log(output)
+                            }
                         })
                     })
     
@@ -393,7 +410,18 @@ router.post("/transact", function(req, res, next) {
                         for (let i = 1; i <= result[0].month_req; i++) {
                             //updating installments table 
                             var interest_rate = result[0][`interest1`]
-                            var installment_amount = Math.ceil((amount_req * interest_rate)/100)
+                            var a = amount_req
+                            var n = result[0].month_req
+                            if(n === 18){
+                                var r = (interest_rate*18/12)/(n*100)
+                            }else{
+                                var r =  interest_rate/(n*100)
+                            }
+                            var numerator = a * r* Math.pow((1+r),n ) ;
+                            var denominator = Math.pow((1+r),n) - 1 ;
+                            var installment_amount = numerator/denominator ;
+                            // console.log(`${a},${n},${r},${numerator},${denominator},${installment_amount},`);
+
                             connection.query("insert into installments (email,amount_borrowed,no_of_months,interest_rate,installment_amount,installment_no,date_of_payment,time_of_payment,status) values(?,?,?,?,?,?,?,?,?)",
                             [email,amount_req,result[0].month_req,interest_rate,installment_amount,i,null,null,'Pending'],(err,output)=>{
                                 if(err){console.log(err)}
@@ -469,6 +497,7 @@ router.post("/calculate", function(req, res, next) {
                                             break;
                                         }
                                     }
+                                    console.log(`borrowerNo: ${leastBorrowerNo}`)
                                     connection.query(`UPDATE  lenders_data set amount_remaining = ?, b${leastBorrowerNo} = ?  where lenders_id = ?`,
                                     [result[i].amount_remaining-result[i].fixed_lending_amount ,email, result[i].lenders_id]),
                                     (err,out)=>{

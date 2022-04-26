@@ -121,6 +121,9 @@ class App extends Component {
                       Amount Required
                     </th>
                     <th>
+                      No of Months
+                    </th>
+                    <th>
                       Purpose
                     </th>
                     <th>
@@ -155,6 +158,9 @@ class App extends Component {
                       </td>
                       <td>
                         {item.amount_req}
+                      </td>
+                      <td>
+                        {item.month_req}
                       </td>
                       <td>
                         {item.purpose}

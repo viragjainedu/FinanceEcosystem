@@ -31,6 +31,7 @@ DELETE FROM personal_notifications ;
 DELETE FROM installments;
 
 
+update account_stats set balance = 0,total_money_lent=0,total_money_borrowed=0 where 1; 
 source SQL_Backup/Only_5_users (2).sql
 
 Create table installments (
