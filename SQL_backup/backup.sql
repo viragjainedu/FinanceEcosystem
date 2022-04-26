@@ -14,7 +14,6 @@ DROP table interest_rates ;
 DROP table personal_notifications ;
 DROP table installments;
 
-
 DELETE FROM lending_transactions ;
 DELETE FROM borrowing_transactions ;
 DELETE FROM borrowing_requests ;
@@ -34,6 +33,7 @@ DELETE FROM installments;
 update account_stats set balance = 0,total_money_lent=0,total_money_borrowed=0 where 1; 
 source SQL_Backup/Only_5_users (2).sql
 
+
 Create table installments (
     installment_id int NOT NULL AUTO_INCREMENT,
     email varchar(255),
@@ -49,15 +49,15 @@ Create table installments (
     PRIMARY KEY(installment_id)
 );
 
-Create table interests (
-    interest_id int NOT NULL AUTO_INCREMENT,
+Create table Returns (
+    returns_id int NOT NULL AUTO_INCREMENT,
     email varchar(255),
-    amount_lent int,
-    date_of_lending date,
-    -- interest_rate float,
-    date_of_payment date,
-    -- status varchar(20),
-    PRIMARY KEY(interest_id)
+    borrower_email varchar(255),
+    return_amount float,
+    principal float,
+    interest float,
+    date_of_payment timestamp,
+    PRIMARY KEY(returns_id)
 );
 
 Create table lenders_data (
