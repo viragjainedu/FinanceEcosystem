@@ -5,7 +5,7 @@ router.get("/", function(req, res, next) {
     res.send("This statement is generate by Fico API backend");
 });
 
-router.post("/FicoForm", function(req, res, next) {
+router.post("/", function(req, res, next) {
     
     const email = req.body.email;
     const answer1 =  req.body.answer1;  
