@@ -52,16 +52,13 @@ class App extends Component {
     }
 
     handleButtonClicked() {
-        // var first_name = this.state.first_name;
         console.log(this.state)
 
         if( this.state.answer1 !== "", this.state.answer1a !== "", this.state.answer2 !== "",
             this.state.answer3 !== "", this.state.answer4 !== "", this.state.answer5 !== "",
-            this.state.answer6 !== "",this.state.answer7 !== "",this.state.answer7a !== "",
-            this.state.answer8 !== "",this.state.answer8a !== "",this.state.answer9 !== "",
-            this.state.answer10 !== "",this.state.answer10a !== "")
+            this.state.answer6 !== "", this.state.answer7 !== "", this.state.answer7a !== "",
+            this.state.answer9 !== "", this.state.answer10 !== "")
         {
-            //Axios ka post request daalna hai 
             axios.post("http://localhost:9000/Fico", {               
                 answer1 : this.state.answer1,
                 answer1a : this.state.answer1a,
@@ -72,14 +69,10 @@ class App extends Component {
                 answer6 : this.state.answer6,
                 answer7 : this.state.answer7,
                 answer7a : this.state.answer7a,
-                answer8 : this.state.answer8,
-                answer8a : this.state.answer8a,
                 answer9 : this.state.answer9,
-                answer10 : this.state.answer10,
                 answer10a : this.state.answer10a,
             }).then((response) => {
                 console.log(response);
-                // console.log("Hiiii")
             if(response.data.success){
                 console.log("Changed Username");
                 window.location.href = "/Dashboard";
@@ -119,7 +112,7 @@ class App extends Component {
                 activateSubmitButton : true,
                 nextButton : false,
             });
-        }else if(this.state.current_q === 13 && this.state.answer10 !== "10.1"){
+        }else if(this.state.current_q === 13 && this.state.answer10 === "10.2"){
             this.setState({
                 ...this.state,
                 activateSubmitButton : true,
