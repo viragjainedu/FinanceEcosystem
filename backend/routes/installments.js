@@ -64,18 +64,49 @@ router.post("/pay", function(req, res) {
                                 var principal_for_lender = ratio * principal_for_borrower
                                 var interest_for_borrower = (installment_amount - principal_for_borrower)
                                 var interest_for_lender = ratio*interest_for_borrower
+                                var borrower_email = email
+
                                 console.log(ratio)
                                 console.log(cut_for_lender)
                                 console.log(principal_for_borrower)
                                 console.log(principal_for_lender)
                                 console.log(interest_for_borrower)
                                 console.log(interest_for_lender)
+
+                                //updating account stats adding interest of borrower to his interest paid
+                                connection.query("select * from account_stats where email = ?",[borrower_email],(err,rows)=>{
+                                    if(err){console.log(err)}else{
+                                        connection.query("Update account_stats set total_interest_paid = ?  where email = ?",
+                                        [rows[0].total_interest_paid + interest_for_borrower , borrower_email],
+                                        (err,ouput) =>{
+                                            if(err){console.log(err)}
+                                        }
+                                        )
+                                    }
+                                })
+                                
+                                //adding transactions in returns for lender;
                                 connection.query("INSERT INTO returns (email,borrower_email,return_amount,principal,interest,date_of_payment) values(?,?,?,?,?,?);",
                                     [result[i].email,email,cut_for_lender,principal_for_lender,interest_for_lender,moment(new Date()).format('YYYY-MM-DD HH:mm:ss')],
                                     (err,output) => {
                                         if(err){console.log(err)}
                                         else{
-                                            
+                                            // console.log(`Lenders Email - ${result[i].email}`)
+                                            //updating account stats adding interest of lender to his balance and interest
+                                            connection.query("select * from account_stats where email = ?",[result[i].email],(err,rows)=>{
+                                                if(err){console.log(err)}else{
+                                                    
+                                                    console.log(`Total interest Recieved : ${rows[0].total_interest_received}`)
+                                                    
+                                                    connection.query("Update account_stats set total_interest_received = ? , balance = ? where email = ?",
+                                                    [rows[0].total_interest_received + interest_for_lender , rows[0].balance + interest_for_lender,result[i].email],
+                                                    (err,ouput) =>{
+                                                        if(err){console.log(err)}
+                                                        console.log("Hiii")
+                                                    }
+                                                   )
+                                                }
+                                            })
                                         }
                                     }
                                 )
