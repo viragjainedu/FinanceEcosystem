@@ -372,7 +372,18 @@ router.post("/", function(req, res, next) {
     var FS = BS+a1+a1a+a2+a3+a4+a5+a6+a7+a7a+a9+a10a;
     console.log(FS);
     console.log(a1);
+    console.log(a1a);
+    console.log(a2);
+    console.log(a3);
+    console.log(a4);
+    console.log(a5);
     console.log(a6);
+    console.log(a7);
+    console.log(a7a);
+    // console.log(a8);
+    console.log(a9);
+    // console.log(a10);
+    console.log(a10a);
 });
 
 
