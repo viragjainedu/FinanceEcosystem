@@ -22,7 +22,7 @@ class App extends Component {
                        answer5: "",   
                        answer6: "",   
                        answer7: "",   
-                       answe7a: "",   
+                       answer7a: "",   
                        answer8: "",   
                        answer8a: "",    
                        answer9: "",    
@@ -51,8 +51,48 @@ class App extends Component {
         });
     }
 
-    handleButtonClicked(){
-
+    handleButtonClicked() {
+        // var first_name = this.state.first_name;
+        console.log(this.state)
+        
+        if( this.state.answer1 !== "", this.state.answer1a !== "", this.state.answer2 !== "",
+            this.state.answer3 !== "", this.state.answer4 !== "", this.state.answer5 !== "",
+            this.state.answer6 !== "",this.state.answer7 !== "",this.state.answer7a !== "",
+            this.state.answer8 !== "",this.state.answer8a !== "",this.state.answer9 !== "",
+            this.state.answer10 !== "",this.state.answer10a !== "")
+        {
+            //Axios ka post request daalna hai 
+            axios.post("http://localhost:9000/Fico", {               
+                answer1 : this.state.answer1,
+                answer1a : this.state.answer1a,
+                answer2 : this.state.answer2,
+                answer3 : this.state.answer3,
+                answer4 : this.state.answer4,
+                answer5 : this.state.answer5,
+                answer6 : this.state.answer6,
+                answer7 : this.state.answer7,
+                answer7a : this.state.answer7a,
+                answer8 : this.state.answer8,
+                answer8a : this.state.answer8a,
+                answer9 : this.state.answer9,
+                answer10 : this.state.answer10,
+                answer10a : this.state.answer10a,
+            }).then((response) => {
+                console.log(response);
+                // console.log("Hiiii")
+            if(response.data.success){
+                console.log("Changed Username");
+                window.location.href = "/Dashboard";
+            }
+            });
+        }
+        else{
+            this.setState({
+                ...this.state,
+                message : "Please fill all fields",
+            });
+        }
+        
     }
 
     handleButtonClickedNext(){
@@ -128,7 +168,7 @@ class App extends Component {
                                                     <div className="col-sm-12">
                                                         <select onChange={this.handleInputChanged.bind(this)} name="answer1" className="form-control">
                                                             <option value="">Select</option>
-                                                            <option value="1.1">I have never had a credit card (Ignore question 1a)</option>
+                                                            <option value="1.1">I have never had a credit card</option>
                                                             <option value="1.2">1</option>
                                                             <option value="1.3">2 to 4</option>
                                                             <option value="1.4">5 or more</option>
@@ -295,7 +335,7 @@ class App extends Component {
                                                         <div className="col-sm-12">
                                                             <select onChange={this.handleInputChanged.bind(this)} name="answer7" className="form-control" required>
                                                                 <option value="">Select</option>
-                                                                <option value="7.1">I have never missed a payment (Ignore question 7a)</option>
+                                                                <option value="7.1">I have never missed a payment</option>
                                                                 <option value="7.2">in the past 3 months</option>
                                                                 <option value="7.3">3 to 6 months ago</option>
                                                                 <option value="7.4">6 months to 1 year ago</option>
@@ -343,7 +383,7 @@ class App extends Component {
                                                         <div className="col-sm-12">
                                                             <select onChange={this.handleInputChanged.bind(this)} name="answer8" className="form-control" required>
                                                                 <option value="">Select</option>
-                                                                <option value="8.1">0 (Ignore question 8a)</option>
+                                                                <option value="8.1">0</option>
                                                                 <option value="8.2">1</option>
                                                                 <option value="8.3">2</option>
                                                             </select>
@@ -415,7 +455,7 @@ class App extends Component {
                                                         <select onChange={this.handleInputChanged.bind(this)} name="answer10" className="form-control" required>
                                                             <option value="">Select</option>
                                                             <option value="10.1">Yes</option>
-                                                            <option value="10.2">No (Ignore question 10a)</option>
+                                                            <option value="10.2">No</option>
                                                         </select>
                                                     </div>
                                                 </div>   
