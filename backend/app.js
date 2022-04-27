@@ -28,6 +28,7 @@ var sendOTP = require("./routes/sendOTP");
 var account_stats = require("./routes/account_stats");
 var interests = require("./routes/interests");
 var installments = require("./routes/installments");
+var myProfile = require("./routes/myProfile");
 
 var SystemNotifications = require("./routesAdmin/SystemNotifications");
 var Mails = require("./routesAdmin/Mails");
@@ -72,6 +73,8 @@ app.use("/sendOTP", sendOTP);
 app.use("/account_stats", account_stats);
 app.use("/installments", installments);
 app.use("/interests", interests);
+app.use("/myProfile", myProfile);
+
 
 
 app.use("/SystemNotifications", SystemNotifications);
