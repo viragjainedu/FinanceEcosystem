@@ -51,9 +51,48 @@ class App extends Component {
         });
     }
 
-    handleButtonClicked(){
+    handleButtonClicked() {
+        // var first_name = this.state.first_name;
+        console.log(this.state)
 
-        Axios.post("")
+        if( this.state.answer1 !== "", this.state.answer1a !== "", this.state.answer2 !== "",
+            this.state.answer3 !== "", this.state.answer4 !== "", this.state.answer5 !== "",
+            this.state.answer6 !== "",this.state.answer7 !== "",this.state.answer7a !== "",
+            this.state.answer8 !== "",this.state.answer8a !== "",this.state.answer9 !== "",
+            this.state.answer10 !== "",this.state.answer10a !== "")
+        {
+            //Axios ka post request daalna hai 
+            axios.post("http://localhost:9000/Fico", {               
+                answer1 : this.state.answer1,
+                answer1a : this.state.answer1a,
+                answer2 : this.state.answer2,
+                answer3 : this.state.answer3,
+                answer4 : this.state.answer4,
+                answer5 : this.state.answer5,
+                answer6 : this.state.answer6,
+                answer7 : this.state.answer7,
+                answer7a : this.state.answer7a,
+                answer8 : this.state.answer8,
+                answer8a : this.state.answer8a,
+                answer9 : this.state.answer9,
+                answer10 : this.state.answer10,
+                answer10a : this.state.answer10a,
+            }).then((response) => {
+                console.log(response);
+                // console.log("Hiiii")
+            if(response.data.success){
+                console.log("Changed Username");
+                window.location.href = "/Dashboard";
+            }
+            });
+        }
+        else{
+            this.setState({
+                ...this.state,
+                message : "Please fill all fields",
+            });
+        }
+
     }
 
     handleButtonClickedNext(){
