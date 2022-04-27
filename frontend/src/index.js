@@ -24,6 +24,7 @@ import News from './pages/News';
 import Payment from './pages/Payment';  
 import Installments from './pages/Installments';  
 import Interests from './pages/Interests';  
+import Fico from './pages/Fico';  
 
 import AdminPanel from './pages/AdminPanel';  
 import SystemNotifications from './AdminPanelPages/SystemNotifications'
@@ -54,6 +55,7 @@ ReactDOM.render(
         <Route path="Payment" element={<Payment />} />
         <Route path="Installments" element={<Installments />} />
         <Route path="Interests" element={<Interests />} />
+        <Route path="Fico" element={<Fico />} />
         
         
         <Route path="AdminPanel" element={<AdminPanel />} />

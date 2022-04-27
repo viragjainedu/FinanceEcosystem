@@ -1,0 +1,745 @@
+.hide {
+    display: none !important; }
+  
+  .show {
+    display: block !important; }
+  
+  /* placeholder */
+  #fse-wrapper #qdone .result-box .box-1 .start-over-btn, #fse-wrapper #qexit .result-box .box-1 .start-over-btn, #fse-wrapper #qdone #fse-result-content .box-2 .other-plans, #fse-wrapper #qexit #fse-error-content .box-2 .other-plans, #fse-wrapper #qdone #fse-result-desc .bottom-start-over .start-over-btn, #fse-wrapper #qexit #fse-error-desc .bottom-start-over .start-over-btn {
+    color: #0062F5;
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    border: 1px solid #0062F5;
+    border-radius: 4px;
+    padding: 16px 24px;
+    background-color: inherit;
+    font-weight: 400; }
+    #fse-wrapper #qdone .result-box .box-1 .start-over-btn:hover, #fse-wrapper #qexit .result-box .box-1 .start-over-btn:hover, #fse-wrapper #qdone #fse-result-content .box-2 .other-plans:hover, #fse-wrapper #qexit #fse-error-content .box-2 .other-plans:hover, #fse-wrapper #qdone #fse-result-desc .bottom-start-over .start-over-btn:hover, #fse-wrapper #qexit #fse-error-desc .bottom-start-over .start-over-btn:hover, #fse-wrapper #qdone .result-box .box-1 .start-over-btn:focus, #fse-wrapper #qexit .result-box .box-1 .start-over-btn:focus, #fse-wrapper #qdone #fse-result-content .box-2 .other-plans:focus, #fse-wrapper #qexit #fse-error-content .box-2 .other-plans:focus, #fse-wrapper #qdone #fse-result-desc .bottom-start-over .start-over-btn:focus, #fse-wrapper #qexit #fse-error-desc .bottom-start-over .start-over-btn:focus {
+      color: #0062F5;
+      background-color: rgba(0, 0, 0, 0.15); }
+  
+  .body_wrapper_mobile {
+    display: none; }
+  
+  #skip.body_wrapper {
+    display: block !important; }
+  
+  #fse-main {
+    padding: 40px 10px;
+    text-align: center;
+    min-height: 900px;
+    font-family: Roboto, "Open Sans", arial, helvetica; }
+    #fse-main.style-one {
+      font-family: "Liu Jian Mao Cao", cursive; }
+    #fse-main .fse-img {
+      width: 90px; }
+    #fse-main #fse-title {
+      max-width: 960px;
+      width: 100%;
+      margin: 0 auto;
+      font-size: 24px;
+      line-height: 34px;
+      font-weight: 700;
+      font-family: inherit;
+      padding: 0;
+      color: #000000;
+      text-align: left; }
+    #fse-main .title-desc {
+      padding-top: 16px;
+      font-family: inherit;
+      max-width: 960px;
+      margin: 0 auto;
+      width: 100%;
+      font-size: 20px;
+      color: #000000;
+      line-height: 26px;
+      letter-spacing: 0.46px;
+      text-align: left; }
+      #fse-main .title-desc a {
+        font-family: inherit; }
+    #fse-main h2 {
+      font-family: inherit;
+      font-size: 24px;
+      font-weight: 300;
+      margin-bottom: 15px; }
+    #fse-main h3, #fse-main .example-info {
+      line-height: 25px;
+      font-family: inherit;
+      font-size: 19px;
+      color: #333;
+      font-weight: 400;
+      max-width: 580px;
+      width: 100%;
+      padding: 0 10px;
+      margin: 0 auto 15px;
+      background: none;
+      text-transform: inherit;
+      text-align: left; }
+    #fse-main .example-info {
+      margin-bottom: 0; }
+    #fse-main .example-btn {
+      font-family: inherit;
+      font-size: 18px;
+      color: #00609c;
+      display: block;
+      border: none;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      -webkit-tap-highlight-color: transparent;
+      background: none;
+      font-weight: 400;
+      padding: 0; }
+      #fse-main .example-btn svg {
+        width: 12px;
+        height: 12px;
+        position: relative;
+        top: 1px;
+        fill: #1566d1;
+        margin-right: 3px;
+        transition: 0.5s all;
+        margin-left: 3px; }
+      #fse-main .example-btn.active svg {
+        transform: rotate(-180deg); }
+  
+  #fse-wrapper {
+    max-width: 960px;
+    width: 100%;
+    margin: 20px auto 0;
+    border-radius: 5px;
+    color: #fff;
+    /* for new a/b test style on the result page */ }
+    #fse-wrapper section {
+      background-color: #fff;
+      border: 1px solid #c9c8c8;
+      border-radius: 5px;
+      position: relative;
+      min-height: 205px; }
+      #fse-wrapper section p {
+        color: #000;
+        line-height: 24px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: normal;
+        margin-bottom: 20px;
+        padding: 0 5%; }
+      #fse-wrapper section .disclaimer {
+        text-align: left;
+        color: #6D6D72;
+        font-family: inherit;
+        font-size: 14px;
+        letter-spacing: -0.16px;
+        line-height: 20px; }
+    #fse-wrapper #estimate_processing div {
+      margin: 15% auto; }
+      @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+        #fse-wrapper #estimate_processing div > img {
+          display: none; } }
+      #fse-wrapper #estimate_processing div .loader {
+        display: block;
+        color: #000;
+        padding-top: 10px; }
+    #fse-wrapper #estimated-score {
+      position: relative;
+      font-family: inherit;
+      margin-left: 10px;
+      color: #00609C;
+      font-size: 74px;
+      display: block;
+      font-weight: 900;
+      line-height: 54px;
+      padding: 0 0 16px;
+      margin: 0; }
+    #fse-wrapper #get_started {
+      background-color: #003f5f;
+      border: 1px solid #003f5f;
+      padding: 40px 30px 50px; }
+      #fse-wrapper #get_started button {
+        background-color: #fd9621;
+        font-family: inherit;
+        color: #fff !important;
+        border: 1px solid #fd9621;
+        text-align: center;
+        text-decoration: none;
+        padding: 15px 60px;
+        border-radius: 5px;
+        margin: 0 auto;
+        display: inherit;
+        font-size: 18px; }
+    #fse-wrapper #qerror > img {
+      margin: 0 auto;
+      text-align: center; }
+    #fse-wrapper #qerror .inner-wrapper {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      min-height: 300px;
+      padding: 12px; }
+    #fse-wrapper #qerror .error-txt {
+      padding-top: 25px;
+      color: #6F6F74;
+      font-family: inherit;
+      font-size: 14px;
+      font-style: italic;
+      line-height: 16px;
+      text-align: center; }
+    #fse-wrapper #qexit, #fse-wrapper #qdone {
+      color: #333; }
+      #fse-wrapper #qexit p, #fse-wrapper #qdone p {
+        color: #333;
+        font-family: inherit; }
+    #fse-wrapper #qdone h2 {
+      font-size: 24px;
+      color: #333;
+      line-height: 30px;
+      font-weight: normal;
+      text-transform: inherit; }
+    #fse-wrapper #qdone .result-box, #fse-wrapper #qexit .result-box {
+      display: flex; }
+      #fse-wrapper #qdone .result-box .box-1, #fse-wrapper #qdone .result-box .box-2, #fse-wrapper #qexit .result-box .box-1, #fse-wrapper #qexit .result-box .box-2 {
+        flex-basis: 50%;
+        text-align: left; }
+      #fse-wrapper #qdone .result-box .box-1, #fse-wrapper #qexit .result-box .box-1 {
+        margin: 24px 0;
+        padding: 0 26px;
+        border-right: 0.5px solid #C8C7CC; }
+        #fse-wrapper #qdone .result-box .box-1 h2, #fse-wrapper #qexit .result-box .box-1 h2 {
+          color: #000000;
+          font-family: inherit;
+          font-size: 16px;
+          font-weight: bold;
+          line-height: 22px;
+          background: none;
+          padding: 0;
+          text-transform: inherit; }
+        #fse-wrapper #qdone .result-box .box-1 .body p.score-raitings-can-be, #fse-wrapper #qexit .result-box .box-1 .body p.score-raitings-can-be {
+          text-align: left;
+          color: #000000;
+          font-family: inherit;
+          font-size: 14px;
+          line-height: 19px;
+          padding: 0; }
+        #fse-wrapper #qdone .result-box .box-1 p.want-to-estimate-you, #fse-wrapper #qdone .result-box .box-1 #exit-msg p, #fse-wrapper #qexit .result-box .box-1 p.want-to-estimate-you, #fse-wrapper #qexit .result-box .box-1 #exit-msg p {
+          color: #000000;
+          font-family: inherit;
+          font-size: 16px;
+          line-height: 24px;
+          text-align: left;
+          padding: 16px 0 8px;
+          margin-bottom: 8px;
+          border-top: 1px solid #C8C7CC; }
+        #fse-wrapper #qdone .result-box .box-1 #exit-msg p, #fse-wrapper #qexit .result-box .box-1 #exit-msg p {
+          padding-top: 0;
+          border: none; }
+        #fse-wrapper #qdone .result-box .box-1 .top-start-over, #fse-wrapper #qexit .result-box .box-1 .top-start-over {
+          padding-bottom: 16px; }
+      #fse-wrapper #qdone .result-box .box-2, #fse-wrapper #qexit .result-box .box-2 {
+        padding: 24px 26px; }
+        #fse-wrapper #qdone .result-box .box-2 h2.get-your-actual-fico, #fse-wrapper #qexit .result-box .box-2 h2.get-your-actual-fico {
+          color: #000000;
+          font-family: inherit;
+          font-size: 20px;
+          font-weight: bold;
+          line-height: 24px;
+          background: none;
+          text-transform: inherit; }
+        #fse-wrapper #qdone .result-box .box-2 p.find-the-right-plan, #fse-wrapper #qexit .result-box .box-2 p.find-the-right-plan {
+          color: #000000;
+          font-family: inherit;
+          font-size: 18px;
+          line-height: 24px;
+          text-align: left;
+          padding: 0 0 20px; }
+        #fse-wrapper #qdone .result-box .box-2 .signup-btn, #fse-wrapper #qexit .result-box .box-2 .signup-btn {
+          border-radius: 4px;
+          background-color: #0071ED;
+          padding: 20px;
+          color: #FFFFFF;
+          font-family: inherit;
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 20px;
+          text-align: center;
+          text-decoration: none; }
+          #fse-wrapper #qdone .result-box .box-2 .signup-btn:hover, #fse-wrapper #qdone .result-box .box-2 .signup-btn:focus, #fse-wrapper #qexit .result-box .box-2 .signup-btn:hover, #fse-wrapper #qexit .result-box .box-2 .signup-btn:focus {
+            color: white;
+            background-color: #0043a9; }
+    #fse-wrapper #qdone #fse-result-content .box-2 .fico-adv-box .we-recommend, #fse-wrapper #qexit #fse-error-content .box-2 .fico-adv-box .we-recommend {
+      color: #787878;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      padding: 0 0 8px;
+      text-transform: uppercase;
+      text-align: left;
+      margin: 0; }
+    #fse-wrapper #qdone #fse-result-content .box-2 .fico-advanced, #fse-wrapper #qexit #fse-error-content .box-2 .fico-advanced {
+      color: #000000;
+      font-family: inherit;
+      font-size: 28px;
+      font-weight: bold;
+      line-height: 28px;
+      text-transform: uppercase;
+      margin-bottom: 8px; }
+    #fse-wrapper #qdone #fse-result-content .box-2 .get-your-actual-fico, #fse-wrapper #qexit #fse-error-content .box-2 .get-your-actual-fico {
+      color: #000000;
+      font-family: inherit;
+      font-size: 20px;
+      line-height: 28px;
+      padding: 0;
+      text-align: left;
+      margin: 0 0 12px; }
+    #fse-wrapper #qdone #fse-result-content .box-2 .group, #fse-wrapper #qexit #fse-error-content .box-2 .group {
+      margin: 0;
+      text-align: left;
+      padding: 0; }
+      #fse-wrapper #qdone #fse-result-content .box-2 .group .a29, #fse-wrapper #qexit #fse-error-content .box-2 .group .a29 {
+        color: #000000;
+        font-family: inherit;
+        font-size: 36px;
+        line-height: 42px; }
+      #fse-wrapper #qdone #fse-result-content .box-2 .group .a95-month, #fse-wrapper #qexit #fse-error-content .box-2 .group .a95-month {
+        color: #000000;
+        font-family: inherit;
+        font-size: 16px;
+        line-height: 45px;
+        vertical-align: top; }
+      #fse-wrapper #qdone #fse-result-content .box-2 .group .super-top, #fse-wrapper #qexit #fse-error-content .box-2 .group .super-top {
+        top: -8px;
+        font-size: 8px;
+        color: #1A1A1A; }
+    #fse-wrapper #qdone #fse-result-content .box-2 .view-product-info, #fse-wrapper #qexit #fse-error-content .box-2 .view-product-info {
+      display: none; }
+    #fse-wrapper #qdone #fse-result-content .box-2 .three-bureau-scores-and, #fse-wrapper #qexit #fse-error-content .box-2 .three-bureau-scores-and {
+      color: #1A1A1A;
+      font-family: inherit;
+      line-height: 20px;
+      text-decoration: none;
+      list-style: none; }
+      #fse-wrapper #qdone #fse-result-content .box-2 .three-bureau-scores-and li, #fse-wrapper #qexit #fse-error-content .box-2 .three-bureau-scores-and li {
+        text-align: left;
+        margin-left: 24px;
+        font-size: 14px;
+        padding: 0 0 6px; }
+        #fse-wrapper #qdone #fse-result-content .box-2 .three-bureau-scores-and li svg, #fse-wrapper #qexit #fse-error-content .box-2 .three-bureau-scores-and li svg {
+          width: 24px;
+          height: 24px;
+          margin-left: -26px;
+          position: relative;
+          top: 8px; }
+        #fse-wrapper #qdone #fse-result-content .box-2 .three-bureau-scores-and li a sup, #fse-wrapper #qexit #fse-error-content .box-2 .three-bureau-scores-and li a sup {
+          font-size: 8px;
+          color: #1A1A1A; }
+    #fse-wrapper #qdone #fse-result-content .box-2 .other-plans, #fse-wrapper #qexit #fse-error-content .box-2 .other-plans {
+      max-width: 220px;
+      width: 100%; }
+    #fse-wrapper #qdone #fse-result-content .box-2 .start-membership, #fse-wrapper #qexit #fse-error-content .box-2 .start-membership {
+      border-radius: 4px;
+      display: block;
+      background-color: #0062F5;
+      padding: 16px 24px;
+      color: #FFFFFF;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      text-align: center;
+      margin: 16px 0 8px;
+      max-width: 220px;
+      width: 100%; }
+      #fse-wrapper #qdone #fse-result-content .box-2 .start-membership:hover, #fse-wrapper #qdone #fse-result-content .box-2 .start-membership:focus, #fse-wrapper #qexit #fse-error-content .box-2 .start-membership:hover, #fse-wrapper #qexit #fse-error-content .box-2 .start-membership:focus {
+        color: white;
+        background-color: #0043a9; }
+    #fse-wrapper #qdone #fse-result-desc, #fse-wrapper #qexit #fse-error-desc {
+      text-align: left;
+      padding: 0 20px 10px;
+      color: #4a4a4a; }
+      #fse-wrapper #qdone #fse-result-desc ul, #fse-wrapper #qexit #fse-error-desc ul {
+        list-style: none; }
+        #fse-wrapper #qdone #fse-result-desc ul li, #fse-wrapper #qexit #fse-error-desc ul li {
+          padding-bottom: 20px; }
+          #fse-wrapper #qdone #fse-result-desc ul li a, #fse-wrapper #qexit #fse-error-desc ul li a {
+            color: #4A4A4A;
+            text-decoration: underline; }
+      #fse-wrapper #qdone #fse-result-desc .bottom-start-over, #fse-wrapper #qexit #fse-error-desc .bottom-start-over {
+        display: none;
+        padding-bottom: 8px; }
+        #fse-wrapper #qdone #fse-result-desc .bottom-start-over .want-to-estimate-you, #fse-wrapper #qexit #fse-error-desc .bottom-start-over .want-to-estimate-you {
+          color: #000000;
+          font-family: inherit;
+          font-size: 16px;
+          line-height: 24px;
+          text-align: left;
+          padding: 16px 0 8px;
+          margin-bottom: 8px;
+          border-top: 1px solid #C8C7CC;
+          margin: 0; }
+    #fse-wrapper .rating-info {
+      border: none;
+      border-radius: 0;
+      min-height: auto; }
+      #fse-wrapper .rating-info p {
+        padding: 0; }
+    #fse-wrapper .rating-info > p > span {
+      display: table-cell;
+      vertical-align: top;
+      font-size: 15px;
+      line-height: 20px;
+      color: #7B7B81;
+      margin-right: 10px;
+      text-align: left;
+      font-family: inherit; }
+      #fse-wrapper .rating-info > p > span strong {
+        display: block;
+        font-family: inherit;
+        font-weight: 400;
+        color: #000000; }
+      #fse-wrapper .rating-info > p > span:last-of-type {
+        padding-left: 10px; }
+    #fse-wrapper .rating-dial {
+      background: url("https://secure.myfico.com/static/images/mobileapp/illustration-score-range-sprite@2x.png") no-repeat 0 0;
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background-size: auto 40px; }
+    #fse-wrapper .rating-exceptional {
+      background-position: 0 0; }
+    #fse-wrapper .rating-very-good {
+      background-position: -40px 0; }
+    #fse-wrapper .rating-good {
+      background-position: -80px 0; }
+    #fse-wrapper .rating-fair {
+      background-position: -120px 0; }
+    #fse-wrapper .rating-poor {
+      background-position: -160px 0; }
+    #fse-wrapper .checkbox-toggle-details {
+      position: absolute;
+      left: -9999px; }
+      #fse-wrapper .checkbox-toggle-details:focus ~ * .icon-dropdown {
+        box-shadow: 0 0 0 3px #80bdff; }
+      #fse-wrapper .checkbox-toggle-details:checked ~ .header .icon-dropdown {
+        transform: rotate(0); }
+      #fse-wrapper .checkbox-toggle-details:checked ~ .body {
+        display: none; }
+    #fse-wrapper .header p.understand-score {
+      text-align: left;
+      padding: 0;
+      display: inline-block;
+      color: #000000;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 22px; }
+    #fse-wrapper .header .control {
+      display: inline-block; }
+    #fse-wrapper .header .icon-dropdown {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2;
+      stroke: #007aff;
+      fill: #0062F5;
+      color: #0062F5;
+      cursor: pointer;
+      user-select: none;
+      border-radius: 2px;
+      position: relative;
+      top: 5px;
+      left: 5px;
+      transition: box-shadow .1875s;
+      transition: background-color .15s;
+      transform: rotate(180deg); }
+    #fse-wrapper .qhelp {
+      display: none;
+      max-width: 560px;
+      width: 100%;
+      padding: 0 10px;
+      text-align: left;
+      color: #333;
+      font-size: 14px;
+      font-family: inherit;
+      line-height: 27px;
+      margin: 0 auto; }
+      #fse-wrapper .qhelp p, #fse-wrapper .qhelp ul {
+        text-align: left;
+        color: #333;
+        font-size: 14px;
+        font-family: inherit;
+        line-height: 27px;
+        margin-bottom: .5em;
+        padding: 0; }
+      #fse-wrapper .qhelp ul {
+        padding-left: 40px; }
+    #fse-wrapper .step-wrap {
+      background: #003f5f;
+      height: 60px;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: 20px; }
+      #fse-wrapper .step-wrap .pagination {
+        display: inline-block;
+        margin: 20px auto; }
+      #fse-wrapper .step-wrap .page-indicator {
+        display: inline-block;
+        position: relative;
+        top: -21px;
+        left: 11px; }
+      #fse-wrapper .step-wrap .white-outline {
+        border: 1px solid #c9c8c8;
+        background-color: #003f5f;
+        padding: 6px 10px;
+        color: #ffffff;
+        font-family: inherit;
+        cursor: pointer;
+        user-select: none;
+        /* supported by Chrome and Opera */
+        -webkit-user-select: none;
+        /* Safari */
+        -khtml-user-select: none;
+        /* Konqueror HTML */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */ }
+      #fse-wrapper .step-wrap .back-btn {
+        float: left;
+        position: absolute;
+        left: 20%;
+        top: 14px;
+        background-color: inherit;
+        font-size: 16px;
+        font-weight: 400; }
+      #fse-wrapper .step-wrap .reset-estimator {
+        margin-top: 10px;
+        padding: 10px 26px; }
+      #fse-wrapper .step-wrap .fse-progress > i {
+        margin-top: 5px;
+        width: 25px;
+        height: 15px;
+        background-color: #f7f7f7;
+        float: left;
+        display: inline-block; }
+        #fse-wrapper .step-wrap .fse-progress > i.viewed {
+          background-color: #19b300; }
+        #fse-wrapper .step-wrap .fse-progress > i:first-of-type {
+          border-radius: 4px 0 0 4px; }
+        #fse-wrapper .step-wrap .fse-progress > i:last-of-type {
+          border-radius: 0 4px 4px 0; }
+    #fse-wrapper #q1 .back-btn {
+      display: none; }
+  
+  ul.ans-selections {
+    display: table;
+    max-width: 580px;
+    width: 100%;
+    margin: 0px auto 40px;
+    font-family: inherit;
+    padding: 0; }
+    ul.ans-selections:after {
+      content: "";
+      clear: both; }
+    ul.ans-selections li {
+      display: table-cell;
+      width: 28%;
+      margin: 2%;
+      float: left; }
+      ul.ans-selections li button {
+        max-width: 150px;
+        width: 100%;
+        font-family: inherit;
+        background-color: #f7f7f7;
+        margin: 0 auto;
+        height: 100px;
+        line-height: 20px;
+        padding: 5px 15px;
+        vertical-align: middle;
+        box-sizing: border-box;
+        border: 1px solid #c9c8c8;
+        border-radius: 5px;
+        font-size: 18px;
+        line-height: 24px;
+        cursor: pointer;
+        transition: 0.3s;
+        color: #000;
+        font-family: inherit;
+        font-weight: 400;
+        user-select: none;
+        /* supported by Chrome and Opera */
+        -webkit-user-select: none;
+        /* Safari */
+        -khtml-user-select: none;
+        /* Konqueror HTML */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */ }
+        ul.ans-selections li button:hover {
+          background-color: #ccc;
+          color: inherit;
+          border-color: #ddd; }
+    ul.ans-selections.col-2 li {
+      width: 43%; }
+      ul.ans-selections.col-2 li button {
+        max-width: 250px; }
+  
+  .fse-banner {
+    background-image: url("https://www.myfico.com/images/FICOCreditScoreEstimator/banner-score-bridge-quiz-asset.png");
+    position: relative;
+    width: 60%;
+    min-height: 200px;
+    margin: 30px auto;
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: 35%;
+    border: 1px solid #c9c8c8;
+    border-radius: 4px;
+    background-color: #f7f7f7;
+    text-align: left; }
+    .fse-banner .fse-box {
+      padding: 0 20px; }
+    .fse-banner .head {
+      font-family: inherit;
+      padding-top: 12px;
+      font-weight: 400 !important;
+      line-height: 1.3em; }
+    .fse-banner .subhead {
+      margin: 0 !important;
+      display: inline-block;
+      font-size: 18px !important;
+      width: 60% !important;
+      padding: 0 !important;
+      text-align: left !important; }
+    .fse-banner .fse-b-btn {
+      font-family: inherit;
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      border: 1px solid #fc962f;
+      background-image: none;
+      background: none;
+      background-color: #fc962f;
+      box-shadow: none;
+      color: white !important;
+      text-shadow: none;
+      font-weight: 400;
+      text-align: center;
+      display: inline-block;
+      font-size: 16px;
+      padding: .5em 15px; }
+  
+  /* turn off a/b test on load  -- control by optimizely */
+  .test-box, #fse-wrapper #qdone #fse-result-desc.test-box, #fse-wrapper #qexit #fse-error-desc.test-box {
+    display: none; }
+  
+  @media screen and (max-width: 1139px) and (min-width: 767px) {
+    .body_wrapper {
+      padding-top: 45px; } }
+  @media screen and (max-width: 766px) and (min-width: 0) {
+    .fico-score-estimator .body_wrapper {
+      padding-top: 48px; }
+    .fico-score-estimator #fse-main {
+      padding-top: 20px;
+      min-height: 800px; }
+      .fico-score-estimator #fse-main #fse-title {
+        font-size: 20px;
+        line-height: 28px;
+        white-space: inherit; }
+      .fico-score-estimator #fse-main .fse-img {
+        width: 50px; }
+    .fico-score-estimator .fse-banner {
+      width: 95%;
+      background-position: right bottom;
+      background-size: 50%; }
+      .fico-score-estimator .fse-banner .fse-box {
+        padding: 0 8px; }
+      .fico-score-estimator .fse-banner .head {
+        width: 70%; }
+      .fico-score-estimator .fse-banner .subhead {
+        font-size: 14px !important;
+        line-height: 20px;
+        padding-left: 10px !important; }
+      .fico-score-estimator .fse-banner .fse-b-btn {
+        position: relative;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        bottom: auto;
+        left: 10px; }
+    .fico-score-estimator #fse-wrapper .step-wrap {
+      margin-bottom: 10px;
+      height: 50px; }
+      .fico-score-estimator #fse-wrapper .step-wrap .pagination {
+        margin: 10px auto;
+        float: none; }
+      .fico-score-estimator #fse-wrapper .step-wrap .page-indicator {
+        top: -11px; }
+      .fico-score-estimator #fse-wrapper .step-wrap .back-btn {
+        left: 8px;
+        top: 10px;
+        padding: 4px 7px; }
+      .fico-score-estimator #fse-wrapper .step-wrap .fse-progress > i {
+        margin-top: 6px;
+        width: 15px;
+        height: 14px;
+        margin-right: -1px; }
+      .fico-score-estimator #fse-wrapper .step-wrap .reset-estimator {
+        padding: 5px 26px; }
+      .fico-score-estimator #fse-wrapper .step-wrap.stick {
+        margin-top: 0;
+        position: fixed;
+        top: 0;
+        z-index: 9999; }
+    .fico-score-estimator #fse-wrapper #estimated-score {
+      font-size: 68px;
+      top: 0; }
+    .fico-score-estimator #fse-wrapper #qdone h2 {
+      padding-right: 8px;
+      font-size: 20px; }
+    .fico-score-estimator ul.ans-selections li {
+      margin: 3%;
+      width: 27%; }
+      .fico-score-estimator ul.ans-selections li button {
+        font-size: 14px;
+        line-height: 16px;
+        padding: 5px;
+        height: 80px;
+        color: #000;
+        font-family: inherit;
+        font-weight: 400; }
+    .fico-score-estimator ul.ans-selections.col-2 li {
+      width: 44%; }
+      .fico-score-estimator ul.ans-selections.col-2 li button {
+        font-size: 18px;
+        line-height: 20px; }
+  
+    #fse-wrapper #qdone .result-box, #fse-wrapper #qexit .result-box {
+      display: block; }
+      #fse-wrapper #qdone .result-box .box-1, #fse-wrapper #qexit .result-box .box-1 {
+        border-right: none;
+        padding: 24px 26px 0;
+        margin: 0; }
+        #fse-wrapper #qdone .result-box .box-1 .your-fico-score-is-e, #fse-wrapper #qexit .result-box .box-1 .your-fico-score-is-e {
+          font-size: 16px; }
+        #fse-wrapper #qdone .result-box .box-1 .get-your-actual-fico, #fse-wrapper #qexit .result-box .box-1 .get-your-actual-fico {
+          margin-bottom: 8px; }
+      #fse-wrapper #qdone .result-box .box-2, #fse-wrapper #qexit .result-box .box-2 {
+        border-top: 1px solid #C8C7CC;
+        margin-bottom: 20px;
+        padding: 8px 24px; }
+  
+    /* a/b test css */
+    #fse-wrapper #qdone #fse-result-content .box-2 .fico-adv-box .three-bureau-scores-and, #fse-wrapper #qexit #fse-error-content .box-2 .fico-adv-box .three-bureau-scores-and {
+      display: none; }
+    #fse-wrapper #qdone #fse-result-content .box-2 .fico-adv-box .view-product-info, #fse-wrapper #qexit #fse-error-content .box-2 .fico-adv-box .view-product-info {
+      display: block; }
+  
+    #fse-wrapper #qdone #fse-result-desc .bottom-start-over, #fse-wrapper #qexit #fse-error-desc .bottom-start-over {
+      display: block; } }
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS styles go here */
+    #fse-wrapper ul.ans-selections li button {
+      display: inline-block; }
+    #fse-wrapper .step-wrap .fse-progress > i:last-of-type, #fse-wrapper .step-wrap .fse-progress > i:first-of-type {
+      border-radius: 0; } }
+  
+  /*# sourceMappingURL=fico_score_estimator.css.map */
+  
