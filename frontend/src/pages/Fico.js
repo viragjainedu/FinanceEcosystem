@@ -22,7 +22,7 @@ class App extends Component {
                        answer5: "",   
                        answer6: "",   
                        answer7: "",   
-                       answe7a: "",   
+                       answer7a: "",   
                        answer8: "",   
                        answer8a: "",    
                        answer9: "",    
@@ -129,7 +129,7 @@ class App extends Component {
                                                     <div className="col-sm-12">
                                                         <select onChange={this.handleInputChanged.bind(this)} name="answer1" className="form-control">
                                                             <option value="">Select</option>
-                                                            <option value="1.1">I have never had a credit card (Ignore question 1a)</option>
+                                                            <option value="1.1">I have never had a credit card</option>
                                                             <option value="1.2">1</option>
                                                             <option value="1.3">2 to 4</option>
                                                             <option value="1.4">5 or more</option>
@@ -296,7 +296,7 @@ class App extends Component {
                                                         <div className="col-sm-12">
                                                             <select onChange={this.handleInputChanged.bind(this)} name="answer7" className="form-control" required>
                                                                 <option value="">Select</option>
-                                                                <option value="7.1">I have never missed a payment (Ignore question 7a)</option>
+                                                                <option value="7.1">I have never missed a payment</option>
                                                                 <option value="7.2">in the past 3 months</option>
                                                                 <option value="7.3">3 to 6 months ago</option>
                                                                 <option value="7.4">6 months to 1 year ago</option>
@@ -344,7 +344,7 @@ class App extends Component {
                                                         <div className="col-sm-12">
                                                             <select onChange={this.handleInputChanged.bind(this)} name="answer8" className="form-control" required>
                                                                 <option value="">Select</option>
-                                                                <option value="8.1">0 (Ignore question 8a)</option>
+                                                                <option value="8.1">0</option>
                                                                 <option value="8.2">1</option>
                                                                 <option value="8.3">2</option>
                                                             </select>
@@ -416,7 +416,7 @@ class App extends Component {
                                                         <select onChange={this.handleInputChanged.bind(this)} name="answer10" className="form-control" required>
                                                             <option value="">Select</option>
                                                             <option value="10.1">Yes</option>
-                                                            <option value="10.2">No (Ignore question 10a)</option>
+                                                            <option value="10.2">No</option>
                                                         </select>
                                                     </div>
                                                 </div>   
