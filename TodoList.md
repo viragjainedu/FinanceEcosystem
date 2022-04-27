@@ -48,8 +48,10 @@ FICO Score.
 <!-- When can our lender withdraw his money !!  Ans - Lock in Period , GRADE -->
 From Balance and From Bank account.
 
-Validation.
-<!-- error - current borrower error after rejection it will cause problem -->
+Validation. Physical Meeting scehdule in mail
+System Notifications
 Backend page - for acitve loans
 advance insights.
 Roll Back code
+
+
