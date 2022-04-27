@@ -29,6 +29,7 @@ var account_stats = require("./routes/account_stats");
 var interests = require("./routes/interests");
 var installments = require("./routes/installments");
 var myProfile = require("./routes/myProfile");
+var Fico = require("./routes/Fico");
 
 var SystemNotifications = require("./routesAdmin/SystemNotifications");
 var Mails = require("./routesAdmin/Mails");
@@ -75,6 +76,7 @@ app.use("/installments", installments);
 app.use("/interests", interests);
 app.use("/myProfile", myProfile);
 
+app.use("/Fico", Fico);
 
 
 app.use("/SystemNotifications", SystemNotifications);

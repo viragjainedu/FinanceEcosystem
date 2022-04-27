@@ -27,6 +27,10 @@ function LeftNavbar (){
                     {/* <li className="nav-item"> <Link to="/IntraBankTransactions"><a className="nav-link" href="pages/ui-features/buttons.html">Intra Bank Transactions</a></Link></li> */}
                     {/* <li className="nav-item"> <Link to="/DecentralizedLoans"><a className="nav-link" href="pages/ui-features/buttons.html">Loans</a></Link></li> */}
                     {/* <li className="nav-item"> <Link to="/InvestmentAdvisor"><a className="nav-link" href="pages/ui-features/buttons.html">Investment Advisor</a></Link></li> */}
+                    <li className="nav-item"> <Link to="/P2PLending"><a className="nav-link" href="pages/ui-features/buttons.html">P2P Lending</a></Link></li>
+                    <li className="nav-item"> <Link to="/Borrowing"><a className="nav-link" href="pages/ui-features/buttons.html">Borrowing</a></Link></li>
+                    <li className="nav-item"> <Link to="/Installments"><a className="nav-link" href="pages/ui-features/buttons.html">Installments</a></Link></li>
+                    <li className="nav-item"> <Link to="/Interests"><a className="nav-link" href="pages/ui-features/buttons.html">Returns</a></Link></li>
                     <li className="nav-item"> <Link to="/AdvancedInsights"><a className="nav-link" href="pages/ui-features/buttons.html">Advanced Insights</a></Link></li>
                     <li className="nav-item"> <a className="nav-link" href='http://localhost:8080/'>Expense Analyser</a></li>
                     <li className="nav-item"> <Link to="/Blogs"><a className="nav-link" href="pages/ui-features/buttons.html">Blogs</a></Link></li>

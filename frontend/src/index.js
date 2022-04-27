@@ -14,7 +14,7 @@ import Borrowing from './pages/Borrowing';
 // import IntraBankTransactions from './pages/IntraBankTransactions';
 // import DecentralizedLoans from './pages/DecentralizedLoans';
 // import InvestmentAdvisor from './pages/InvestmentAdvisor';
-// import AdvancedInsights from './pages/AdvancedInsights';
+import AdvancedInsights from './pages/AdvancedInsights';
 // import BudgetPlanner from './pages/BudgetPlanner';
 import SearchResult from './pages/SearchResult';
 // import DocumentVerification from './pages/DocumentVerification';
@@ -25,6 +25,7 @@ import Payment from './pages/Payment';
 import Installments from './pages/Installments';  
 import Interests from './pages/Interests';  
 import MyProfile from './pages/MyProfile'
+import Fico from './pages/Fico';  
 
 import AdminPanel from './pages/AdminPanel';  
 import SystemNotifications from './AdminPanelPages/SystemNotifications'
@@ -45,7 +46,7 @@ ReactDOM.render(
         {/* <Route path="IntraBankTransactions" element={<IntraBankTransactions />} /> */}
         {/* <Route path="DecentralizedLoans" element={<DecentralizedLoans />} /> */}
         {/* <Route path="InvestmentAdvisor" element={<InvestmentAdvisor />} /> */}
-        {/* <Route path="AdvancedInsights" element={<AdvancedInsights />} /> */}
+        <Route path="AdvancedInsights" element={<AdvancedInsights />} />
         {/* <Route path="BudgetPlanner" element={<BudgetPlanner />} /> */}
         <Route path="SearchResult" element={<SearchResult />} />
         {/* <Route path="DocumentVerification" element={<DocumentVerification />} /> */}
@@ -57,6 +58,8 @@ ReactDOM.render(
         <Route path="Interests" element={<Interests />} />
         <Route path="MyProfile" element={<MyProfile />} />
 
+        <Route path="Fico" element={<Fico />} />
+        
         
         <Route path="AdminPanel" element={<AdminPanel />} />
         <Route path="SystemNotifications" element={<SystemNotifications />} />

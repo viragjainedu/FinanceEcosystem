@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var connection = require('../connection');
 var moment = require('moment')
+var nodemailer = require('nodemailer');
 
 
 router.post("/", function(req, res, next) {
@@ -171,13 +172,41 @@ router.post("/CompleteProfile", function(req, res, next) {
             (err, result)=> {
                 if(err){
                     console.log(err)
-                }    
-                res.send({"success":"Updated Succesfully"})
+                }
+
+                //send mail
+                            
+                var transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                    user: 'virag.j@somaiya.edu',
+                    pass: 'dontopenthis12345'
+                    }
+                });
+                
+                
+                var mailOptions = {
+                    from: 'virag.j@somaiya.edu',
+                    to: email,
+                    subject: 'Physical Verification of your details will take place soon',
+                    text: 'You can visit http://localhost:3000/borrowing for more details.'
+                };
+                
+                transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                    console.log(error);
+                    res.send({error:error})
+                    } else {
+                    console.log('Email sent: ' + info.response);
+
+                        res.send({"success":"Updated Succesfully"})
+
+                    }
+                });
             }
             );
             //INSERTING IN BORROWING REQUESTS ENDS
            
-            
 
             //Credit Score calculation for grade ENDS
         }
@@ -407,7 +436,7 @@ router.post("/transact", function(req, res, next) {
                     //calculating interest_rate to insert in installments table
                     connection.query(`select * from proposedLoans where email = ? ` , [email], (err,result) => {
                         if(err){console.log(err)}
-                        for (let i = 1; i <= result[0].month_req; i++) {
+                        for (var i = 1; i <= result[0].month_req; i++) {
                             //updating installments table 
                             var interest_rate = result[0][`interest1`]
                             var a = amount_req
@@ -421,9 +450,10 @@ router.post("/transact", function(req, res, next) {
                             var denominator = Math.pow((1+r),n) - 1 ;
                             var installment_amount = numerator/denominator ;
                             // console.log(`${a},${n},${r},${numerator},${denominator},${installment_amount},`);
-
+                            var date_of_payment = moment(new Date()).add(i, 'M').format('YYYY-MM-DD HH:mm:ss');   
+                            console.log(date_of_payment)
                             connection.query("insert into installments (email,amount_borrowed,no_of_months,interest_rate,installment_amount,installment_no,date_of_payment,time_of_payment,status) values(?,?,?,?,?,?,?,?,?)",
-                            [email,amount_req,result[0].month_req,interest_rate,installment_amount,i,null,null,'Pending'],(err,output)=>{
+                            [email,amount_req,result[0].month_req,interest_rate,installment_amount,i,date_of_payment,null,'Pending'],(err,output)=>{
                                 if(err){console.log(err)}
                             })                    
                         }

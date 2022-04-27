@@ -4,7 +4,7 @@ import TopNavbar from '../components/TopNavbar'
 import LeftNavbar from '../components/LeftNavbar'
 import RightNavbar from '../components/RightNavbar'
 import MainHeader from '../components/MainHeader'
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import ProposedLoans from '../components/ProposedLoans'
 
@@ -110,28 +110,42 @@ class App extends Component {
     handleButtonClicked() {
         // var first_name = this.state.first_name;
         console.log(this.state)
-        
+        const regexExp = /^[6-9]\d{9}$/gi;
+
         if(this.state.emp_length !== "" &&  this.state.purpose !== "" &&  this.state.age !== "" &&  this.state.amount_req !== ""&&  this.state.month_req !== "" &&  this.state.collateral_value !== "" &&  this.state.collateral !== "" && this.state.contact !== "" && this.state.annual_income !== ""){
-            //Axios ka post request daalna hai 
-            Axios.post("http://localhost:9000/borrowing/CompleteProfile", {
-                emp_length : this.state.emp_length,
-                purpose : this.state.purpose,
-                contact : this.state.contact,
-                collateral : this.state.collateral,
-                collateral_value : this.state.collateral_value,
-                amount_req : this.state.amount_req,
-                month_req : this.state.month_req,
-                age : this.state.age,
-                annual_income : this.state.annual_income,
-                email : localStorage.getItem('emailReg'),
-            }).then((response) => {
-                console.log(response);
-                // console.log("Hiiii")
-            if(response.data.success){
-                console.log("Completed profile");
-                window.location.href = "/borrowing";
+            
+            if(this.state.age < 18){
+                this.setState({
+                    ...this.state,
+                    message : "You should be above 18 years old to borrow",
+                });
+            }else if(!regexExp.test(this.state.contact)){
+                this.setState({
+                    ...this.state,
+                    message : "Invalid Phone Number",
+                });
+            }else{
+                //Axios ka post request daalna hai 
+                Axios.post("http://localhost:9000/borrowing/CompleteProfile", {
+                    emp_length : this.state.emp_length,
+                    purpose : this.state.purpose,
+                    contact : this.state.contact,
+                    collateral : this.state.collateral,
+                    collateral_value : this.state.collateral_value,
+                    amount_req : this.state.amount_req,
+                    month_req : this.state.month_req,
+                    age : this.state.age,
+                    annual_income : this.state.annual_income,
+                    email : localStorage.getItem('emailReg'),
+                }).then((response) => {
+                    console.log(response);
+                    // console.log("Hiiii")
+                if(response.data.success){
+                    console.log("Completed profile");
+                    window.location.href = "/borrowing";
+                }
+                });
             }
-            });
         }
         else{
             this.setState({
@@ -145,7 +159,8 @@ class App extends Component {
     BorrowingChart(){
         return(
     <>
-        <div class="col-12 grid-margin stretch-card">
+    
+        <div class="col-3 grid-margin stretch-card">
             <div class="card card-rounded">
                 <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">
@@ -173,7 +188,7 @@ class App extends Component {
                     </li>
                     <li>
                     <div class="d-flex justify-content-between">
-                        <div>Acceptance/Rejection</div>
+                        <div>Accept/Reject</div>
                         <p>{(() => {if(this.state.status > 3) {return 'Completed';}else{return 'Pending'}})()}</p>
                     </div>
                     </li>                                  
@@ -208,7 +223,13 @@ class App extends Component {
                         <div className="content-wrapper">
                             <MainHeader name="Borrowing"/>
                             <br/>
-                            <div className="col-lg-12 grid-margin stretch-card">
+                            {(()=>{
+                                if(this.state.isLoanCalculatedForThisEmail){
+                                    return <ProposedLoans/>
+                                }
+                            })()}
+                            <div className='row'>
+                            <div className="col-lg-9 grid-margin stretch-card">
                             <div className="card">
                                 <div className="card-body">
                                     <h4 className="card-title">Profile Information</h4><p>We've recieved your profile information and is under our evaluation.</p>
@@ -287,12 +308,8 @@ class App extends Component {
                                 </div>
                                 <br></br>
                             </div>
-                        {(()=>{
-                            if(this.state.isLoanCalculatedForThisEmail){
-                                return <ProposedLoans/>
-                            }
-                        })()}
                         {this.BorrowingChart()}
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -315,14 +332,15 @@ class App extends Component {
                         <h3>{this.state.apiResponse}</h3>
                         <br></br> */}
                         {/* <CompleteProfile/> */}
-                                            
-                        <div className="col-12 grid-margin">
+                        <br></br>
+                        <div className='row'>
+                        <div className="col-9 grid-margin">
                             <div className="card">
                                 <div className="card-body">
                                 <h4 className="card-title">Enter Required Information</h4>
                                 <div className="form-sample">
                                     <p className="card-description">
-                                        Please fill FICO form. Link Here 
+                                    <Link to="/Fico"><a className="nav-link" href="pages/Fico.js">Please fill FICO form</a></Link> 
                                     </p>
                                     <h6 className='text-danger'>{this.state.message}</h6>
                                     <div className="row">
@@ -330,7 +348,7 @@ class App extends Component {
                                         <div className="form-group row">
                                         <label className="col-sm-3 col-form-label">No of years of Employment</label>
                                         <div className="col-sm-9">
-                                            <input type="number" value={this.state.emp_length} onChange={this.handleInputChanged.bind(this)} name="emp_length" className="form-control" placeholder='0 if not started working yet.'/>
+                                            <input type="number" min="0" value={this.state.emp_length} onChange={this.handleInputChanged.bind(this)} name="emp_length" className="form-control" placeholder='0 if not started working yet.'/>
                                         </div>
                                         </div>
                                     </div>
@@ -375,7 +393,7 @@ class App extends Component {
                                         <div className="form-group row">
                                         <label className="col-sm-3 col-form-label">Contact</label>
                                         <div className="col-sm-9">
-                                            <input type="text" value={this.state.contact} onChange={this.handleInputChanged.bind(this)} name="contact" className="form-control" placeholder='9869101921' />
+                                            <input type="text" minlength="10" value={this.state.contact} onChange={this.handleInputChanged.bind(this)} name="contact" className="form-control" placeholder='9869101921' />
                                         </div>
                                         </div>
                                     </div>
@@ -405,7 +423,7 @@ class App extends Component {
                                     </div>
                                     <div className="col-md-6">
                                         <div className="form-group row">
-                                        <label className="col-sm-3 col-form-label">No Of Months</label>
+                                        <label className="col-sm-3 col-form-label">No Of Months to Borrow</label>
                                         <div className="col-sm-9">
                                             <select onChange={this.handleInputChanged.bind(this)} name="month_req" className="form-control">
                                                 <option value="">No of Months</option>
@@ -426,6 +444,7 @@ class App extends Component {
                             </div>
                         </div>
                         {this.BorrowingChart()}
+                        </div>
                     </div>
                     
                     </div>

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 import Axios from 'axios';
+import moment from 'moment'
 
 class CompleteProfile extends Component {
 	
@@ -56,32 +57,44 @@ class CompleteProfile extends Component {
     
     handleButtonClicked() {
         // var first_name = this.state.first_name;
-        console.log(this.state)
+        // console.log(this.state)
+
+        var age = moment(this.state.DOB)
+        var now = moment()
         
+
         if(this.state.first_name !== "" && this.state.last_name !== "" && this.state.DOB !== "" && this.state.gender !== "" && this.state.address1 !== ""
             && this.state.address2 !== "" && this.state.city !== "" && this.state.state !== "" && this.state.country !== "" && this.state.pincode !== ""     
         ){
-            //Axios ka post request daalna hai 
-            Axios.post("http://localhost:9000/p2pLending/CompleteProfile", {
-                first_name : this.state.first_name,
-                last_name : this.state.last_name,
-                gender : this.state.gender,
-                DOB : this.state.DOB,
-                city : this.state.city,
-                state : this.state.state,
-                country : this.state.country,
-                pincode : this.state.pincode,
-                address1 : this.state.address1,
-                address2 : this.state.address2,
-                email : localStorage.getItem('emailReg'),
-            }).then((response) => {
-                console.log(response);
-                // console.log("Hiiii")
-            if(response.data.success){
-                console.log("Completed profile");
-                window.location.href = "/p2pLending";
+            
+            if(now.diff(age,'years') < 18){
+                this.setState({
+                    ...this.state,
+                    message : "You should be above 18 years old",
+                });
+            }else{
+                // Axios ka post request daalna hai 
+                Axios.post("http://localhost:9000/p2pLending/CompleteProfile", {
+                    first_name : this.state.first_name,
+                    last_name : this.state.last_name,
+                    gender : this.state.gender,
+                    DOB : this.state.DOB,
+                    city : this.state.city,
+                    state : this.state.state,
+                    country : this.state.country,
+                    pincode : this.state.pincode,
+                    address1 : this.state.address1,
+                    address2 : this.state.address2,
+                    email : localStorage.getItem('emailReg'),
+                }).then((response) => {
+                    console.log(response);
+                    // console.log("Hiiii")
+                if(response.data.success){
+                    console.log("Completed profile");
+                    window.location.href = "/p2pLending";
+                }
+                });
             }
-            });
         }
         else{
             this.setState({
@@ -150,7 +163,7 @@ class CompleteProfile extends Component {
                                 <div className="form-group row">
                                 <label className="col-sm-3 col-form-label">Date of Birth</label>
                                 <div className="col-sm-9">
-                                    <input required className="form-control" value={this.state.DOB} onChange={this.handleInputChanged.bind(this)} name="DOB"  placeholder="dd/mm/yyyy" />
+                                    <input type='date' required className="form-control" value={this.state.DOB} onChange={this.handleInputChanged.bind(this)} name="DOB"  placeholder="dd-mm-yyyy" />
                                 </div>
                                 </div>
                             </div>
@@ -225,7 +238,7 @@ class CompleteProfile extends Component {
                                 <div className="form-group row">
                                 <label className="col-sm-3 col-form-label">Postcode</label>
                                 <div className="col-sm-9">
-                                    <input required type="text" value={this.state.pincode} onChange={this.handleInputChanged.bind(this)} name="pincode"  className="form-control" />
+                                    <input required type="text" maxlength="6" minlength="6" value={this.state.pincode} onChange={this.handleInputChanged.bind(this)} name="pincode"  className="form-control" />
                                 </div>
                                 </div>
                             </div>
