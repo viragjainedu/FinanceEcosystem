@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var connection = require('../connection');
 var moment = require('moment')
+var nodemailer = require('nodemailer');
 
 
 router.post("/", function(req, res, next) {
@@ -171,13 +172,41 @@ router.post("/CompleteProfile", function(req, res, next) {
             (err, result)=> {
                 if(err){
                     console.log(err)
-                }    
-                res.send({"success":"Updated Succesfully"})
+                }
+
+                //send mail
+                            
+                var transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                    user: 'virag.j@somaiya.edu',
+                    pass: 'dontopenthis12345'
+                    }
+                });
+                
+                
+                var mailOptions = {
+                    from: 'virag.j@somaiya.edu',
+                    to: email,
+                    subject: 'Physical Verification of your details will take place soon',
+                    text: 'You can visit http://localhost:3000/borrowing for more details.'
+                };
+                
+                transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                    console.log(error);
+                    res.send({error:error})
+                    } else {
+                    console.log('Email sent: ' + info.response);
+
+                        res.send({"success":"Updated Succesfully"})
+
+                    }
+                });
             }
             );
             //INSERTING IN BORROWING REQUESTS ENDS
            
-            
 
             //Credit Score calculation for grade ENDS
         }

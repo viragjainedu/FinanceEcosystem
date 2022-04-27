@@ -14,7 +14,7 @@ import Borrowing from './pages/Borrowing';
 // import IntraBankTransactions from './pages/IntraBankTransactions';
 // import DecentralizedLoans from './pages/DecentralizedLoans';
 // import InvestmentAdvisor from './pages/InvestmentAdvisor';
-// import AdvancedInsights from './pages/AdvancedInsights';
+import AdvancedInsights from './pages/AdvancedInsights';
 // import BudgetPlanner from './pages/BudgetPlanner';
 import SearchResult from './pages/SearchResult';
 // import DocumentVerification from './pages/DocumentVerification';
@@ -44,7 +44,7 @@ ReactDOM.render(
         {/* <Route path="IntraBankTransactions" element={<IntraBankTransactions />} /> */}
         {/* <Route path="DecentralizedLoans" element={<DecentralizedLoans />} /> */}
         {/* <Route path="InvestmentAdvisor" element={<InvestmentAdvisor />} /> */}
-        {/* <Route path="AdvancedInsights" element={<AdvancedInsights />} /> */}
+        <Route path="AdvancedInsights" element={<AdvancedInsights />} />
         {/* <Route path="BudgetPlanner" element={<BudgetPlanner />} /> */}
         <Route path="SearchResult" element={<SearchResult />} />
         {/* <Route path="DocumentVerification" element={<DocumentVerification />} /> */}

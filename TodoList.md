@@ -52,6 +52,13 @@ Validation. Physical Meeting scehdule in mail
 System Notifications
 Backend page - for acitve loans
 advance insights.
-Roll Back code
+returns page 
+total interest installment paid
+principal and innterest
+
+Sir's changes - 
+OTP timer
+Forgot Password
+
 
 

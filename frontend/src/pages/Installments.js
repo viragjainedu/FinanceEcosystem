@@ -77,6 +77,9 @@ class App extends Component {
                         <p class="card-description text-danger">
                           {this.state.message}
                         </p>
+                        <p class="card-description text-success">
+                          
+                        </p>
                         <div class="table-responsive">
                           <table class="table table-hover">
                             <thead>
@@ -84,6 +87,8 @@ class App extends Component {
                                 <th>Installment No</th>
                                 <th>Amount Borrowed</th>
                                 <th>Interest Rate</th>
+                                {/* <th>Principal</th>
+                                <th>Interest</th> */}
                                 <th>Installment Amount</th>
                                 {/* <th>Date of Loan Transaction</th> */}
                                 <th>Due Date</th>
@@ -98,6 +103,8 @@ class App extends Component {
                                   <td>{item.installment_no}</td>
                                   <td>₹ {item.amount_borrowed}</td>
                                   <td>{item.interest_rate} % </td>
+                                  {/* <td>{item.interest_rate} </td>
+                                  <td>{item.interest_rate} % </td> */}
                                   <td>₹ {item.installment_amount} </td>
                                   {/* <td>{item.date_of_loan_transaction} </td> */}
                                   {/* <td>{momnet(item.time_of_payment)} </td> */}

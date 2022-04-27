@@ -3,6 +3,7 @@ var router = express.Router();
 var connection = require('../connection');
 var moment = require('moment');
 const { connect } = require("../connection");
+var nodemailer = require('nodemailer');
 
 router.post("/getInstallments", function(req, res) {
 
@@ -55,12 +56,22 @@ router.post("/pay", function(req, res) {
                             if(BorrowerNo === -1){
                                 continue;
                             }else if(BorrowerNo !== -1){
+                                
                                 console.log(`Borrower No is ${BorrowerNo}`)
-                                var cut = (installment_amount * (result[i].fixed_lending_amount/amount_borrowed).toFixed(2)).toFixed(2)
-                                var principal = (amount_borrowed/result[i].lock_in_period).toFixed(2)
-                                var interest = (installment_amount - principal).toFixed(2)
+                                var ratio = (result[i].fixed_lending_amount/amount_borrowed)
+                                var cut_for_lender = (installment_amount * ratio)
+                                var principal_for_borrower = (amount_borrowed/result[i].lock_in_period)
+                                var principal_for_lender = ratio * principal_for_borrower
+                                var interest_for_borrower = (installment_amount - principal_for_borrower)
+                                var interest_for_lender = ratio*interest_for_borrower
+                                console.log(ratio)
+                                console.log(cut_for_lender)
+                                console.log(principal_for_borrower)
+                                console.log(principal_for_lender)
+                                console.log(interest_for_borrower)
+                                console.log(interest_for_lender)
                                 connection.query("INSERT INTO returns (email,borrower_email,return_amount,principal,interest,date_of_payment) values(?,?,?,?,?,?);",
-                                    [result[i].email,email,cut,principal,interest,moment(new Date()).format('YYYY-MM-DD HH:mm:ss')],
+                                    [result[i].email,email,cut_for_lender,principal_for_lender,interest_for_lender,moment(new Date()).format('YYYY-MM-DD HH:mm:ss')],
                                     (err,output) => {
                                         if(err){console.log(err)}
                                         else{
@@ -75,7 +86,35 @@ router.post("/pay", function(req, res) {
 
                     }
                 }
-            })           
+            })
+            //sending mail successfull
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  user: 'virag.j@somaiya.edu',
+                  pass: 'dontopenthis12345'
+                }
+              });
+              
+              
+              var mailOptions = {
+                from: 'virag.j@somaiya.edu',
+                to: email,
+                subject: 'Payment Of Installment',
+                text: `Your installment amount of Rs.${installment_amount} of Loan Rs.${amount_borrowed} has been paid.`
+              };
+              
+              transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                  res.send({error:error})
+                } else {
+                  console.log('Email sent: ' + info.response);
+                  res.send({success: true})
+        
+                }
+              });
+        
             res.send({message: "Paid Successfully"})     
         }
     })

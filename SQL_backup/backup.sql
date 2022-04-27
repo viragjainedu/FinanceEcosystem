@@ -1,18 +1,19 @@
 
-DROP table lending_transactions ;
-DROP table borrowing_transactions ;
-DROP table borrowing_requests ;
-DROP table proposedloans ;
-DROP table person ;
-DROP table system_notifications ; 
-DROP table lenders_data ; 
-DROP table borrowers_data ; 
-DROP table account_stats ;
-DROP table blogs ;
-DROP table news ;
-DROP table interest_rates ;
-DROP table personal_notifications ;
-DROP table installments;
+    DROP table lending_transactions ;
+    DROP table borrowing_transactions ;
+    DROP table borrowing_requests ;
+    DROP table proposedloans ;
+    DROP table person ;
+    DROP table system_notifications ; 
+    DROP table lenders_data ; 
+    DROP table borrowers_data ; 
+    DROP table account_stats ;
+    DROP table blogs ;
+    DROP table news ;
+    DROP table interest_rates ;
+    DROP table personal_notifications ;
+    DROP table installments;
+    DROP table returns;
 
 DELETE FROM lending_transactions ;
 DELETE FROM borrowing_transactions ;

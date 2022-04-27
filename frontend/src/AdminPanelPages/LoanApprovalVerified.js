@@ -105,7 +105,7 @@ class App extends Component {
     if(response.data.message){
       alert(response.data.message)
     }else{
-      
+      window.location.href = "/LoanApprovalVerified";
     }
   });
 
@@ -172,7 +172,7 @@ class App extends Component {
                           {item.email}
                         </td>
                           {(()=>{
-                            if(item.isCalculated == true){
+                            if(item.isCalculated === 1){
                               return (
                                 <td className="py-1">
                                   Calculated Already
@@ -217,13 +217,13 @@ class App extends Component {
                           if(item.selected !== 0 && item.rejected === null ){
                             return (
                               <td className="py-1" style={{color: "green"}}>
-                                Selected  Option {item.selected}
+                                Accepted {item.selected}
                               </td>
                             )
                           }else if (item.selected === 0 && item.rejected === null){
                             return(
                               <td className="py-1" style={{color: "blue"}}>
-                               Not Selected
+                               Not Accepted Yet
                             </td>
                             )
                           }else if(item.rejected === 1){
