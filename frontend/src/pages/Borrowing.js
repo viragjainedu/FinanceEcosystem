@@ -4,7 +4,7 @@ import TopNavbar from '../components/TopNavbar'
 import LeftNavbar from '../components/LeftNavbar'
 import RightNavbar from '../components/RightNavbar'
 import MainHeader from '../components/MainHeader'
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import ProposedLoans from '../components/ProposedLoans'
 
@@ -322,7 +322,7 @@ class App extends Component {
                                 <h4 className="card-title">Enter Required Information</h4>
                                 <div className="form-sample">
                                     <p className="card-description">
-                                        Please fill FICO form. Link Here 
+                                    <Link to="/Fico"><a className="nav-link" href="pages/Fico.js">Please fill FICO form</a></Link> 
                                     </p>
                                     <h6 className='text-danger'>{this.state.message}</h6>
                                     <div className="row">
