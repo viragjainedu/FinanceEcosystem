@@ -54,6 +54,7 @@ router.post("/amount_lending", function(req, res, next) {
     const amount = req.body.amount;
     const lock_in_period = req.body.lock_in_period;
     const debitFrom = req.body.debitFrom;
+    const riskApetite = req.body.riskApetite;
     
     // if(debitFrom balance)
     if(debitFrom === 'balance'){
@@ -83,13 +84,25 @@ router.post("/amount_lending", function(req, res, next) {
                             })
             
                             //add this to lenders data table
-                            connection.query("INSERT into lenders_data (lock_in_period,email,amount_lent, amount_remaining, fixed_lending_amount,current_borrower) values (?,?,?,?,?,0);",
-                                [lock_in_period,email,amount,amount,parseInt(amount)/10]
+                            var v1 = 5;
+                            var v2 = 5;
+                            if(riskApetite === 'high') {
+                                v1 = 2,
+                                v2 = 8
+                            }
+                            if(riskApetite === 'low') {
+                                v1 = 8,
+                                v2 = 2
+                            }
+
+                            connection.query("INSERT into lenders_data (v1,v2,lock_in_period,email,amount_lent, amount_remaining, fixed_lending_amount,current_borrower) values (?,?,?,?,?,?,?,0);",
+                                [v1,v2, lock_in_period,email,amount,amount,parseInt(amount)/10]
                                 ,(err,res) => {
                                     console.log(err)
+                                    console.log(res)
                                 }
                             );
-            
+        
                             res.send({"Lending_status" : "Success"});
                         }
                     }
@@ -116,8 +129,19 @@ router.post("/amount_lending", function(req, res, next) {
                     })
     
                     //add this to lenders data table
-                    connection.query("INSERT into lenders_data (lock_in_period,email,amount_lent, amount_remaining, fixed_lending_amount,current_borrower) values (?,?,?,?,?,0);",
-                        [lock_in_period,email,amount,amount,parseInt(amount)/10]
+                    var v1 = 5;
+                    var v2 = 5;
+                    if(riskApetite === 'high') {
+                        v1 = 2,
+                        v2 = 8
+                    }
+                    if(riskApetite === 'low') {
+                        v1 = 8,
+                        v2 = 2
+                    }
+
+                    connection.query("INSERT into lenders_data (v1,v2,lock_in_period,email,amount_lent, amount_remaining, fixed_lending_amount,current_borrower) values (?,?,?,?,?,?,?,0);",
+                        [v1,v2, lock_in_period,email,amount,amount,parseInt(amount)/10]
                         ,(err,res) => {
                             console.log(err)
                             console.log(res)

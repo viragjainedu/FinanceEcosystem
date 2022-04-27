@@ -25,10 +25,12 @@ class App extends Component {
     const amount = query.get('amount');
     const lock_in_period = query.get('lock_in_period');
     const debitFrom = query.get('debitFrom');
+    const riskApetite = query.get('riskApetite');
       this.setState({
         amount: amount,
         lock_in_period: lock_in_period,
         debitFrom: debitFrom,
+        riskApetite: riskApetite,
       })
 	}
 	
@@ -40,6 +42,7 @@ class App extends Component {
     var amount = this.state.amount;
     var lock_in_period = this.state.lock_in_period;
     var debitFrom = this.state.debitFrom;
+    var riskApetite = this.state.riskApetite;
     
     //Axios ka post request daalna hai 
       Axios.post("http://localhost:9000/p2pLending/amount_lending", {
@@ -47,6 +50,7 @@ class App extends Component {
         amount: amount,
         lock_in_period: lock_in_period,
         debitFrom: debitFrom,
+        riskApetite: riskApetite,
     }).then((response) => {
       console.log(response);
       if(response.data.Lending_status){

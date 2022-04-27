@@ -15,7 +15,11 @@
     DROP table installments;
     DROP table returns;
 
-DELETE FROM lending_transactions ;
+
+Alter table lenders_data add column v1 int;
+Alter table lenders_data add column v2 int;
+
+DELETE FROM lending_transactions ;  
 DELETE FROM borrowing_transactions ;
 DELETE FROM borrowing_requests ;
 DELETE FROM proposedloans ;

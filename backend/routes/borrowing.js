@@ -516,24 +516,51 @@ router.post("/calculate", function(req, res, next) {
                             if(result[i].amount_remaining == 0){
                                 continue;
                             }else{
-                                if(result[i].fixed_lending_amount + amount_included <= loan_cap){
-                                    amount_included = amount_included + result[i].fixed_lending_amount
 
-                                    var leastBorrowerNo = 0;
-                                    //calculating borrowerNo
-                                    for (let j = 0; j < 10; j++) {
-                                        if(result[i][`b${j}`] ===  null){
-                                            leastBorrowerNo = j;
-                                            break;
+                                if((GRADE === 'A' || GRADE === 'B' || GRADE === 'C') && result[i].v1 > 0){
+
+                                    if(result[i].fixed_lending_amount + amount_included <= loan_cap){
+                                        amount_included = amount_included + result[i].fixed_lending_amount
+    
+                                        var leastBorrowerNo = 0;
+                                        //calculating borrowerNo
+                                        for (let j = 0; j < 10; j++) {
+                                            if(result[i][`b${j}`] ===  null){
+                                                leastBorrowerNo = j;
+                                                break;
+                                            }
+                                        }
+                                        console.log(`borrowerNo: ${leastBorrowerNo}`)
+                                        connection.query(`UPDATE  lenders_data set amount_remaining = ?, b${leastBorrowerNo} = ? ,v1 = ? where lenders_id = ?`,
+                                        [result[i].amount_remaining-result[i].fixed_lending_amount ,email,result[i].v1-1, result[i].lenders_id]),
+                                        (err,out)=>{
+                                            if(err){console.log(err)}
+                                            
                                         }
                                     }
-                                    console.log(`borrowerNo: ${leastBorrowerNo}`)
-                                    connection.query(`UPDATE  lenders_data set amount_remaining = ?, b${leastBorrowerNo} = ?  where lenders_id = ?`,
-                                    [result[i].amount_remaining-result[i].fixed_lending_amount ,email, result[i].lenders_id]),
-                                    (err,out)=>{
-                                        if(err){console.log(err)}
-                                        
+                                    
+                                }else if(( GRADE === 'D' || GRADE === 'E' || GRADE === 'F' || GRADE ==='G') && result[i].v2 > 0){
+                                    
+                                    if(result[i].fixed_lending_amount + amount_included <= loan_cap){
+                                        amount_included = amount_included + result[i].fixed_lending_amount
+    
+                                        var leastBorrowerNo = 0;
+                                        //calculating borrowerNo
+                                        for (let j = 0; j < 10; j++) {
+                                            if(result[i][`b${j}`] ===  null){
+                                                leastBorrowerNo = j;
+                                                break;
+                                            }
+                                        }
+                                        console.log(`borrowerNo: ${leastBorrowerNo}`)
+                                        connection.query(`UPDATE  lenders_data set amount_remaining = ?, b${leastBorrowerNo} = ? ,v2 = ? where lenders_id = ?`,
+                                        [result[i].amount_remaining-result[i].fixed_lending_amount ,email,result[i].v2-1, result[i].lenders_id]),
+                                        (err,out)=>{
+                                            if(err){console.log(err)}
+                                            
+                                        }
                                     }
+                                    
                                 }
                             }
                         }

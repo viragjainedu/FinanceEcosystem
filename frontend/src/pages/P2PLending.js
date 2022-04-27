@@ -19,7 +19,8 @@ class App extends Component {
       ProfileCompleted: false, 
       lending_transactions : [],
       message : "",
-      debitFrom : ""
+      debitFrom : "",
+      riskApetite: ""
     };
 	}
 
@@ -71,13 +72,13 @@ class App extends Component {
 
   handleButtonClicked() {
     
-    if(this.state.lock_in_period !== 0 && this.state.lend_amount !== 0  && this.state.debitFrom !== "" ){
+    if(this.state.lock_in_period !== 0 && this.state.lend_amount !== 0  && this.state.debitFrom !== "" && this.state.riskApetite !== "" ){
       this.setState({
         ...this.state,
         request_submitted: true,
       });
       // console.log(this.state)
-      window.location.href  = `/Payment?amount=${this.state.lend_amount}&lock_in_period=${this.state.lock_in_period}&debitFrom=${this.state.debitFrom}`;         
+      window.location.href  = `/Payment?amount=${this.state.lend_amount}&lock_in_period=${this.state.lock_in_period}&debitFrom=${this.state.debitFrom}&riskApetite=${this.state.riskApetite}`;         
     }else{
       this.setState({
         ...this.state,
@@ -151,6 +152,17 @@ class App extends Component {
                               <option value="">Debit From</option>
                               <option value="bank">Bank Account</option>
                               <option value="balance">Balance</option>
+                          </select>
+                        </div>
+                      </div>
+                    <div className="form-group row">
+                      <div className="col">
+                      <label>Select Risk Apetite</label>
+                          <select name='riskApetite' onChange={this.handleInputChanged.bind(this)}  className="form-control">
+                              <option value="">Risk Apetite</option>
+                              <option value="high">High Risk</option>
+                              <option value="moderate">Moderate Risk</option>
+                              <option value="low">Low Risk</option>
                           </select>
                         </div>
                       </div>
