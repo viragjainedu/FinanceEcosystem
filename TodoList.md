@@ -48,17 +48,17 @@ FICO Score.
 <!-- When can our lender withdraw his money !!  Ans - Lock in Period , GRADE -->
 From Balance and From Bank account.
 
-Validation. Physical Meeting scehdule in mail
+<!-- Validation. Physical Meeting scehdule in mail -->
 System Notifications
 Backend page - for acitve loans
 advance insights.
-returns page 
-total interest installment paid
-principal and innterest
+<!-- returns page  -->
 
-Sir's changes - 
-OTP timer
-Forgot Password
+Fico - 
+total interest installment paid - 
+Loan Defaults in installment page - 
+
+principal and innterest
 
 
 
