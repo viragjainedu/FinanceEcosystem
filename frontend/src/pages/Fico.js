@@ -54,7 +54,7 @@ class App extends Component {
     handleButtonClicked() {
         console.log(this.state)
 
-        if( this.state.answer1 !== "", this.state.answer1a !== "", this.state.answer2 !== "",
+        if( this.state.answer1 !== "" , this.state.answer1a !== "", this.state.answer2 !== "",
             this.state.answer3 !== "", this.state.answer4 !== "", this.state.answer5 !== "",
             this.state.answer6 !== "", this.state.answer7 !== "", this.state.answer7a !== "",
             this.state.answer9 !== "", this.state.answer10 !== "")
