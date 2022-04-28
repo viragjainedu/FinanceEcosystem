@@ -10,11 +10,11 @@
     DROP table account_stats ;
     DROP table blogs ;
     DROP table news ;
-    DROP table interest_rates ;
     DROP table personal_notifications ;
     DROP table installments;
     DROP table returns;
-
+    DROP table interest_rates ;
+    DROP table fico_score ;
 
 Alter table lenders_data add column v1 int;
 Alter table lenders_data add column v2 int;
@@ -30,14 +30,32 @@ DELETE FROM borrowers_data ;
 DELETE FROM account_stats ;
 DELETE FROM blogs ;
 DELETE FROM news ;
--- DELETE FROM interest_rates ;
 DELETE FROM personal_notifications ;
 DELETE FROM installments;
-
+DELETE FROM returns;
+DELETE FROM interest_rates ;
+DELETE FROM fico_score ;
 
 update account_stats set balance = 0,total_money_lent=0,total_money_borrowed=0 where 1; 
 source SQL_Backup/Only_5_users (2).sql
 
+create table fico_score(
+    FS int,
+    a1 int,
+    a1a int,
+    a2 int,
+    a3 int,
+    a4 int,
+    a5 int,
+    a6 int,
+    a7 int,
+    a7a int,
+    a8 int,
+    a9 int,
+    a10 int,
+    a10a int,
+    email varchar(255)
+);
 
 Create table installments (
     installment_id int NOT NULL AUTO_INCREMENT,

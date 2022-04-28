@@ -1,8 +1,26 @@
+// const { response } = require("express");
 var express = require("express");
 var router = express.Router();
+var connection = require('../connection');
 
 router.get("/", function(req, res, next) {
     res.send("This statement is generate by Fico API backend");
+});
+
+router.post("/isFicoCalculated", function(req, res, next) {
+    const email = req.body.email
+
+    connection.query("select * from fico_score where email = ?",[email] , (err,result)=>{
+        if(err){console.log(err)}
+        else{
+            if(result.length > 0 ){
+                console.log(result[0].email)
+                res.send({message:true})
+            }else{
+                res.send({message:false})
+            }
+        }
+    })
 });
 
 router.post("/", function(req, res, next) {
@@ -20,7 +38,7 @@ router.post("/", function(req, res, next) {
     const answer9 =  req.body.answer9;    
     const answer10a =  req.body.answer10a;
 
-    var BS = 600;
+    var BS = 650;
     var a1,a1a,a2,a3,a4,a5,a6,a7,a7a,a9,a10a = 0;
 
     if(answer1 === "1.1"){
@@ -320,18 +338,30 @@ router.post("/", function(req, res, next) {
 
     var FS = BS+a1+a1a+a2+a3+a4+a5+a6+a7+a7a+a9+a10a;
     console.log(FS);
-    console.log(a1);
-    console.log(a1a);
-    console.log(a2);
-    console.log(a3);
-    console.log(a4);
-    console.log(a5);
-    console.log(a6);
-    console.log(a7);
-    console.log(a7a);
-    console.log(a9);
-    console.log(a10a);
+    console.log(`a1-${a1}`);
+    console.log(`a1a-${a1a}`);
+    console.log(`a2-${a2}`);
+    console.log(`a3-${a3}`);
+    console.log(`a4-${a4}`);
+    console.log(`a5-${a5}`);
+    console.log(`a6-${a6}`);
+    console.log(`a7-${a7}`);
+    console.log(`a7a-${a7a}`);
+    console.log(`a9-${a9}`);
+    console.log(`a10a-${a10a}`);
+
+    connection.query("Insert into fico_score (FS,a1,a1a,a2,a3,a4,a5,a6,a7,a7a,a9,a10a,email) values(?,?,?,?,?,?,?,?,?,?,?,?,?);",
+    [FS,a1,a1a,a2,a3,a4,a5,a6,a7,a7a,a9,a10a,email],
+    (err,result) => {
+        if(err){console.log(err)}
+        else{
+            res.send({message:"success"})
+        }
+    }
+    )
+
 });
+
 
 
 

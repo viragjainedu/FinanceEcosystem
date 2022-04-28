@@ -25,7 +25,8 @@ class App extends Component {
             purpose : "",
             message : "",
             status : 0,
-            isLoanCalculatedForThisEmail : false
+            isLoanCalculatedForThisEmail : false,
+            isFicoCalculated : false
         };
 	}
 
@@ -93,10 +94,24 @@ class App extends Component {
         })
     }
     
+    isFicoCalculated() {
+        Axios.post("http://localhost:9000/fico/isFicoCalculated", {
+            email: localStorage.getItem('emailReg'),
+        }).then((res)=>{
+            if(res.data.message === true){
+                this.setState({
+                    ...this.state,
+                    isFicoCalculated : true       
+                })
+            }
+        })
+    }
+    
 	componentWillMount() {
 		this.callAPI();
         this.getStatus();
         this.isLoanCalculatedForThisEmail(localStorage.getItem('emailReg'));
+        this.isFicoCalculated();
 	} 
 	
     //All the handle INput functions for forms 
@@ -339,105 +354,119 @@ class App extends Component {
                                 <div className="card-body">
                                 <h4 className="card-title">Enter Required Information</h4>
                                 <div className="form-sample">
-                                    <p className="card-description">
-                                    <Link to="/Fico"><a className="nav-link" href="pages/Fico.js">Please fill FICO form</a></Link> 
-                                    </p>
-                                    <h6 className='text-danger'>{this.state.message}</h6>
-                                    <div className="row">
-                                    <div className="col-md-6">
-                                        <div className="form-group row">
-                                        <label className="col-sm-3 col-form-label">No of years of Employment</label>
-                                        <div className="col-sm-9">
-                                            <input type="number" min="0" value={this.state.emp_length} onChange={this.handleInputChanged.bind(this)} name="emp_length" className="form-control" placeholder='0 if not started working yet.'/>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-group row">
-                                        <label className="col-sm-3 col-form-label">Annual Income(In lacs)</label>
-                                        <div className="col-sm-9">
-                                            <input type="number" value={this.state.annual_income} onChange={this.handleInputChanged.bind(this)} name="annual_income" className="form-control" placeholder='Type 6 if 6 lacs' />
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-group row">
-                                        <label className="col-sm-3 col-form-label">Purpose</label>
-                                        <div className="col-sm-9">
-                                            <select onChange={this.handleInputChanged.bind(this)} name="purpose" className="form-control">
-                                                <option value="">Select</option>
-                                                <option value="Education">Education</option>
-                                                <option value="House">House</option>
-                                                <option value="Business">Business</option>
-                                                <option value="Medical">Medical</option>
-                                                <option value="Car">Car</option>
-                                                <option value="Other">Other</option>
-                                            </select>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-group row">
-                                        <label className="col-sm-3 col-form-label">Collateral type</label>
-                                        <div className="col-sm-9">
-                                            <select onChange={this.handleInputChanged.bind(this)} name="collateral" className="form-control">
-                                                <option value="">Type</option>
-                                                <option value="House">House</option>
-                                                <option value="Commerical">Commerical</option>
-                                                <option value="Other">Other</option>
-                                            </select>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-group row">
-                                        <label className="col-sm-3 col-form-label">Contact</label>
-                                        <div className="col-sm-9">
-                                            <input type="text" minlength="10" value={this.state.contact} onChange={this.handleInputChanged.bind(this)} name="contact" className="form-control" placeholder='9869101921' />
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-group row">
-                                        <label className="col-sm-3 col-form-label">Age</label>
-                                        <div className="col-sm-9">
-                                            <input type="number" min={18} max={100} value={this.state.age} onChange={this.handleInputChanged.bind(this)} name="age" className="form-control" placeholder='Should be above 18' />
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-group row">
-                                        <label className="col-sm-3 col-form-label">Collateral Value(in lacs)</label>
-                                        <div className="col-sm-9">
-                                            <input type="number" value={this.state.collateral_value} onChange={this.handleInputChanged.bind(this)} name="collateral_value" className="form-control" placeholder='Type 5 for 5 lacs'/>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-group row">
-                                        <label className="col-sm-3 col-form-label">Amount Required</label>
-                                        <div className="col-sm-9">
-                                            <input type="number" value={this.state.amount_req} onChange={this.handleInputChanged.bind(this)} name="amount_req" className="form-control" placeholder='30000'/>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-group row">
-                                        <label className="col-sm-3 col-form-label">No Of Months to Borrow</label>
-                                        <div className="col-sm-9">
-                                            <select onChange={this.handleInputChanged.bind(this)} name="month_req" className="form-control">
-                                                <option value="">No of Months</option>
-                                                <option value="3">3 Months</option>
-                                                <option value="6">6 Months</option>
-                                                <option value="12">12 Months</option>
-                                                <option value="18">18 Months</option>
-                                            </select>
-                                        </div>
-                                        </div>
-                                    </div>
+                                    {
+                                        (()=>{
+                                            if(!this.state.isFicoCalculated){
+                                                return(
+                                                    <p className="card-description">
+                                                    <Link to="/Fico"><a className="nav-link" href="pages/Fico.js">Please fill FICO form - Pre requirement</a></Link> 
+                                                    </p>
+                                                )
+                                            }else{
+                                                return(
+                                                    <>
+                                                    <h6 className='text-danger'>{this.state.message}</h6>
+                                                    <div className="row">
+                                                    <div className="col-md-6">
+                                                        <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">No of years of Employment</label>
+                                                        <div className="col-sm-9">
+                                                            <input type="number" min="0" value={this.state.emp_length} onChange={this.handleInputChanged.bind(this)} name="emp_length" className="form-control" placeholder='0 if not started working yet.'/>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Annual Income(In lacs)</label>
+                                                        <div className="col-sm-9">
+                                                            <input type="number" value={this.state.annual_income} onChange={this.handleInputChanged.bind(this)} name="annual_income" className="form-control" placeholder='Type 6 if 6 lacs' />
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Purpose</label>
+                                                        <div className="col-sm-9">
+                                                            <select onChange={this.handleInputChanged.bind(this)} name="purpose" className="form-control">
+                                                                <option value="">Select</option>
+                                                                <option value="Education">Education</option>
+                                                                <option value="House">House</option>
+                                                                <option value="Business">Business</option>
+                                                                <option value="Medical">Medical</option>
+                                                                <option value="Car">Car</option>
+                                                                <option value="Other">Other</option>
+                                                            </select>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Collateral type</label>
+                                                        <div className="col-sm-9">
+                                                            <select onChange={this.handleInputChanged.bind(this)} name="collateral" className="form-control">
+                                                                <option value="">Type</option>
+                                                                <option value="House">House</option>
+                                                                <option value="Commerical">Commerical</option>
+                                                                <option value="Other">Other</option>
+                                                            </select>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Contact</label>
+                                                        <div className="col-sm-9">
+                                                            <input type="text" minlength="10" value={this.state.contact} onChange={this.handleInputChanged.bind(this)} name="contact" className="form-control" placeholder='9869101921' />
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Age</label>
+                                                        <div className="col-sm-9">
+                                                            <input type="number" min={18} max={100} value={this.state.age} onChange={this.handleInputChanged.bind(this)} name="age" className="form-control" placeholder='Should be above 18' />
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Collateral Value(in lacs)</label>
+                                                        <div className="col-sm-9">
+                                                            <input type="number" value={this.state.collateral_value} onChange={this.handleInputChanged.bind(this)} name="collateral_value" className="form-control" placeholder='Type 5 for 5 lacs'/>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Amount Required</label>
+                                                        <div className="col-sm-9">
+                                                            <input type="number" value={this.state.amount_req} onChange={this.handleInputChanged.bind(this)} name="amount_req" className="form-control" placeholder='30000'/>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">No Of Months to Borrow</label>
+                                                        <div className="col-sm-9">
+                                                            <select onChange={this.handleInputChanged.bind(this)} name="month_req" className="form-control">
+                                                                <option value="">No of Months</option>
+                                                                <option value="3">3 Months</option>
+                                                                <option value="6">6 Months</option>
+                                                                <option value="12">12 Months</option>
+                                                                <option value="18">18 Months</option>
+                                                            </select>
+                                                        </div>
+                                                        </div>
+                                                    </div>
 
-                                    </div>
-                                    <button onClick={this.handleButtonClicked.bind(this)} className="btn btn-primary me-2">Submit</button>
+                                                    </div>
+                                                    <button onClick={this.handleButtonClicked.bind(this)} className="btn btn-primary me-2">Submit</button>
+
+                                                    </>
+                                                )
+                                            }
+                                        })()
+                                    }
 
                                 </div>
                                 </div>

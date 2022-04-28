@@ -1,13 +1,13 @@
 
 import React, { Component } from 'react';
 // import './css/fico_score_estimator.css';
-import MyVueComponent from '../expense-analyser/src/App.vue'
+// import MyVueComponent from '../expense-analyser/src/App.vue'
 import TopNavbar from '../components/TopNavbar'
 import LeftNavbar from '../components/LeftNavbar'
 import RightNavbar from '../components/RightNavbar'
 import MainHeader from '../components/MainHeader'
 // import { Link } from 'react-router-dom';
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 
 
 class App extends Component {
@@ -31,20 +31,13 @@ class App extends Component {
                        current_q:1, 
                        activateSubmitButton: false,
                        nextButton: true,
+                       returnButton: true,
     };
 	}
 	
-	callAPI() {
-		axios.post("http://localhost:9000/Fico")
-			.then(res => res.text())
-			.then(res => this.setState({ apiResponse: res }));
-	}
-	
-	componentWillMount() {
-		this.callAPI();
-	}
 
     handleInputChanged(event) {
+
         this.setState({
             ...this.state,
             [event.target.name] : event.target.value,
@@ -54,10 +47,10 @@ class App extends Component {
     handleButtonClicked() {
         console.log(this.state)
 
-        if( this.state.answer1 !== "" , this.state.answer1a !== "", this.state.answer2 !== "",
-            this.state.answer3 !== "", this.state.answer4 !== "", this.state.answer5 !== "",
-            this.state.answer6 !== "", this.state.answer7 !== "", this.state.answer7a !== "",
-            this.state.answer9 !== "", this.state.answer10 !== "")
+        if( this.state.answer1 !== ""  && this.state.answer2 !== ""&&
+            this.state.answer3 !== ""&& this.state.answer4 !== ""&& this.state.answer5 !== ""&&
+            this.state.answer6 !== ""&& this.state.answer7 !== ""&& 
+            this.state.answer9 !== ""&& this.state.answer10 !== "")
         {
             axios.post("http://localhost:9000/Fico", {               
                 answer1 : this.state.answer1,
@@ -71,11 +64,12 @@ class App extends Component {
                 answer7a : this.state.answer7a,
                 answer9 : this.state.answer9,
                 answer10a : this.state.answer10a,
+                email: localStorage.getItem('emailReg')
             }).then((response) => {
                 console.log(response);
-            if(response.data.success){
-                console.log("Changed Username");
-                window.location.href = "/Dashboard";
+            if(response.data.message){
+                alert(response.data.message)
+                window.location.href = "/Borrowing";
             }
             });
         }
@@ -88,22 +82,37 @@ class App extends Component {
 
     }
 
+    handleButtonClickedReturn(){
+        if(this.state.current_q !== 1){
+            this.setState({
+                ...this.state,
+                current_q : this.state.current_q - 1,
+                nextButton : true
+            })
+        }
+    }
+
     handleButtonClickedNext(){
+
         if(this.state.current_q === 1 && this.state.answer1 === "1.1")
         {
             this.setState({
                 ...this.state,
                 current_q : 3,
+                answer1a : ""
+
             }); 
         }else if(this.state.current_q === 8 && this.state.answer7 === "7.1"){
             this.setState({
                 ...this.state,
                 current_q : 10,
+                answer7a : ""
             });
         }else if(this.state.current_q === 10 && this.state.answer8 === "8.1"){
             this.setState({
                 ...this.state,
                 current_q : 12,
+                answer8a : ""
             });
         }else if(this.state.current_q === 13 && this.state.answer10 === "10.1"){
             this.setState({
@@ -116,9 +125,15 @@ class App extends Component {
             this.setState({
                 ...this.state,
                 activateSubmitButton : true,
-                nextButton : false
+                nextButton : false,
+                answer10a : ""
             });
 
+        }else if(this.state.current_q === 14){
+            this.setState({
+                ...this.state,
+                activateSubmitButton : true
+            })
         }else{
             this.setState({
                 ...this.state,
@@ -148,10 +163,12 @@ class App extends Component {
                   <div className='col-12 grid-margin'>
                     <div className='card'>
                         <div className='card-body'>
-                        <h4 className="card-title">Answer the following questions</h4>
-
+                        <h4 className="card-title">Answer the following questions correctly</h4>
+                        <p style={{color: "green"}}>These details will be physically verified</p>
+                        <p style={{color : "red"}}>
+                            {this.state.message}    
+                        </p>
                             <div className='form-sample'>
-                                
                                 {
                                     (()=>{
                                         if(this.state.current_q === 1){
@@ -481,13 +498,24 @@ class App extends Component {
                                 }
                                 
 
-
+                                <div className='row'>
                                 {
                                     (()=>{
                                         if(this.state.nextButton){
                                             return(
-                                                <div>
+                                                <div className='col-lg-1'>
                                                     <button  onClick={this.handleButtonClickedNext.bind(this)} className="btn btn-primary me-2">Next</button>
+                                                </div>                                                
+                                            )
+                                        }
+                                    })()
+                                }
+                                {
+                                    (()=>{
+                                        if(this.state.returnButton){
+                                            return(
+                                                <div className='col-lg-1'>
+                                                    <button  onClick={this.handleButtonClickedReturn.bind(this)} className="btn btn-success me-2">Return</button>
                                                 </div>                                                
                                             )
                                         }
@@ -497,13 +525,15 @@ class App extends Component {
                                     (()=>{
                                         if(this.state.activateSubmitButton){
                                             return(
-                                            <div>
+                                            <div className='col-lg-1'>
                                                 <button  onClick={this.handleButtonClicked.bind(this)} className="btn btn-primary me-2">Submit</button>
                                             </div>
                                             )
                                         }
                                     })()
                                 }
+                                </div>
+
                                 
 
                             </div>

@@ -119,8 +119,19 @@ router.post("/CompleteProfile", function(req, res, next) {
     }
     // console.log("Hiii3")
 
-    const CV = collateral_value;
-    const Credit_Score = 10*IS + 5*ES + 5*AS + 3*Math.log10(CV) + PS
+    // connection.query("select * from fico_score where email = ?",[email] , (err,rows)=>{
+    //     if(err){console.log(err)}
+    //     else{
+    //         if(rows.length > 0 ){
+
+    //         }else{
+
+    //         }
+    //     }
+    // })
+
+    var CV = collateral_value;
+    var Credit_Score = 0.6*IS + 4*ES + 1.3*AS + 3*Math.log10(CV) + PS
     var Loan_Cap = 0.7*CV*100000
     
     if(amount_req < Loan_Cap){
