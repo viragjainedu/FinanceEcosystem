@@ -89,7 +89,7 @@ router.post("/pay", function(req, res) {
                                                     console.log(`Total interest Recieved : ${rows[0].total_interest_received}`)
                                                     
                                                     connection.query("Update account_stats set total_interest_received = ? , balance = ? where email = ?",
-                                                    [rows[0].total_interest_received + interest_for_lender , rows[0].balance + interest_for_lender,rows[0].email],
+                                                    [rows[0].total_interest_received + interest_for_lender , rows[0].balance + principal_for_borrower + interest_for_lender ,rows[0].email],
                                                     (err,ouput) =>{
                                                         if(err){console.log(err)}
 

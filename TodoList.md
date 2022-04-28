@@ -58,11 +58,6 @@ Fico -
 total interest installment paid - 
 Loan Defaults in installment page - 
 
-principal and innterest
-
-
-
-ROll back code 
-Async code 
 
 Withdraw page after borowing:
+Default

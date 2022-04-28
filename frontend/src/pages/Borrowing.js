@@ -358,8 +358,8 @@ class App extends Component {
                                         (()=>{
                                             if(!this.state.isFicoCalculated){
                                                 return(
-                                                    <p className="card-description">
-                                                    <Link to="/Fico"><a className="nav-link" href="pages/Fico.js">Please fill FICO form - Pre requirement</a></Link> 
+                                                    <p style={{"text-align" : "center"}}>
+                                                    <Link to="/Fico"><button className="btn btn-primary">Please fill FICO form - Pre requirement</button></Link> 
                                                     </p>
                                                 )
                                             }else{
