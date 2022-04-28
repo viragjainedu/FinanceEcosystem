@@ -60,4 +60,9 @@ Loan Defaults in installment page -
 
 
 Withdraw page after borowing:
-Default
+Default loans 
+Scheduling
+Returns page
+Notifications
+Rollback of v1 and v2 after decline.
+
