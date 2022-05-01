@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
+import Notification from './Notification'
 
 function TopNavbar (){
 
@@ -70,83 +71,8 @@ function TopNavbar (){
                   <input type="search" className="form-control" placeholder="Search Here" title="Search here" />
                 </form>
               </li>
-              <li className="nav-item dropdown">
-                <a className="nav-link count-indicator" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
-                  <i className="icon-mail icon-lg" />
-                </a>
-                <div className="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificationDropdown">
-                  <a className="dropdown-item py-3 border-bottom">
-                    <p className="mb-0 font-weight-medium float-left">You have 4 new notifications </p>
-                    <span className="badge badge-pill badge-primary float-right">View all</span>
-                  </a>
-                  <a className="dropdown-item preview-item py-3">
-                    <div className="preview-thumbnail">
-                      <i className="mdi mdi-alert m-auto text-primary" />
-                    </div>
-                    <div className="preview-item-content">
-                      <h6 className="preview-subject fw-normal text-dark mb-1">Application Error</h6>
-                      <p className="fw-light small-text mb-0"> Just now </p>
-                    </div>
-                  </a>
-                  <a className="dropdown-item preview-item py-3">
-                    <div className="preview-thumbnail">
-                      <i className="mdi mdi-settings m-auto text-primary" />
-                    </div>
-                    <div className="preview-item-content">
-                      <h6 className="preview-subject fw-normal text-dark mb-1">Settings</h6>
-                      <p className="fw-light small-text mb-0"> Private message </p>
-                    </div>
-                  </a>
-                  <a className="dropdown-item preview-item py-3">
-                    <div className="preview-thumbnail">
-                      <i className="mdi mdi-airballoon m-auto text-primary" />
-                    </div>
-                    <div className="preview-item-content">
-                      <h6 className="preview-subject fw-normal text-dark mb-1">New user registration</h6>
-                      <p className="fw-light small-text mb-0"> 2 days ago </p>
-                    </div>
-                  </a>
-                </div>
-              </li>
               <li className="nav-item dropdown"> 
-                <a className="nav-link count-indicator" id="countDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i className="icon-bell" />
-                  <span className="count" />
-                </a>
-                <div className="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="countDropdown">
-                  <a className="dropdown-item py-3">
-                    <p className="mb-0 font-weight-medium float-left">You have 7 unread mails </p>
-                    <span className="badge badge-pill badge-primary float-right">View all</span>
-                  </a>
-                  <div className="dropdown-divider" />
-                  <a className="dropdown-item preview-item">
-                    <div className="preview-thumbnail">
-                      <img src="images/faces/Virag.jpg" alt="image" className="img-sm profile-pic" />
-                    </div>
-                    <div className="preview-item-content flex-grow py-2">
-                      <p className="preview-subject ellipsis font-weight-medium text-dark">Dhundiraj Tumbad</p>
-                      <p className="fw-light small-text mb-0"> The meeting is cancelled </p>
-                    </div>
-                  </a>
-                  <a className="dropdown-item preview-item">
-                    <div className="preview-thumbnail">
-                      <img src="images/faces/Virag.jpg" alt="image" className="img-sm profile-pic" />
-                    </div>
-                    <div className="preview-item-content flex-grow py-2">
-                      <p className="preview-subject ellipsis font-weight-medium text-dark">Nachiket Rambo</p>
-                      <p className="fw-light small-text mb-0"> The meeting is cancelled </p>
-                    </div>
-                  </a>
-                  <a className="dropdown-item preview-item">
-                    <div className="preview-thumbnail">
-                      <img src="images/faces/Virag.jpg" alt="image" className="img-sm profile-pic" />
-                    </div>
-                    <div className="preview-item-content flex-grow py-2">
-                      <p className="preview-subject ellipsis font-weight-medium text-dark">Keval Paneer</p>
-                      <p className="fw-light small-text mb-0"> The meeting is cancelled </p>
-                    </div>
-                  </a>
-                </div>
+                <Notification/>
               </li>
               <li className="nav-item dropdown d-none d-lg-block user-dropdown">
                 <a className="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
@@ -159,6 +85,7 @@ function TopNavbar (){
                   </div>
                   <a className="dropdown-item" href='/myProfile'><i className="dropdown-item-icon mdi mdi-account-outline text-primary me-2" /> My Profile <span className="badge badge-pill badge-danger">1</span></a>
                   <Link to="/Activity"><a className="dropdown-item"><i className="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2" /> Activity</a></Link>
+                  <Link to="/testReact"><a className="dropdown-item"><i className="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2" /> Test Page</a></Link>
                   <a onClick={signout} className="dropdown-item"><i className="dropdown-item-icon mdi mdi-power text-primary me-2" />Sign Out</a>
                 </div>
               </li>

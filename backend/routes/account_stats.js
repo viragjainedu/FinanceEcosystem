@@ -71,7 +71,7 @@ router.post("/prev_transactions", function(req, res, next) {
             if(err){
                 console.log(err);
             }else if(result.length > 0){
-                console.log(result)
+                // console.log(result)
                 res.send(result)
             }else
                 res.send([])

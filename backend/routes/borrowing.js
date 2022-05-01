@@ -3,6 +3,8 @@ var router = express.Router();
 var connection = require('../connection');
 var moment = require('moment')
 var nodemailer = require('nodemailer');
+const  multer = require("multer");
+const path = require('path');
 
 
 router.post("/", function(req, res, next) {
@@ -74,9 +76,29 @@ router.post("/details", function(req, res, next) {
 
 });
 
-router.post("/CompleteProfile", function(req, res, next) {
-    // res.send("This statement is generate by p2pLending API backend");
+// const storage = multer.diskStorage({
+//     destination: function(req, file, cb) {
+//         cb(null, 'uploads/');
+//     },
+  
+//     filename: function(req, file, cb) {
+//         // cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+//         cb(null, file.originalname);
+//     }
+// });
+  
+// const upload = multer({ storage: storage })
 
+router.post("/CompleteProfile",  function(req, res) {
+    // res.send("This statement is generate by p2pLending API backend");
+    console.log(req.body)
+
+    // console.log('hii')
+    // res.end('It works')
+    if(1){
+        res.send("Hiiiiiii")
+    }else{
+    
     const emp_length = req.body.emp_length;
     const annual_income = req.body.annual_income;
     const purpose = req.body.purpose;
@@ -89,7 +111,6 @@ router.post("/CompleteProfile", function(req, res, next) {
     const email = req.body.email;
     // console.log(req.body);
     // console.log("Hiii")
-
 
     //Credit Score calculation for grade STARTS
     const x = parseInt(emp_length);
@@ -219,7 +240,7 @@ router.post("/CompleteProfile", function(req, res, next) {
         }
     })
 
-
+}
 });
 
 router.post("/profile_info", function(req, res, next) {
@@ -620,29 +641,43 @@ router.post("/LoanRejection", function(req, res, next) {
     const email = req.body.email;
     const month_req = req.body.month_req;
 
-    connection.query(`Select * from lenders_data where lock_in_period = ${month_req};`,[],(err,result)=>{
-        if(err){
-            console.log(err)
-        }else if(result.length > 0 ){
-            for (let i = 0; i < result.length; i++) {
-
-                var leastBorrowerNo = 0;
-                //calculating borrowerNo
-                for (let j = 0; j < 10; j++) {
-                    if(result[i][`b${j}`] ===  email){
-                        leastBorrowerNo = j;
-                        break;
+    connection.query("Select grade from person where email =?",[email],(err,output)=>{
+        var GRADE = output[0].grade
+        connection.query(`Select * from lenders_data where lock_in_period = ${month_req};`,[],(err,result)=>{
+            if(err){
+                console.log(err)
+            }else if(result.length > 0 ){
+                for (let i = 0; i < result.length; i++) {
+    
+                    var leastBorrowerNo = 0;
+                    //calculating borrowerNo
+                    for (let j = 0; j < 10; j++) {
+                        if(result[i][`b${j}`] ===  email){
+                            leastBorrowerNo = j;
+                            break;
+                        }
                     }
+                    if(GRADE === 'A' || GRADE === 'B' || GRADE === 'C'){
+                        connection.query(`UPDATE  lenders_data set amount_remaining = ?, b${leastBorrowerNo} = ?, v1 = ? where lenders_id = ?`,
+                        [result[i].fixed_lending_amount+result[i].amount_remaining ,null,result[i].v1+1, result[i].lenders_id],
+                        (err,out)=>{
+                            if(err){console.log(err)}
+                                    
+                        })
+                    }else{
+                        connection.query(`UPDATE  lenders_data set amount_remaining = ?, b${leastBorrowerNo} = ?, v2 = ? where lenders_id = ?`,
+                        [result[i].fixed_lending_amount+result[i].amount_remaining ,null,result[i].v2+1, result[i].lenders_id],
+                        (err,out)=>{
+                            if(err){console.log(err)}
+                                    
+                        })
+                    }
+                    
                 }
-                connection.query(`UPDATE  lenders_data set amount_remaining = ?, b${leastBorrowerNo} = ?  where lenders_id = ?`,
-                [result[i].fixed_lending_amount+result[i].amount_remaining ,null, result[i].lenders_id]),
-                (err,out)=>{
-                    if(err){console.log(err)}
-                            
-                    }
+            
             }
-        
-        }
+        })
+    
     })
 
     connection.query(

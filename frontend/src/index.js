@@ -25,7 +25,9 @@ import Payment from './pages/Payment';
 import Installments from './pages/Installments';  
 import Interests from './pages/Interests';  
 import MyProfile from './pages/MyProfile'
+import Withdrawal from './pages/Withdrawal'
 import Fico from './pages/Fico';  
+import TestReact from './pages/TestReact';  
 
 import AdminPanel from './pages/AdminPanel';  
 import SystemNotifications from './AdminPanelPages/SystemNotifications'
@@ -59,6 +61,8 @@ ReactDOM.render(
         <Route path="MyProfile" element={<MyProfile />} />
 
         <Route path="Fico" element={<Fico />} />
+        <Route path="Withdrawal" element={<Withdrawal />} />
+        <Route path="TestReact" element={<TestReact />} />
         
         
         <Route path="AdminPanel" element={<AdminPanel />} />

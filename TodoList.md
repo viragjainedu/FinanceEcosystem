@@ -59,10 +59,11 @@ total interest installment paid -
 Loan Defaults in installment page - 
 
 
-Withdraw page after borowing:
-Default loans 
+2) Withdraw page after borowing:
 Scheduling
+Default loans 
 Returns page
-Notifications
-Rollback of v1 and v2 after decline.
-
+<!-- 3) Notifications -->
+1)Rollback of v1 and v2 after decline.
+<!-- FIle Uploading -->
+Deployment - https://stackoverflow.com/questions/63552490/deploy-reactjs-mysql-nodejs-express-project
