@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2022 at 06:56 AM
+-- Generation Time: Apr 28, 2022 at 08:38 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -29,12 +29,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `account_stats` (
   `email` varchar(250) DEFAULT NULL,
-  `balance` int(11) DEFAULT NULL,
-  `total_money_lent` int(11) DEFAULT NULL,
-  `total_money_borrowed` int(11) DEFAULT NULL,
-  `total_money_withdrawn` int(11) DEFAULT NULL,
-  `total_interest_received` int(11) DEFAULT NULL,
-  `total_interest_paid` int(11) DEFAULT NULL
+  `balance` float DEFAULT NULL,
+  `total_money_lent` float DEFAULT NULL,
+  `total_money_borrowed` float DEFAULT NULL,
+  `total_money_withdrawn` float DEFAULT NULL,
+  `total_interest_received` float DEFAULT NULL,
+  `total_interest_paid` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -42,11 +42,12 @@ CREATE TABLE `account_stats` (
 --
 
 INSERT INTO `account_stats` (`email`, `balance`, `total_money_lent`, `total_money_borrowed`, `total_money_withdrawn`, `total_interest_received`, `total_interest_paid`) VALUES
-('virag.j@somaiya.edu', 200, 11300, 500, 0, 0, 0),
-('vikasdharma503@gmail.com', 600, 0, 600, 0, 0, 0),
-('viragjain.work@gmail.com', 0, 0, 0, 0, 0, 0),
-('viragjain501@gmail.com', 0, 0, 0, 0, 0, 0),
-('viragjain502@gmail.com', 0, 0, 0, 0, 0, 0);
+('virag.j@somaiya.edu', 0, 50000, 0, 0, 0, 0),
+('Keval.dk@somaiya.edu', 0, 30000, 0, 0, 0, 0),
+('nachiketmoghe2@gmail.com', 0, 20000, 0, 0, 0, 0),
+('Dhundirajj00@gmail.com', 0, 10000, 0, 0, 0, 0),
+('vikasdharma503@gmail.com', 0, 50000, 0, 0, 0, 0),
+('anaghapjogalekar11@gmail.com', 10000, 0, 10000, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -92,10 +93,7 @@ CREATE TABLE `borrowing_requests` (
 --
 
 INSERT INTO `borrowing_requests` (`email`, `isAprroved`, `status`) VALUES
-('virag.j@somaiya.edu', 1, 4),
-('vikasdharma503@gmail.com', 1, 4),
-('viragjain.work@gmail.com', 1, 4),
-('viragjain501@gmail.com', 1, 4);
+('anaghapjogalekar11@gmail.com', 1, 4);
 
 -- --------------------------------------------------------
 
@@ -115,8 +113,37 @@ CREATE TABLE `borrowing_transactions` (
 --
 
 INSERT INTO `borrowing_transactions` (`transaction_time`, `transaction_comment`, `email_id`, `amount_borrowed`) VALUES
-('2022-04-25 16:19:47', NULL, 'virag.j@somaiya.edu', 500),
-('2022-04-25 17:02:16', NULL, 'vikasdharma503@gmail.com', 600);
+('2022-04-28 06:36:46', NULL, 'anaghapjogalekar11@gmail.com', 10000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fico_score`
+--
+
+CREATE TABLE `fico_score` (
+  `FS` int(11) DEFAULT NULL,
+  `a1` int(11) DEFAULT NULL,
+  `a1a` int(11) DEFAULT NULL,
+  `a2` int(11) DEFAULT NULL,
+  `a3` int(11) DEFAULT NULL,
+  `a4` int(11) DEFAULT NULL,
+  `a5` int(11) DEFAULT NULL,
+  `a6` int(11) DEFAULT NULL,
+  `a7` int(11) DEFAULT NULL,
+  `a7a` int(11) DEFAULT NULL,
+  `a8` int(11) DEFAULT NULL,
+  `a9` int(11) DEFAULT NULL,
+  `a10a` int(11) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `fico_score`
+--
+
+INSERT INTO `fico_score` (`FS`, `a1`, `a1a`, `a2`, `a3`, `a4`, `a5`, `a6`, `a7`, `a7a`, `a8`, `a9`, `a10a`, `email`) VALUES
+(732, 0, 30, 25, -5, 5, -5, 12, 0, 0, NULL, 20, 0, 'anaghapjogalekar11@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -143,21 +170,9 @@ CREATE TABLE `installments` (
 --
 
 INSERT INTO `installments` (`installment_id`, `email`, `amount_borrowed`, `date_of_loan_transaction`, `no_of_months`, `interest_rate`, `installment_amount`, `installment_no`, `date_of_payment`, `time_of_payment`, `status`) VALUES
-(13, 'virag.j@somaiya.edu', 500, '2022-04-25', 12, 13.6, 68, 1, NULL, NULL, 'Pending'),
-(14, 'virag.j@somaiya.edu', 500, '2022-04-25', 12, 13.6, 68, 2, NULL, NULL, 'Pending'),
-(15, 'virag.j@somaiya.edu', 500, '2022-04-25', 12, 13.6, 68, 3, NULL, NULL, 'Pending'),
-(16, 'virag.j@somaiya.edu', 500, '2022-04-25', 12, 13.6, 68, 4, NULL, NULL, 'Pending'),
-(17, 'virag.j@somaiya.edu', 500, '2022-04-25', 12, 13.6, 68, 5, NULL, NULL, 'Pending'),
-(18, 'virag.j@somaiya.edu', 500, '2022-04-25', 12, 13.6, 68, 6, NULL, NULL, 'Pending'),
-(19, 'virag.j@somaiya.edu', 500, '2022-04-25', 12, 13.6, 68, 7, NULL, NULL, 'Pending'),
-(20, 'virag.j@somaiya.edu', 500, '2022-04-25', 12, 13.6, 68, 8, NULL, NULL, 'Pending'),
-(21, 'virag.j@somaiya.edu', 500, '2022-04-25', 12, 13.6, 68, 9, NULL, NULL, 'Pending'),
-(22, 'virag.j@somaiya.edu', 500, '2022-04-25', 12, 13.6, 68, 10, NULL, NULL, 'Pending'),
-(23, 'virag.j@somaiya.edu', 500, '2022-04-25', 12, 13.6, 68, 11, NULL, NULL, 'Pending'),
-(24, 'virag.j@somaiya.edu', 500, '2022-04-25', 12, 13.6, 68, 12, NULL, NULL, 'Pending'),
-(25, 'vikasdharma503@gmail.com', 600, '2022-04-25', 3, 11.6, 70, 1, NULL, NULL, 'Pending'),
-(26, 'vikasdharma503@gmail.com', 600, '2022-04-25', 3, 11.6, 70, 2, NULL, NULL, 'Pending'),
-(27, 'vikasdharma503@gmail.com', 600, '2022-04-25', 3, 11.6, 70, 3, NULL, NULL, 'Pending');
+(13, 'anaghapjogalekar11@gmail.com', 10000, '2022-04-28', 3, 8, 3513, 1, '2022-05-28', NULL, 'Pending'),
+(14, 'anaghapjogalekar11@gmail.com', 10000, '2022-04-28', 3, 8, 3513, 2, '2022-06-28', NULL, 'Pending'),
+(15, 'anaghapjogalekar11@gmail.com', 10000, '2022-04-28', 3, 8, 3513, 3, '2022-07-28', NULL, 'Pending');
 
 -- --------------------------------------------------------
 
@@ -229,17 +244,21 @@ CREATE TABLE `lenders_data` (
   `b9_amount` int(11) DEFAULT NULL,
   `b9_grade` varchar(1) DEFAULT NULL,
   `current_borrower` int(11) DEFAULT NULL,
-  `lock_in_period` int(11) DEFAULT NULL
+  `lock_in_period` int(11) DEFAULT NULL,
+  `v1` int(11) DEFAULT NULL,
+  `v2` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `lenders_data`
 --
 
-INSERT INTO `lenders_data` (`lenders_id`, `email`, `amount_lent`, `amount_remaining`, `fixed_lending_amount`, `b0`, `b0_amount`, `b0_grade`, `b1`, `b1_amount`, `b1_grade`, `b2`, `b2_amount`, `b2_grade`, `b3`, `b3_amount`, `b3_grade`, `b4`, `b4_amount`, `b4_grade`, `b5`, `b5_amount`, `b5_grade`, `b6`, `b6_amount`, `b6_grade`, `b7`, `b7_amount`, `b7_grade`, `b8`, `b8_amount`, `b8_grade`, `b9`, `b9_amount`, `b9_grade`, `current_borrower`, `lock_in_period`) VALUES
-(11, 'virag.j@somaiya.edu', 4500, 4500, 500, 'virag.j@somaiya.edu', 500, 'C', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 12),
-(12, 'virag.j@somaiya.edu', 5400, 5400, 600, 'vikasdharma503@gmail.com', 600, 'B', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 3),
-(13, 'virag.j@somaiya.edu', 300, 300, 30, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 18);
+INSERT INTO `lenders_data` (`lenders_id`, `email`, `amount_lent`, `amount_remaining`, `fixed_lending_amount`, `b0`, `b0_amount`, `b0_grade`, `b1`, `b1_amount`, `b1_grade`, `b2`, `b2_amount`, `b2_grade`, `b3`, `b3_amount`, `b3_grade`, `b4`, `b4_amount`, `b4_grade`, `b5`, `b5_amount`, `b5_grade`, `b6`, `b6_amount`, `b6_grade`, `b7`, `b7_amount`, `b7_grade`, `b8`, `b8_amount`, `b8_grade`, `b9`, `b9_amount`, `b9_grade`, `current_borrower`, `lock_in_period`, `v1`, `v2`) VALUES
+(7, 'virag.j@somaiya.edu', 45000, 45000, 5000, 'anaghapjogalekar11@gmail.com', 10000, 'A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 3, 7, 2),
+(8, 'Keval.dk@somaiya.edu', 27000, 27000, 3000, 'anaghapjogalekar11@gmail.com', 10000, 'A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 3, 4, 5),
+(9, 'nachiketmoghe2@gmail.com', 18000, 18000, 2000, 'anaghapjogalekar11@gmail.com', 10000, 'A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 3, 1, 8),
+(10, 'Dhundirajj00@gmail.com', 10000, 10000, 1000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 3, 5, 5),
+(11, 'vikasdharma503@gmail.com', 50000, 50000, 5000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 6, 5, 5);
 
 -- --------------------------------------------------------
 
@@ -259,9 +278,11 @@ CREATE TABLE `lending_transactions` (
 --
 
 INSERT INTO `lending_transactions` (`transaction_time`, `email_id`, `amount_lent`, `lock_in_period`) VALUES
-('2022-04-25 16:19:09', 'virag.j@somaiya.edu', 5000, 12),
-('2022-04-25 16:54:02', 'virag.j@somaiya.edu', 6000, 3),
-('2022-04-26 04:54:16', 'virag.j@somaiya.edu', 300, 18);
+('2022-04-28 06:12:49', 'virag.j@somaiya.edu', 50000, 3),
+('2022-04-28 06:14:46', 'Keval.dk@somaiya.edu', 30000, 3),
+('2022-04-28 06:16:58', 'nachiketmoghe2@gmail.com', 20000, 3),
+('2022-04-28 06:22:28', 'Dhundirajj00@gmail.com', 10000, 3),
+('2022-04-28 06:24:31', 'vikasdharma503@gmail.com', 50000, 6);
 
 -- --------------------------------------------------------
 
@@ -316,11 +337,13 @@ CREATE TABLE `person` (
 --
 
 INSERT INTO `person` (`email`, `password`, `balance`, `emp_length`, `home_ownership`, `annual_income`, `contact`, `purpose`, `first_name`, `last_name`, `gender`, `DOB`, `pincode`, `state`, `city`, `address1`, `address2`, `GRADE`, `isAdmin`, `collateral`, `username`, `age`, `collateral_value`, `loan_cap`, `amount_req`, `month_req`) VALUES
-('vikasdharma503@gmail.com', 'Dop@12345', NULL, 1, NULL, 1, '9869101921', 'House', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'B', 0, 'House', 'vikasdharma503', 19, 1, 1100, 1100, 3),
-('virag.j@somaiya.edu', 'Dop@12345', NULL, 1, NULL, 1, '9869101921', 'House', 'Virag', 'Jain', 'Male', '29/11/2000', '400083', 'Maharashtra', 'Mumbai', '503/Aditya Tower Kan', '503/Aditya Tower kan', 'C', 0, 'House', 'viragjainedu', 30, 50, 500, 500, 12),
-('viragjain.work@gmail.com', 'Dop@12345', NULL, 10, NULL, 10, '9869101921', 'House', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'A', 0, 'House', 'viragjain.work', 19, 19, 500, 500, 12),
-('viragjain501@gmail.com', 'Dop@12345', NULL, 10, NULL, 10, '9869101921', 'House', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'A', 0, 'House', 'viragjain501', 19, 1, 600, 600, 3),
-('viragjain502@gmail.com', 'Dop@12345', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 'viragjain502', NULL, NULL, NULL, NULL, NULL);
+('viragjain503@gmail.com', 'Dop@12345', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'viragjain503', NULL, NULL, NULL, NULL, NULL),
+('virag.j@somaiya.edu', 'Dop@12345', NULL, NULL, NULL, NULL, NULL, NULL, 'Virag', 'Jain', 'Male', '2000-10-28', '400083', 'Maharashtra', 'Mumbai', '503/Aditya Tower Kan', '503/Aditya Tower kan', NULL, 0, NULL, 'viragjainedu', NULL, NULL, NULL, NULL, NULL),
+('Keval.dk@somaiya.edu', 'Dop@12345', NULL, NULL, NULL, NULL, NULL, NULL, 'Keval', 'Karani', 'Male', '2000-07-13', '400083', 'Maharashtra', 'Mumbai', '503/Aditya Tower kan', '503/Aditya Tower Kan', NULL, 0, NULL, 'Keval', NULL, NULL, NULL, NULL, NULL),
+('nachiketmoghe2@gmail.com', 'Dop@12345', NULL, NULL, NULL, NULL, NULL, NULL, 'Nachiket', 'Moghe', 'Female', '2002-11-30', '400083', 'Maharashtra', 'Mumbai', '503/Aditya Tower kan', '503/Aditya Tower kan', NULL, 0, NULL, 'nachiket', NULL, NULL, NULL, NULL, NULL),
+('Dhundirajj00@gmail.com', 'Dop@12345', NULL, NULL, NULL, NULL, NULL, NULL, 'Dhundiraj', 'Jogalekar', 'Male', '2000-07-06', '400083', 'Maharashtra', 'Mumbai', '503/Aditya Tower kan', '503/Aditya Tower kan', NULL, 0, NULL, 'Dhundiraj', NULL, NULL, NULL, NULL, NULL),
+('vikasdharma503@gmail.com', 'Dop@12345', NULL, NULL, NULL, NULL, NULL, NULL, 'Vikas', 'Dharma', 'Male', '2000-10-27', '400083', 'Maharashtra', 'Mumbai', '503/Aditya Tower Kan', '503/Aditya Tower Kan', NULL, 0, NULL, 'vikasdharma503', NULL, NULL, NULL, NULL, NULL),
+('anaghapjogalekar11@gmail.com', 'Dop@12345', NULL, 1, NULL, 1, '9869101921', 'Education', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'A', 0, 'Commerical', 'anagha', 20, 5, 10000, 10000, 3);
 
 -- --------------------------------------------------------
 
@@ -358,37 +381,27 @@ CREATE TABLE `proposedloans` (
 --
 
 INSERT INTO `proposedloans` (`email`, `amount1`, `selected`, `MailSent`, `Time`, `isCalculated`, `isTransacted`, `month_req`, `interest1`, `rejected`) VALUES
-('vikasdharma503@gmail.com', 600, 1, 0, '2022-04-25 17:37:09', 1, 1, 3, 11.6, NULL),
-('virag.j@somaiya.edu', 500, 1, 0, '2022-04-25 17:37:13', 1, 1, 12, 13.6, NULL),
-('viragjain.work@gmail.com', 500, 0, 0, '2022-04-25 17:34:16', 1, 0, 12, 7.5, 1),
-('viragjain501@gmail.com', 600, 0, 0, '2022-04-25 18:02:42', 1, 0, 3, 8, 1);
+('anaghapjogalekar11@gmail.com', 10000, 1, 0, '2022-04-28 06:36:46', 1, 1, 3, 8, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `system_notifications`
+-- Table structure for table `returns`
 --
 
-CREATE TABLE `system_notifications` (
-  `Not_Time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `Message` varchar(255) DEFAULT NULL
+CREATE TABLE `returns` (
+  `returns_id` int(11) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `borrower_email` varchar(255) DEFAULT NULL,
+  `return_amount` float DEFAULT NULL,
+  `principal` float DEFAULT NULL,
+  `interest` float DEFAULT NULL,
+  `date_of_payment` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `borrowers_data`
---
-ALTER TABLE `borrowers_data`
-  ADD PRIMARY KEY (`borrowers_id`);
-
---
--- Indexes for table `borrowing_requests`
---
-ALTER TABLE `borrowing_requests`
-  ADD KEY `email` (`email`);
 
 --
 -- Indexes for table `installments`
@@ -403,54 +416,32 @@ ALTER TABLE `lenders_data`
   ADD PRIMARY KEY (`lenders_id`);
 
 --
--- Indexes for table `person`
+-- Indexes for table `returns`
 --
-ALTER TABLE `person`
-  ADD PRIMARY KEY (`email`);
-
---
--- Indexes for table `proposedloans`
---
-ALTER TABLE `proposedloans`
-  ADD PRIMARY KEY (`email`);
+ALTER TABLE `returns`
+  ADD PRIMARY KEY (`returns_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `borrowers_data`
---
-ALTER TABLE `borrowers_data`
-  MODIFY `borrowers_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `installments`
 --
 ALTER TABLE `installments`
-  MODIFY `installment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `installment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `lenders_data`
 --
 ALTER TABLE `lenders_data`
-  MODIFY `lenders_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `lenders_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- Constraints for dumped tables
+-- AUTO_INCREMENT for table `returns`
 --
-
---
--- Constraints for table `borrowing_requests`
---
-ALTER TABLE `borrowing_requests`
-  ADD CONSTRAINT `borrowing_requests_ibfk_1` FOREIGN KEY (`email`) REFERENCES `person` (`email`);
-
---
--- Constraints for table `proposedloans`
---
-ALTER TABLE `proposedloans`
-  ADD CONSTRAINT `proposedloans_ibfk_1` FOREIGN KEY (`email`) REFERENCES `person` (`email`);
+ALTER TABLE `returns`
+  MODIFY `returns_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

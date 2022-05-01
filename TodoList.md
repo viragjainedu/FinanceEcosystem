@@ -58,7 +58,11 @@ Fico -
 total interest installment paid - 
 Loan Defaults in installment page - 
 
-principal and innterest
 
-
+Withdraw page after borowing:
+Default loans 
+Scheduling
+Returns page
+Notifications
+Rollback of v1 and v2 after decline.
 

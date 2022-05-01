@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2022 at 08:53 AM
+-- Generation Time: Apr 28, 2022 at 08:04 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -29,23 +29,13 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `account_stats` (
   `email` varchar(250) DEFAULT NULL,
-  `balance` int(11) DEFAULT NULL,
-  `total_money_lent` int(11) DEFAULT NULL,
-  `total_money_borrowed` int(11) DEFAULT NULL,
-  `total_money_withdrawn` int(11) DEFAULT NULL,
-  `total_interest_received` int(11) DEFAULT NULL,
-  `total_interest_paid` int(11) DEFAULT NULL
+  `balance` float DEFAULT NULL,
+  `total_money_lent` float DEFAULT NULL,
+  `total_money_borrowed` float DEFAULT NULL,
+  `total_money_withdrawn` float DEFAULT NULL,
+  `total_interest_received` float DEFAULT NULL,
+  `total_interest_paid` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `account_stats`
---
-
-INSERT INTO `account_stats` (`email`, `balance`, `total_money_lent`, `total_money_borrowed`, `total_money_withdrawn`, `total_interest_received`, `total_interest_paid`) VALUES
-('virag.j@somaiya.edu', 0, 50000, 0, 0, 0, 0),
-('Dhundirajj00@gmail.com', 5000, 0, 5000, 0, 0, 0),
-('Keval.dk@somaiya.edu', 0, 30000, 0, 0, 0, 0),
-('nachiketmoghe2@gmail.com', 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -86,13 +76,6 @@ CREATE TABLE `borrowing_requests` (
   `status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `borrowing_requests`
---
-
-INSERT INTO `borrowing_requests` (`email`, `isAprroved`, `status`) VALUES
-('Dhundirajj00@gmail.com', 1, 4);
-
 -- --------------------------------------------------------
 
 --
@@ -106,12 +89,28 @@ CREATE TABLE `borrowing_transactions` (
   `amount_borrowed` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `borrowing_transactions`
+-- Table structure for table `fico_score`
 --
 
-INSERT INTO `borrowing_transactions` (`transaction_time`, `transaction_comment`, `email_id`, `amount_borrowed`) VALUES
-('2022-04-27 05:48:54', NULL, 'Dhundirajj00@gmail.com', 5000);
+CREATE TABLE `fico_score` (
+  `FS` int(11) DEFAULT NULL,
+  `a1` int(11) DEFAULT NULL,
+  `a1a` int(11) DEFAULT NULL,
+  `a2` int(11) DEFAULT NULL,
+  `a3` int(11) DEFAULT NULL,
+  `a4` int(11) DEFAULT NULL,
+  `a5` int(11) DEFAULT NULL,
+  `a6` int(11) DEFAULT NULL,
+  `a7` int(11) DEFAULT NULL,
+  `a7a` int(11) DEFAULT NULL,
+  `a8` int(11) DEFAULT NULL,
+  `a9` int(11) DEFAULT NULL,
+  `a10a` int(11) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -132,15 +131,6 @@ CREATE TABLE `installments` (
   `time_of_payment` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   `status` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `installments`
---
-
-INSERT INTO `installments` (`installment_id`, `email`, `amount_borrowed`, `date_of_loan_transaction`, `no_of_months`, `interest_rate`, `installment_amount`, `installment_no`, `date_of_payment`, `time_of_payment`, `status`) VALUES
-(1, 'Dhundirajj00@gmail.com', 5000, '2022-04-27', 3, 8, 1756, 1, '2022-05-27', '2022-04-27 05:49:25', 'Paid'),
-(2, 'Dhundirajj00@gmail.com', 5000, '2022-04-27', 3, 8, 1756, 2, '2022-06-27', NULL, 'Pending'),
-(3, 'Dhundirajj00@gmail.com', 5000, '2022-04-27', 3, 8, 1756, 3, '2022-07-27', NULL, 'Pending');
 
 -- --------------------------------------------------------
 
@@ -212,16 +202,10 @@ CREATE TABLE `lenders_data` (
   `b9_amount` int(11) DEFAULT NULL,
   `b9_grade` varchar(1) DEFAULT NULL,
   `current_borrower` int(11) DEFAULT NULL,
-  `lock_in_period` int(11) DEFAULT NULL
+  `lock_in_period` int(11) DEFAULT NULL,
+  `v1` int(11) DEFAULT NULL,
+  `v2` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `lenders_data`
---
-
-INSERT INTO `lenders_data` (`lenders_id`, `email`, `amount_lent`, `amount_remaining`, `fixed_lending_amount`, `b0`, `b0_amount`, `b0_grade`, `b1`, `b1_amount`, `b1_grade`, `b2`, `b2_amount`, `b2_grade`, `b3`, `b3_amount`, `b3_grade`, `b4`, `b4_amount`, `b4_grade`, `b5`, `b5_amount`, `b5_grade`, `b6`, `b6_amount`, `b6_grade`, `b7`, `b7_amount`, `b7_grade`, `b8`, `b8_amount`, `b8_grade`, `b9`, `b9_amount`, `b9_grade`, `current_borrower`, `lock_in_period`) VALUES
-(0, 'virag.j@somaiya.edu', 45000, 45000, 5000, 'Dhundirajj00@gmail.com', 5000, 'A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 3),
-(4, 'Keval.dk@somaiya.edu', 30000, 30000, 3000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 3);
 
 -- --------------------------------------------------------
 
@@ -235,14 +219,6 @@ CREATE TABLE `lending_transactions` (
   `amount_lent` int(11) DEFAULT NULL,
   `lock_in_period` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `lending_transactions`
---
-
-INSERT INTO `lending_transactions` (`transaction_time`, `email_id`, `amount_lent`, `lock_in_period`) VALUES
-('2022-04-27 05:43:11', 'virag.j@somaiya.edu', 50000, 3),
-('2022-04-27 06:52:31', 'Keval.dk@somaiya.edu', 30000, 3);
 
 -- --------------------------------------------------------
 
@@ -297,11 +273,7 @@ CREATE TABLE `person` (
 --
 
 INSERT INTO `person` (`email`, `password`, `balance`, `emp_length`, `home_ownership`, `annual_income`, `contact`, `purpose`, `first_name`, `last_name`, `gender`, `DOB`, `pincode`, `state`, `city`, `address1`, `address2`, `GRADE`, `isAdmin`, `collateral`, `username`, `age`, `collateral_value`, `loan_cap`, `amount_req`, `month_req`) VALUES
-('viragjain503@gmail.com', 'Dop@12345', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'viragjain503', NULL, NULL, NULL, NULL, NULL),
-('virag.j@somaiya.edu', 'Dop@12345', NULL, NULL, NULL, NULL, NULL, NULL, 'Virag', 'Jain', 'Male', '2000-11-29', '400083', 'Maharashtra', 'Mumbai', '503/Aditya Tower Kan', '503/Aditya Tower kan', NULL, 0, NULL, 'viragjainedu', NULL, NULL, NULL, NULL, NULL),
-('Dhundirajj00@gmail.com', 'Dop@12345', NULL, 10, NULL, 10, '9869101921', 'House', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'A', 0, 'House', 'Dhundiraj', 30, 5, 5000, 5000, 3),
-('Keval.dk@somaiya.edu', 'Dop@12345', NULL, NULL, NULL, NULL, NULL, NULL, 'Virag', 'Jain', 'Male', '1998-07-24', '400083', 'Maharashtra', 'Mumbai', '503/Aditya Tower Kan', '503/Aditya Tower kan', NULL, 0, NULL, 'keval', NULL, NULL, NULL, NULL, NULL),
-('nachiketmoghe2@gmail.com', 'Dop@12345', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 'Nachiket', NULL, NULL, NULL, NULL, NULL);
+('viragjain503@gmail.com', 'Dop@12345', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'viragjain503', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -334,13 +306,6 @@ CREATE TABLE `proposedloans` (
   `rejected` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `proposedloans`
---
-
-INSERT INTO `proposedloans` (`email`, `amount1`, `selected`, `MailSent`, `Time`, `isCalculated`, `isTransacted`, `month_req`, `interest1`, `rejected`) VALUES
-('Dhundirajj00@gmail.com', 5000, 1, 0, '2022-04-27 05:48:54', 1, 1, 3, 8, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -356,13 +321,6 @@ CREATE TABLE `returns` (
   `interest` float DEFAULT NULL,
   `date_of_payment` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `returns`
---
-
-INSERT INTO `returns` (`returns_id`, `email`, `borrower_email`, `return_amount`, `principal`, `interest`, `date_of_payment`) VALUES
-(1, 'virag.j@somaiya.edu', 'Dhundirajj00@gmail.com', 1756, 1666.67, 89.33, '2022-04-27 05:49:25');
 
 --
 -- Indexes for dumped tables
@@ -394,19 +352,19 @@ ALTER TABLE `returns`
 -- AUTO_INCREMENT for table `installments`
 --
 ALTER TABLE `installments`
-  MODIFY `installment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `installment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `lenders_data`
 --
 ALTER TABLE `lenders_data`
-  MODIFY `lenders_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `lenders_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `returns`
 --
 ALTER TABLE `returns`
-  MODIFY `returns_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `returns_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -119,99 +119,107 @@ router.post("/CompleteProfile", function(req, res, next) {
     }
     // console.log("Hiii3")
 
-    const CV = collateral_value;
-    const Credit_Score = 10*IS + 5*ES + 5*AS + 3*Math.log10(CV) + PS
-    var Loan_Cap = 0.7*CV*100000
-    
-    if(amount_req < Loan_Cap){
-        Loan_Cap = amount_req;
-    }
-
-    var GRADE = 'X';
-    console.log("Hiii3.5")
-    if(Credit_Score >= 85){
-        GRADE = 'A';
-    }
-    else if (Credit_Score >= 70 && Credit_Score < 85){
-        GRADE = 'B';
-    }
-    else if (Credit_Score >= 55 && Credit_Score < 70){
-        GRADE = 'C';
-    }
-    else if (Credit_Score >= 40 && Credit_Score < 55){
-        GRADE = 'D';
-    }
-    else if (Credit_Score >= 25 && Credit_Score < 40){
-        GRADE = 'E';
-    }
-    else if (Credit_Score >= 10 && Credit_Score < 25){
-        GRADE = 'F';
-    }
-    else if (Credit_Score < 10){
-        GRADE = 'G';
-    }
-    console.log("Hiii4")
-
-    console.log(Loan_Cap)
-    console.log(Credit_Score);
-    console.log(GRADE);
-
-    connection.query(
-        "UPDATE person SET emp_length = ?, annual_income = ?, purpose = ?,collateral = ?,age=?,collateral_value=?,amount_req = ?,month_req = ?, contact = ?,GRADE = ?,Loan_Cap = ? where email = ? ;",
-        [emp_length, annual_income,purpose,collateral,age,collateral_value,amount_req,month_req,contact,GRADE,Loan_Cap,email],
-        (err, result)=> {
-            if(err){
-                console.log(err);
-            }
-            console.log(result);
-
-
-            //INSERTING IN BORROWING REQUESTS ENDS            
-            connection.query("INSERT INTO borrowing_requests (email,isAprroved,status) values (?,0,1)",
-            [email],
-            (err, result)=> {
-                if(err){
-                    console.log(err)
+    connection.query("select * from fico_score where email = ?",[email] , (err,rows)=>{
+        if(err){console.log(err)}
+        else{
+            if(rows.length > 0 ){
+                var CV = collateral_value;
+                var Credit_Score = rows[0].FS  +  4*(0.6*IS + 4*ES + 1.3*AS + 3*Math.log10(CV) + PS)
+                var Loan_Cap = 0.7*CV*100000
+                
+                if(amount_req < Loan_Cap){
+                    Loan_Cap = amount_req;
                 }
-
-                //send mail
+            
+                var GRADE = 'X';
+                console.log("Hiii3.5")
+                if(Credit_Score >= 800){
+                    GRADE = 'A';
+                }
+                else if (Credit_Score >= 740 && Credit_Score < 800){
+                    GRADE = 'B';
+                }
+                else if (Credit_Score >= 700 && Credit_Score < 740){
+                    GRADE = 'C';
+                }
+                else if (Credit_Score >= 670 && Credit_Score < 700){
+                    GRADE = 'D';
+                }
+                else if (Credit_Score >= 625 && Credit_Score < 670){
+                    GRADE = 'E';
+                }
+                else if (Credit_Score >= 580 && Credit_Score < 625){
+                    GRADE = 'F';
+                }
+                else if (Credit_Score < 580){
+                    GRADE = 'G';
+                }
+                console.log("Hiii4")
+            
+                console.log(Loan_Cap)
+                console.log(Credit_Score);
+                console.log(GRADE);
+            
+                connection.query(
+                    "UPDATE person SET emp_length = ?, annual_income = ?, purpose = ?,collateral = ?,age=?,collateral_value=?,amount_req = ?,month_req = ?, contact = ?,GRADE = ?,Loan_Cap = ? where email = ? ;",
+                    [emp_length, annual_income,purpose,collateral,age,collateral_value,amount_req,month_req,contact,GRADE,Loan_Cap,email],
+                    (err, result)=> {
+                        if(err){
+                            console.log(err);
+                        }
+                        console.log(result);
+            
+                        //INSERTING IN BORROWING REQUESTS ENDS            
+                        connection.query("INSERT INTO borrowing_requests (email,isAprroved,status) values (?,0,1)",
+                        [email],
+                        (err, result)=> {
+                            if(err){
+                                console.log(err)
+                            }
+            
+                            //send mail
+                                        
+                            var transporter = nodemailer.createTransport({
+                                service: 'gmail',
+                                auth: {
+                                user: 'virag.j@somaiya.edu',
+                                pass: 'dontopenthis12345'
+                                }
+                            });
                             
-                var transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    auth: {
-                    user: 'virag.j@somaiya.edu',
-                    pass: 'dontopenthis12345'
+                            
+                            var mailOptions = {
+                                from: 'virag.j@somaiya.edu',
+                                to: email,
+                                subject: 'Physical Verification of your details will take place soon',
+                                text: 'You can visit http://localhost:3000/borrowing for more details.'
+                            };
+                            
+                            transporter.sendMail(mailOptions, function(error, info){
+                                if (error) {
+                                console.log(error);
+                                res.send({error:error})
+                                } else {
+                                console.log('Email sent: ' + info.response);
+            
+                                    res.send({"success":"Updated Succesfully"})
+            
+                                }
+                            });
+                        }
+                        );
+                        //INSERTING IN BORROWING REQUESTS ENDS
+                       
+            
+                        //Credit Score calculation for grade ENDS
                     }
-                });
-                
-                
-                var mailOptions = {
-                    from: 'virag.j@somaiya.edu',
-                    to: email,
-                    subject: 'Physical Verification of your details will take place soon',
-                    text: 'You can visit http://localhost:3000/borrowing for more details.'
-                };
-                
-                transporter.sendMail(mailOptions, function(error, info){
-                    if (error) {
-                    console.log(error);
-                    res.send({error:error})
-                    } else {
-                    console.log('Email sent: ' + info.response);
-
-                        res.send({"success":"Updated Succesfully"})
-
-                    }
-                });
+                  );
+                // res.send({"Profile Recieved":"Yes"})
             }
-            );
-            //INSERTING IN BORROWING REQUESTS ENDS
-           
-
-            //Credit Score calculation for grade ENDS
         }
-      );
-    // res.send({"Profile Recieved":"Yes"})
+    })
+
+
 });
 
 router.post("/profile_info", function(req, res, next) {
@@ -516,24 +524,51 @@ router.post("/calculate", function(req, res, next) {
                             if(result[i].amount_remaining == 0){
                                 continue;
                             }else{
-                                if(result[i].fixed_lending_amount + amount_included <= loan_cap){
-                                    amount_included = amount_included + result[i].fixed_lending_amount
 
-                                    var leastBorrowerNo = 0;
-                                    //calculating borrowerNo
-                                    for (let j = 0; j < 10; j++) {
-                                        if(result[i][`b${j}`] ===  null){
-                                            leastBorrowerNo = j;
-                                            break;
+                                if((GRADE === 'A' || GRADE === 'B' || GRADE === 'C') && result[i].v1 > 0){
+
+                                    if(result[i].fixed_lending_amount + amount_included <= loan_cap){
+                                        amount_included = amount_included + result[i].fixed_lending_amount
+    
+                                        var leastBorrowerNo = 0;
+                                        //calculating borrowerNo
+                                        for (let j = 0; j < 10; j++) {
+                                            if(result[i][`b${j}`] ===  null){
+                                                leastBorrowerNo = j;
+                                                break;
+                                            }
+                                        }
+                                        console.log(`borrowerNo: ${leastBorrowerNo}`)
+                                        connection.query(`UPDATE  lenders_data set amount_remaining = ?, b${leastBorrowerNo} = ? ,v1 = ? where lenders_id = ?`,
+                                        [result[i].amount_remaining-result[i].fixed_lending_amount ,email,result[i].v1-1, result[i].lenders_id]),
+                                        (err,out)=>{
+                                            if(err){console.log(err)}
+                                            
                                         }
                                     }
-                                    console.log(`borrowerNo: ${leastBorrowerNo}`)
-                                    connection.query(`UPDATE  lenders_data set amount_remaining = ?, b${leastBorrowerNo} = ?  where lenders_id = ?`,
-                                    [result[i].amount_remaining-result[i].fixed_lending_amount ,email, result[i].lenders_id]),
-                                    (err,out)=>{
-                                        if(err){console.log(err)}
-                                        
+                                    
+                                }else if(( GRADE === 'D' || GRADE === 'E' || GRADE === 'F' || GRADE ==='G') && result[i].v2 > 0){
+                                    
+                                    if(result[i].fixed_lending_amount + amount_included <= loan_cap){
+                                        amount_included = amount_included + result[i].fixed_lending_amount
+    
+                                        var leastBorrowerNo = 0;
+                                        //calculating borrowerNo
+                                        for (let j = 0; j < 10; j++) {
+                                            if(result[i][`b${j}`] ===  null){
+                                                leastBorrowerNo = j;
+                                                break;
+                                            }
+                                        }
+                                        console.log(`borrowerNo: ${leastBorrowerNo}`)
+                                        connection.query(`UPDATE  lenders_data set amount_remaining = ?, b${leastBorrowerNo} = ? ,v2 = ? where lenders_id = ?`,
+                                        [result[i].amount_remaining-result[i].fixed_lending_amount ,email,result[i].v2-1, result[i].lenders_id]),
+                                        (err,out)=>{
+                                            if(err){console.log(err)}
+                                            
+                                        }
                                     }
+                                    
                                 }
                             }
                         }

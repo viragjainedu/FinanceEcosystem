@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 // import './css/fico_score_estimator.css';
-import MyVueComponent from '../expense-analyser/src/App.vue'
+// import MyVueComponent from '../expense-analyser/src/App.vue'
 import TopNavbar from '../components/TopNavbar'
 import LeftNavbar from '../components/LeftNavbar'
 import RightNavbar from '../components/RightNavbar'
@@ -22,7 +22,7 @@ class App extends Component {
                        answer5: "",   
                        answer6: "",   
                        answer7: "",   
-                       answe7a: "",   
+                       answer7a: "",   
                        answer8: "",   
                        answer8a: "",    
                        answer9: "",    
@@ -31,46 +31,88 @@ class App extends Component {
                        current_q:1, 
                        activateSubmitButton: false,
                        nextButton: true,
+                       returnButton: true,
     };
 	}
 	
-	callAPI() {
-		axios.post("http://localhost:9000/Fico")
-			.then(res => res.text())
-			.then(res => this.setState({ apiResponse: res }));
-	}
-	
-	componentWillMount() {
-		this.callAPI();
-	}
 
     handleInputChanged(event) {
+
         this.setState({
             ...this.state,
             [event.target.name] : event.target.value,
         });
     }
 
-    handleButtonClicked(){
+    handleButtonClicked() {
+        console.log(this.state)
+
+        if( this.state.answer1 !== ""  && this.state.answer2 !== ""&&
+            this.state.answer3 !== ""&& this.state.answer4 !== ""&& this.state.answer5 !== ""&&
+            this.state.answer6 !== ""&& this.state.answer7 !== ""&& 
+            this.state.answer9 !== ""&& this.state.answer10 !== "")
+        {
+            axios.post("http://localhost:9000/Fico", {               
+                answer1 : this.state.answer1,
+                answer1a : this.state.answer1a,
+                answer2 : this.state.answer2,
+                answer3 : this.state.answer3,
+                answer4 : this.state.answer4,
+                answer5 : this.state.answer5,
+                answer6 : this.state.answer6,
+                answer7 : this.state.answer7,
+                answer7a : this.state.answer7a,
+                answer9 : this.state.answer9,
+                answer10a : this.state.answer10a,
+                email: localStorage.getItem('emailReg')
+            }).then((response) => {
+                console.log(response);
+            if(response.data.message){
+                alert(response.data.message)
+                window.location.href = "/Borrowing";
+            }
+            });
+        }
+        else{
+            this.setState({
+                ...this.state,
+                message : "Please fill all fields",
+            });
+        }
 
     }
 
+    handleButtonClickedReturn(){
+        if(this.state.current_q !== 1){
+            this.setState({
+                ...this.state,
+                current_q : this.state.current_q - 1,
+                nextButton : true
+            })
+        }
+    }
+
     handleButtonClickedNext(){
+
         if(this.state.current_q === 1 && this.state.answer1 === "1.1")
         {
             this.setState({
                 ...this.state,
                 current_q : 3,
+                answer1a : ""
+
             }); 
         }else if(this.state.current_q === 8 && this.state.answer7 === "7.1"){
             this.setState({
                 ...this.state,
                 current_q : 10,
+                answer7a : ""
             });
         }else if(this.state.current_q === 10 && this.state.answer8 === "8.1"){
             this.setState({
                 ...this.state,
                 current_q : 12,
+                answer8a : ""
             });
         }else if(this.state.current_q === 13 && this.state.answer10 === "10.1"){
             this.setState({
@@ -79,13 +121,19 @@ class App extends Component {
                 activateSubmitButton : true,
                 nextButton : false,
             });
-        }else if(this.state.current_q === 13 && this.state.answer10 !== "10.1"){
+        }else if(this.state.current_q === 13 && this.state.answer10 === "10.2"){
             this.setState({
                 ...this.state,
                 activateSubmitButton : true,
-                nextButton : false
+                nextButton : false,
+                answer10a : ""
             });
 
+        }else if(this.state.current_q === 14){
+            this.setState({
+                ...this.state,
+                activateSubmitButton : true
+            })
         }else{
             this.setState({
                 ...this.state,
@@ -115,10 +163,12 @@ class App extends Component {
                   <div className='col-12 grid-margin'>
                     <div className='card'>
                         <div className='card-body'>
-                        <h4 className="card-title">Answer the following questions</h4>
-
+                        <h4 className="card-title">Answer the following questions correctly</h4>
+                        <p style={{color: "green"}}>These details will be physically verified</p>
+                        <p style={{color : "red"}}>
+                            {this.state.message}    
+                        </p>
                             <div className='form-sample'>
-                                
                                 {
                                     (()=>{
                                         if(this.state.current_q === 1){
@@ -128,7 +178,7 @@ class App extends Component {
                                                     <div className="col-sm-12">
                                                         <select onChange={this.handleInputChanged.bind(this)} name="answer1" className="form-control">
                                                             <option value="">Select</option>
-                                                            <option value="1.1">I have never had a credit card (Ignore question 1a)</option>
+                                                            <option value="1.1">I have never had a credit card</option>
                                                             <option value="1.2">1</option>
                                                             <option value="1.3">2 to 4</option>
                                                             <option value="1.4">5 or more</option>
@@ -295,7 +345,7 @@ class App extends Component {
                                                         <div className="col-sm-12">
                                                             <select onChange={this.handleInputChanged.bind(this)} name="answer7" className="form-control" required>
                                                                 <option value="">Select</option>
-                                                                <option value="7.1">I have never missed a payment (Ignore question 7a)</option>
+                                                                <option value="7.1">I have never missed a payment</option>
                                                                 <option value="7.2">in the past 3 months</option>
                                                                 <option value="7.3">3 to 6 months ago</option>
                                                                 <option value="7.4">6 months to 1 year ago</option>
@@ -343,7 +393,7 @@ class App extends Component {
                                                         <div className="col-sm-12">
                                                             <select onChange={this.handleInputChanged.bind(this)} name="answer8" className="form-control" required>
                                                                 <option value="">Select</option>
-                                                                <option value="8.1">0 (Ignore question 8a)</option>
+                                                                <option value="8.1">0</option>
                                                                 <option value="8.2">1</option>
                                                                 <option value="8.3">2</option>
                                                             </select>
@@ -415,7 +465,7 @@ class App extends Component {
                                                         <select onChange={this.handleInputChanged.bind(this)} name="answer10" className="form-control" required>
                                                             <option value="">Select</option>
                                                             <option value="10.1">Yes</option>
-                                                            <option value="10.2">No (Ignore question 10a)</option>
+                                                            <option value="10.2">No</option>
                                                         </select>
                                                     </div>
                                                 </div>   
@@ -448,13 +498,24 @@ class App extends Component {
                                 }
                                 
 
-
+                                <div className='row'>
                                 {
                                     (()=>{
                                         if(this.state.nextButton){
                                             return(
-                                                <div>
+                                                <div className='col-lg-1'>
                                                     <button  onClick={this.handleButtonClickedNext.bind(this)} className="btn btn-primary me-2">Next</button>
+                                                </div>                                                
+                                            )
+                                        }
+                                    })()
+                                }
+                                {
+                                    (()=>{
+                                        if(this.state.returnButton){
+                                            return(
+                                                <div className='col-lg-1'>
+                                                    <button  onClick={this.handleButtonClickedReturn.bind(this)} className="btn btn-success me-2">Return</button>
                                                 </div>                                                
                                             )
                                         }
@@ -464,13 +525,15 @@ class App extends Component {
                                     (()=>{
                                         if(this.state.activateSubmitButton){
                                             return(
-                                            <div>
+                                            <div className='col-lg-1'>
                                                 <button  onClick={this.handleButtonClicked.bind(this)} className="btn btn-primary me-2">Submit</button>
                                             </div>
                                             )
                                         }
                                     })()
                                 }
+                                </div>
+
                                 
 
                             </div>
