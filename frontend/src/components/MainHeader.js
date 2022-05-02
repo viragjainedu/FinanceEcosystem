@@ -20,6 +20,7 @@ function MainHeader (props){
                     <Link to='/Borrowing'><a className="btn btn-otline-dark align-items-center"><i className="icon-people" /> Borrowing</a></Link>
                     <Link to='/Installments'><a className="btn btn-otline-dark align-items-center"><i className="icon-people" /> Installments</a></Link>
                     <Link to='/Interests'><a className="btn btn-otline-dark align-items-center"><i className="icon-people" /> Returns</a></Link>
+                    <Link to='/Withdrawal'><a className="btn btn-otline-dark align-items-center"><i className="icon-people" /> Withdrawal</a></Link>
                     </div>
                 </div>
                 </div>

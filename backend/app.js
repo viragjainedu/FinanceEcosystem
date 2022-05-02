@@ -32,6 +32,7 @@ var myProfile = require("./routes/myProfile");
 var faqs = require("./routes/faqs");
 
 var Fico = require("./routes/Fico");
+var withdrawal = require("./routes/withdrawal");
 
 var SystemNotifications = require("./routesAdmin/SystemNotifications");
 var Mails = require("./routesAdmin/Mails");
@@ -81,6 +82,7 @@ app.use("/faqs", faqs);
 
 
 app.use("/Fico", Fico);
+app.use("/withdrawal", withdrawal);
 
 
 app.use("/SystemNotifications", SystemNotifications);

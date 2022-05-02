@@ -26,7 +26,8 @@ class App extends Component {
             message : "",
             status : 0,
             isLoanCalculatedForThisEmail : false,
-            isFicoCalculated : false
+            isFicoCalculated : false,
+            selectedFile: "",
         };
 	}
 
@@ -48,6 +49,7 @@ class App extends Component {
                     }).then((response) => {
                       console.log(response);
                       if(response.data){
+                          console.log(response)
                         this.setState({
                             ...this.state,
                             emp_length : response.data.emp_length,
@@ -113,7 +115,15 @@ class App extends Component {
         this.isLoanCalculatedForThisEmail(localStorage.getItem('emailReg'));
         this.isFicoCalculated();
 	} 
-	
+    
+    onFileChange = event => { 
+        // Update the state 
+        this.setState({ 
+            ...this.state,
+            selectedFile: event.target.files,
+        }); 
+      }; 
+
     //All the handle INput functions for forms 
     handleInputChanged(event) {
         this.setState({
@@ -124,7 +134,7 @@ class App extends Component {
     
     handleButtonClicked() {
         // var first_name = this.state.first_name;
-        console.log(this.state)
+        // console.log(this.state)
         const regexExp = /^[6-9]\d{9}$/gi;
 
         if(this.state.emp_length !== "" &&  this.state.purpose !== "" &&  this.state.age !== "" &&  this.state.amount_req !== ""&&  this.state.month_req !== "" &&  this.state.collateral_value !== "" &&  this.state.collateral !== "" && this.state.contact !== "" && this.state.annual_income !== ""){
@@ -139,7 +149,25 @@ class App extends Component {
                     ...this.state,
                     message : "Invalid Phone Number",
                 });
+            // }else if (!this.state.selectedFile) {
+            //     alert("Please select a file!");
+            //     this.setState({
+            //         message: "Please upload files"
+            //     })
             }else{
+                // const data = new FormData();
+
+                // for (let i = 0; i < this.state.selectedFile.length; i++) {
+                //     data.append("myFiles", this.state.selectedFile[i]);
+                // }
+                // data.append("Name", "Virag");
+                
+                // for (var key of data.keys()) {
+                //     console.log(key); 
+                // }
+
+                // console.log("Hey")
+
                 //Axios ka post request daalna hai 
                 Axios.post("http://localhost:9000/borrowing/CompleteProfile", {
                     emp_length : this.state.emp_length,
@@ -158,7 +186,7 @@ class App extends Component {
                 if(response.data.success){
                     console.log("Completed profile");
                     window.location.href = "/borrowing";
-                }
+                    }
                 });
             }
         }
@@ -455,6 +483,14 @@ class App extends Component {
                                                                 <option value="12">12 Months</option>
                                                                 <option value="18">18 Months</option>
                                                             </select>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="form-group row">
+                                                        <label className="col-sm-3 col-form-label">Collateral Documents</label>
+                                                        <div className="col-sm-9">
+                                                            <input type="file"  onChange={this.onFileChange.bind(this)} name="myFiles" className="form-control" placeholder='Upload Collateral Documents' multiple/>
                                                         </div>
                                                         </div>
                                                     </div>
