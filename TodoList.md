@@ -59,11 +59,31 @@ total interest installment paid -
 Loan Defaults in installment page - 
 
 
-2) Withdraw page after borowing:
-Scheduling
-Default loans 
+<!-- 2) Withdraw page after borowing: -->
+<!-- Scheduling -->
+<!-- Default loans - 3(1) 6(2) 12(3) 18(3)  -->
+<!-- late fees -   -->
 Returns page
+
+Advance insights - Reveal info 
+
+Common OTP page
+
 <!-- 3) Notifications -->
-1)Rollback of v1 and v2 after decline.
+<!-- 1)Rollback of v1 and v2 after decline. -->
 <!-- FIle Uploading -->
 Deployment - https://stackoverflow.com/questions/63552490/deploy-reactjs-mysql-nodejs-express-project
+
+
+Installments page - 
+1) after due date - blink due in red.
+2)
+
+Algortim ppt - 
+1) use cases.
+2) parabolic graphs.
+3) Ranges of our score.  
+
+Flow of our project ppt -
+
+https://www.i2ifunding.com/how-p2p-lending-works

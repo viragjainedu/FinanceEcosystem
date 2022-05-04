@@ -117,7 +117,24 @@ router.post("/pay", function(req, res) {
                             }
                             
                         }, function(err, results) {
-                            if(err){console.log(err)}
+                            if(err){console.log(err)}else{
+                                //for completed loans 
+                                connection.query("select * from installments where email = ?",[email],(err,output)=>{
+                                    var flag = false;
+                                    for (let i = 0; i < output.length; i++) {
+                                        if(output[i].status === 'Paid'){
+                                            continue;
+                                        }else{
+                                            flag = true //means pending
+                                            break;
+                                        }
+                                    }
+                                    if(flag === false){
+                                        //loan completed
+                                        connection.query("Insert into CompletedLoans select * from installments where email = ?",[email],(err,rows)=>{})
+                                    }
+                                })
+                            }
                             console.log(""); // Output will the value that you have inserted in array, once for loop completed ex . 1,2,3,4,5,6,7,8,9
                             //sending mail successfull
                             var transporter = nodemailer.createTransport({

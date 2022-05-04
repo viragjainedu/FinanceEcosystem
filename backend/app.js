@@ -35,12 +35,13 @@ var withdrawal = require("./routes/withdrawal");
 var SystemNotifications = require("./routesAdmin/SystemNotifications");
 var Mails = require("./routesAdmin/Mails");
 var AddRemoveBlogs = require('./routesAdmin/AddRemoveBlogs');
+var LoanDefault = require('./routesAdmin/LoanDefault');
 
 var app = express();
 const jwt = require('jsonwebtoken');
 
 // for node cron tasks
-// require('./tasks/tasks')();
+require('./tasks/tasks')();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -83,6 +84,7 @@ app.use("/withdrawal", withdrawal);
 
 app.use("/SystemNotifications", SystemNotifications);
 app.use("/AddRemoveBlogs", AddRemoveBlogs);
+app.use("/LoanDefault", LoanDefault);
 
 app.use("/Mails", Mails);
 

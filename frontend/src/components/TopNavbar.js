@@ -30,7 +30,7 @@ function TopNavbar (){
 	return (
         <>
          <nav className="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
-          <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-contpent-start">
             <div className="me-3">
               <button className="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
                 <span className="icon-menu" />

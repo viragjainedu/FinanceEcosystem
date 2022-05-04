@@ -2,34 +2,58 @@ var express = require("express");
 var router = express.Router();
 var async = require('async');
 var connection = require('../connection');
+const cron = require('node-cron');
+var moment = require('moment');
 
-router.post("/", function(req, res, next) {
+router.get("/", function(req, res, next) {
 
-    console.log(req.body);
 
-    // var output = [];
-    // connection.query('SELECT * FROM person',(error,results) => {
-    //     if(error) throw err;
-    
-    //     async.eachSeries(results,function(data,callback){ // It will be executed one by one
-    //             //Here it will be wait query execute. It will work like synchronous
-    //             connection.query('SELECT * FROM account_stats  where email = ?',[data.email],(error,results1) => {
-    //                 if(error) throw err;
-    
-    //                 output.push(results1[0])
-    //                 callback();
-    //             });
-    
-    //     }, function(err, results) {
-    //         if(err){console.log(err)}
-    //         console.log(output); // Output will the value that you have inserted in array, once for loop completed ex . 1,2,3,4,5,6,7,8,9
-    //     });
-    
-    // })
+    var todays_date = moment(new Date()).format('YYYY-MM-DD')
+    // console.log(todays_date)
+    //check for loan defaults.
+    connection.query("Select * from installments" , [], (err,result) => {
+        if(err){
+            console.log(err)
+            res.send({message:err})
+        }else{
+            async.eachSeries(result,function(sub_result,callback){
+                var difference = moment.duration(moment(todays_date).diff(moment(sub_result.date_of_payment))).asDays();
+                
+                // console.log(` id - ${sub_result.installment_id} diff - ${difference} payment date: ${sub_result.date_of_payment} `)
+                // console.log(sub_result.date_of_payment < todays_date)
+                
+                if(moment(sub_result.date_of_payment) < moment(todays_date) && difference < 90){
+                    
+                    //late fees
+                    var late_fees = difference*(sub_result.installment_amount/30)
 
-    // res.send("Hiii")
-    // var now = new Date();
-    // res.send(now.toISOString().slice(0, 19).replace('T', ' '));
+                    connection.query(`update installments set status = 'Late by ${difference} days', late_fees = ? where installment_id = ? `, [late_fees,sub_result.installment_id]
+                    , (err,output)=>{
+                        if(err){console.log(err)}else{
+                            callback()
+                        }
+                    })
+
+                }else if(moment(sub_result.date_of_payment) < moment(todays_date) && difference > 90){
+                    
+                    //default
+                    connection.query(`update installments set status = 'Defaulted' where installment_id = ? `, [sub_result.installment_id]
+                    , (err,output)=>{
+                        if(err){console.log(err)}else{
+                            callback()
+                        }
+                    })
+                }else{
+                    callback()
+                }
+
+            },function(err,output){
+                if(err){console.log(err)}
+
+            });
+           
+        }
+    })
 });
 
 module.exports = router;

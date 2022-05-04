@@ -25,6 +25,7 @@ function LeftNavbar (){
                     <li className="nav-item"> <Link to="/SystemNotifications"><a className="nav-link" >System Notifications</a></Link></li>
                     <li className="nav-item"> <Link to="/LoanApprovalUnverified"><a className="nav-link" >Loan Approval Unverified</a></Link></li>
                     <li className="nav-item"> <Link to="/LoanApprovalVerified"><a className="nav-link" >Loan Approval Verified</a></Link></li>
+                    <li className="nav-item"> <Link to="/LoanDefaulted"><a className="nav-link" >Loan Defaults</a></Link></li>
                     <li className="nav-item"> <Link to="/AddRemoveBlogs"><a className="nav-link" >Add/Remove Blogs</a></Link></li>
 
                   </ul>

@@ -92,7 +92,7 @@ class App extends Component {
                                 <th>Installment Amount</th>
                                 {/* <th>Date of Loan Transaction</th> */}
                                 <th>Due Date</th>
-                                <th>Payed On</th>
+                                {/* <th>Payed On</th> */}
                                 <th>Status</th>
                                 <th>Pay</th>
                               </tr>
@@ -105,11 +105,22 @@ class App extends Component {
                                   <td>{item.interest_rate} % </td>
                                   {/* <td>{item.interest_rate} </td>
                                   <td>{item.interest_rate} % </td> */}
-                                  <td>₹ {item.installment_amount} </td>
+                                  <td>
+                                    ₹ {item.installment_amount + item.late_fees}
+                                    {(()=>{
+                                      if(item.late_fees === 0){
+                                        return(<></>)
+                                      }else{
+                                        return(
+                                          <p style={{color: 'red'}}>Late fees: {item.late_fees}</p>
+                                        )
+                                      }
+                                    })()} 
+                                  </td>
                                   {/* <td>{item.date_of_loan_transaction} </td> */}
                                   {/* <td>{momnet(item.time_of_payment)} </td> */}
                                   <td>{ item.date_of_payment ? moment(item.date_of_payment).format('DD/MM/YYYY') : "Due Upcoming"} </td>
-                                  <td>{ item.time_of_payment ? moment(item.time_of_payment).format('DD-MM-YYYY HH:mm:ss') : "Due Upcoming"} </td>
+                                  {/* <td>{ item.time_of_payment ? moment(item.time_of_payment).format('DD-MM-YYYY HH:mm:ss') : "Due Upcoming"} </td> */}
                                   <td class="text-success">{item.status}</td>
                                   {(()=>{
                                     if(item.status === 'Paid'){
@@ -118,6 +129,12 @@ class App extends Component {
                                         Paid
                                       </td>
                                       );
+                                    }else if(item.status === 'Defaulted'){
+                                      return(
+                                        <td>
+                                          <button disabled onClick={(email) => {if(window.confirm('Are you sure to PAY installment?')){ this.handleButtonClickedPay(item.installment_amount, item.installment_id, item.amount_borrowed)};}} className="btn btn-primary me-2">Pay</button>
+                                        </td>
+                                      )
                                     }else{
                                       return(
                                       <td>

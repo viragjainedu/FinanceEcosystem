@@ -13,4 +13,4 @@ CREATE TABLE system_notifications (
 
 Alter table person add column last_not_opened datetime;
 update account_stats set balance = 6000 where email = 'dhuniraj.j@somaiya.edu';
-
+ALTER TABLE installments ALTER COLUMN late_fees SET DEFAULT 0;

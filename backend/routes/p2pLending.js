@@ -4,7 +4,6 @@ var connection = require('../connection');
 var moment = require('moment');
 // const { connect } = require("../connection");
 
-
 router.post("/", function(req, res, next) {
     // res.send("This statement is generate by p2pLending API backend");
 
