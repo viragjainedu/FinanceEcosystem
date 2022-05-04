@@ -24,7 +24,9 @@ import News from './pages/News';
 import Payment from './pages/Payment';  
 import Installments from './pages/Installments';  
 import Interests from './pages/Interests';  
-import MyProfile from './pages/MyProfile'
+import MyProfile from './pages/MyProfile';
+import Faqs from './pages/Faqs';
+
 import Withdrawal from './pages/Withdrawal'
 import Fico from './pages/Fico';  
 import TestReact from './pages/TestReact';  
@@ -60,6 +62,7 @@ ReactDOM.render(
         <Route path="Installments" element={<Installments />} />
         <Route path="Interests" element={<Interests />} />
         <Route path="MyProfile" element={<MyProfile />} />
+        <Route path="Faqs" element={<Faqs />} />
 
         <Route path="Fico" element={<Fico />} />
         <Route path="Withdrawal" element={<Withdrawal />} />
