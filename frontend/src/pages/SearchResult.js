@@ -4,7 +4,6 @@ import TopNavbar from '../components/TopNavbar'
 import LeftNavbar from '../components/LeftNavbar'
 import RightNavbar from '../components/RightNavbar'
 import MainHeader from '../components/MainHeader'
-import { Link } from 'react-router-dom';
 
 
 class App extends Component {

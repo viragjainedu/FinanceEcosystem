@@ -27,16 +27,38 @@ class App extends Component {
     const debitFrom = query.get('debitFrom');
     const riskApetite = query.get('riskApetite');
       this.setState({
+        ...this.state,
         amount: amount,
         lock_in_period: lock_in_period,
         debitFrom: debitFrom,
         riskApetite: riskApetite,
+        original_otp : 0,
+        entered_otp : -1,  
       })
 	}
 	
+  SendOTP() {
+    Axios.post(`http://localhost:9000/SendOTP/CommonOTP`, {
+      email : localStorage.getItem('emailReg'),
+    }).then(res => {
+      if(res.data){
+        this.setState({
+          ...this.state,
+          original_otp : res.data
+        })
+      }
+    })
+  }
+
 	componentWillMount() {
 		this.callAPI();
 	}
+  handleInputChanged(event) {
+    this.setState({
+      ...this.state,
+      [event.target.name] : event.target.value,
+    });
+  }
 
   handleButtonClicked() {
     var amount = this.state.amount;
@@ -44,21 +66,26 @@ class App extends Component {
     var debitFrom = this.state.debitFrom;
     var riskApetite = this.state.riskApetite;
     
-    //Axios ka post request daalna hai 
-      Axios.post("http://localhost:9000/p2pLending/amount_lending", {
-        email: localStorage.getItem('emailReg'),
-        amount: amount,
-        lock_in_period: lock_in_period,
-        debitFrom: debitFrom,
-        riskApetite: riskApetite,
-    }).then((response) => {
-      console.log(response);
-      if(response.data.Lending_status){
-        window.location.href = "/P2PLending";
-      }else{
-        alert(response.data)
-      }
-    });
+    if(parseInt(this.state.entered_otp) === this.state.original_otp){
+      //Axios ka post request daalna hai 
+        Axios.post("http://localhost:9000/p2pLending/amount_lending", {
+          email: localStorage.getItem('emailReg'),
+          amount: amount,
+          lock_in_period: lock_in_period,
+          debitFrom: debitFrom,
+          riskApetite: riskApetite,
+      }).then((response) => {
+        console.log(response);
+        if(response.data.Lending_status){
+          window.location.href = "/P2PLending";
+        }else{
+          alert(response.data)
+        }
+      });
+    }else{
+      alert("Invalid OTP")
+    }
+    
   }
 
   render() {
@@ -78,7 +105,7 @@ class App extends Component {
               </div>
               <div className="d-flex justify-content-between pt-5 align-items-center">
                 <button type="button" className="btn cancel-btn">Cancel</button>
-                <button  onClick={this.handleButtonClicked.bind(this)}  type="button" className="btn payment-btn">Make Payment</button>
+                <button  data-toggle="modal" onClick={this.SendOTP.bind(this)} data-target="#exampleModal"  type="button" className="btn payment-btn">Make Payment</button>
               </div>
             </div>
           </div>
@@ -94,7 +121,7 @@ class App extends Component {
             </div>
             <div className="d-flex justify-content-between pt-5 align-items-center">
               <button type="button" className="btn cancel-btn">Cancel</button>
-              <button  onClick={this.handleButtonClicked.bind(this)}  type="button" className="btn payment-btn">Make Payment</button>
+              <button data-toggle="modal" onClick={this.SendOTP.bind(this)} data-target="#exampleModal"  type="button" className="btn payment-btn">Make Payment</button>
             </div>
           </div>
         </div>
@@ -111,6 +138,27 @@ class App extends Component {
             <div className="main-panel">
               <div className="content-wrapper">
                 <MainHeader name="Search Result"/>
+                {/* Modal */}
+                <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">OTP Verification</h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                      </div>
+                      <div className="modal-body">
+                        <input type="number" className="form-control" name='entered_otp' onChange={this.handleInputChanged.bind(this)} placeholder="Enter OTP" />
+                      </div>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" className="btn btn-primary" onClick={this.handleButtonClicked.bind(this)} >Make Payment</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {/* Modal */}
                 {debitFromFunction()}
               </div>
               

@@ -22,15 +22,21 @@ router.post("/getNotification", function(req, res, next) {
 
     connection.query("select last_not_opened from person where email = ?",[email],(err,output)=>{
       // console.log(err)
-      var last_not_opened = output[0].last_not_opened
-      connection.query(
-        "Select * from system_notifications where not_time > ? order by not_time desc",
-        [last_not_opened],
-        (err, result)=> {
-          // console.log(result);
-          res.send({notifications:result})
-        } 
-      );
+      if(err){
+        console.log(err)
+      }else{
+        if(output.length > 0 ){
+          var last_not_opened = output[0].last_not_opened
+          connection.query(
+            "Select * from system_notifications where not_time > ? order by not_time desc",
+            [last_not_opened],
+            (err, result)=> {
+              // console.log(result);
+              res.send({notifications:result})
+            } 
+          );
+        }
+      }
     })
 });
 

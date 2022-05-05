@@ -15,7 +15,9 @@ class App extends Component {
       withdrawals: [],
       message : "",
       current_balance : 0,
-      withdrawal_amount: 0
+      withdrawal_amount: 0,
+      original_otp : 0,
+      entered_otp : -1,
     };
 	}
 	
@@ -65,23 +67,43 @@ class App extends Component {
     });
   }
 
-  handleButtonClickedWithdrawed() {
+  SendOTP() {
+    Axios.post(`http://localhost:9000/SendOTP/CommonOTP`, {
+      email : localStorage.getItem('emailReg'),
+    }).then(res => {
+      if(res.data){
+        this.setState({
+          ...this.state,
+          original_otp : res.data
+        })
+      }
+    })
+  }
 
+  handleButtonClickedWithdrawed() {
+    
     if(this.state.withdrawal_amount <= 0 || this.state.withdrawal_amount > this.state.current_balance ){
       alert('Invalid amount')
     }else{
-      Axios.post(`http://localhost:9000/withdrawal/withdraw`, {
-        email : localStorage.getItem('emailReg'),
-        withdrawal_amount : this.state.withdrawal_amount,
-      }).then((response) => {
-        // console.log(response);
-        if(response.data.message){
-          alert(response.data.message)
-          window.location.href = "/withdrawal";
-        }else{
-          window.location.href = "/withdrawal";      
-        }
-      });
+      // console.log(this.state)
+      if(parseInt(this.state.entered_otp) === this.state.original_otp){
+        Axios.post(`http://localhost:9000/withdrawal/withdraw`, {
+          email : localStorage.getItem('emailReg'),
+          withdrawal_amount : this.state.withdrawal_amount,
+        }).then((response) => {
+          // console.log(response);
+          if(response.data.message){
+            alert(response.data.message)
+            window.location.href = "/withdrawal";
+          }else{
+            window.location.href = "/withdrawal";      
+          }
+        });
+      }else{
+        alert("Invalid OTP")
+      }
+
+    
     }
   }
 
@@ -100,6 +122,29 @@ class App extends Component {
                 <MainHeader name="Installments"/>
                   <br></br>
 
+       
+                {/* Modal */}
+                <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">OTP Verification</h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                      </div>
+                      <div className="modal-body">
+                        <input type="number" className="form-control" name='entered_otp' onChange={this.handleInputChanged.bind(this)} placeholder="Enter OTP" />
+                      </div>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" className="btn btn-primary" onClick={this.handleButtonClickedWithdrawed.bind(this)} >Withdraw</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {/* Modal */}
+
                   <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                       <div class="card-body">
@@ -116,7 +161,11 @@ class App extends Component {
                         </div>
                         <input type="number" className="form-control" name='withdrawal_amount' value={this.state.withdrawal_amount}  onChange={this.handleInputChanged.bind(this)}  aria-label="Amount (to the nearest rupees)" />
                         <div class="input-group-append">
-                          <button class="btn btn-sm btn-primary" onClick={this.handleButtonClickedWithdrawed.bind(this)} type="button">Withdraw</button>
+                          {/* <button class="btn btn-sm btn-primary" onClick={this.handleButtonClickedWithdrawed.bind(this)} type="button">Withdraw</button>
+                          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            Launch demo modal
+                          </button> */}
+                          <button class="btn btn-sm btn-primary" type="button" data-toggle="modal" onClick={this.SendOTP.bind(this)} data-target="#exampleModal">Withdraw</button>
                         </div>
                       </div>
                     </div>

@@ -34,11 +34,16 @@ function getInterests(borrower_emails, cb) {
 router.post("/fixed_amount_and_months", function(req, res, next) {
     const email = req.body.email
     connection.query("select * from lenders_data where email = ? limit 1 ",[email],(err,response)=>{
-        var data = {}
-        data['fixed_lending_amount'] = response[0].fixed_lending_amount
-        data['months'] = [ ...Array(response[0].lock_in_period).keys() ].map( i => i+1);
-        console.log(data)
-        res.send(data)
+        if(response.length > 0){
+            var data = {}
+            data['fixed_lending_amount'] = response[0].fixed_lending_amount
+            data['months'] = [ ...Array(response[0].lock_in_period).keys() ].map( i => i+1);
+            console.log(data)
+            res.send(data)
+        }else{
+            res.send([])
+        }
+
     });
 })
 
