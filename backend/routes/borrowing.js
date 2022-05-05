@@ -95,9 +95,9 @@ router.post("/CompleteProfile",  function(req, res) {
 
     // console.log('hii')
     // res.end('It works')
-    if(1){
-        res.send("Hiiiiiii")
-    }else{
+    // if(1){
+    //     res.send("Hiiiiiii")
+    // }else{
     
     const emp_length = req.body.emp_length;
     const annual_income = req.body.annual_income;
@@ -239,8 +239,7 @@ router.post("/CompleteProfile",  function(req, res) {
             }
         }
     })
-
-}
+// }
 });
 
 router.post("/profile_info", function(req, res, next) {

@@ -24,7 +24,7 @@ router.post("/getNotification", function(req, res, next) {
       // console.log(err)
       var last_not_opened = output[0].last_not_opened
       connection.query(
-        "Select * from system_notifications where not_time > ? ",
+        "Select * from system_notifications where not_time > ? order by not_time desc",
         [last_not_opened],
         (err, result)=> {
           // console.log(result);
@@ -41,7 +41,7 @@ router.post("/getReadNotification", function(req, res, next) {
       // console.log(err)
       var last_not_opened = output[0].last_not_opened
       connection.query(
-        "Select * from system_notifications where not_time < ? ",
+        "Select * from system_notifications where not_time < ?  order by not_time desc",
         [last_not_opened],
         (err, result)=> {
           // console.log(result);

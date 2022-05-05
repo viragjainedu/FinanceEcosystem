@@ -5,8 +5,6 @@ import LeftNavbar from '../components/LeftNavbar'
 import RightNavbar from '../components/RightNavbar'
 import MainHeader from '../components/MainHeader'
 import Axios from 'axios';
-import moment from 'moment';
-import { useEffect, useState } from "react";
 import Faq from "react-faq-component";
 
 const data = {

@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import  Axios  from 'axios';
+import moment from 'moment'
 
 
 class App extends Component {
@@ -70,7 +71,7 @@ class App extends Component {
                             <img src="images/faces/Virag.jpg" alt="image" className="img-sm profile-pic" />
                             </div>
                             <div className="preview-item-content flex-grow py-2">
-                            <p className="preview-subject ellipsis font-weight-medium text-dark">{item.not_time}</p>
+                            <p className="preview-subject ellipsis font-weight-medium text-dark">{moment(item.not_time).format('DD/MM/YYYY') }</p>
                             <p className="fw-light small-text mb-0"> {item.message} </p>
                             </div>
                         </a>
@@ -89,7 +90,7 @@ class App extends Component {
                             <img src="images/faces/Virag.jpg" alt="image" className="img-sm profile-pic" />
                             </div>
                             <div className="preview-item-content flex-grow py-2">
-                            <p className="preview-subject ellipsis font-weight-medium text-dark">{item.not_time}</p>
+                            <p className="preview-subject ellipsis font-weight-medium text-dark">{moment(item.not_time).format('DD/MM/YYYY HH:mm:ss') }</p>
                             <p className="fw-light small-text mb-0"> {item.message} </p>
                             </div>
                         </a>
