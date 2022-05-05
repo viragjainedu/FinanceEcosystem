@@ -4,9 +4,9 @@ active loans and completed loans
 if(<50%){we can only offer this  much amount}else{you can accept this.}
 Vertical Chart
 Backend page - for acitve loans
-Returns page
-Advance insights - Reveal info 
-Common OTP page
+<!-- Returns page -->
+<!-- Advance insights - Reveal info  -->
+<!-- Common OTP page -->
 FIle Uploading
 Deployment - https://stackoverflow.com/questions/63552490/deploy-reactjs-mysql-nodejs-express-project
 

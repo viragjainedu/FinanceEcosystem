@@ -4,6 +4,7 @@ import TopNavbarAdmin from '../AdminPanelComponents/TopNavbarAdmin'
 import LeftNavbarAdmin from '../AdminPanelComponents/LeftNavbarAdmin'
 // import { Link } from 'react-router-dom';
 import Axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
 
@@ -127,6 +128,9 @@ class App extends Component {
                       Purpose
                     </th>
                     <th>
+                      Collateral File
+                    </th>
+                    <th>
                       isVerified?
                     </th>
                     <th>
@@ -165,6 +169,17 @@ class App extends Component {
                       <td>
                         {item.purpose}
                       </td>
+                      {
+                        (()=>{
+                          return(
+                            <td>
+                            <a href={'http://localhost:9000/uploads/'+ item.filename} target="_blank"><i className="icon-file" /></a>
+                            </td>
+                      
+                          )
+                        })()
+                      }
+                      
                       <td>
                         {this.state.requests.find(o => o.email === item.email).isAprroved ? "True" : "False"}
                       </td>

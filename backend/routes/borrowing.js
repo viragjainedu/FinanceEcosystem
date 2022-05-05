@@ -3,7 +3,7 @@ var router = express.Router();
 var connection = require('../connection');
 var moment = require('moment')
 var nodemailer = require('nodemailer');
-const  multer = require("multer");
+const multer = require("multer");
 const path = require('path');
 
 
@@ -76,28 +76,22 @@ router.post("/details", function(req, res, next) {
 
 });
 
-// const storage = multer.diskStorage({
-//     destination: function(req, file, cb) {
-//         cb(null, 'uploads/');
-//     },
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './public/uploads/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+        // cb(null, file.originalname);
+    }
+});
   
-//     filename: function(req, file, cb) {
-//         // cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-//         cb(null, file.originalname);
-//     }
-// });
-  
-// const upload = multer({ storage: storage })
+const upload = multer({ storage: storage })
 
-router.post("/CompleteProfile",  function(req, res) {
+router.post("/CompleteProfile", upload.single("myFile") ,function(req, res) {
     // res.send("This statement is generate by p2pLending API backend");
-    console.log(req.body)
-
-    // console.log('hii')
-    // res.end('It works')
-    // if(1){
-    //     res.send("Hiiiiiii")
-    // }else{
+    // console.log(req.body)
+    // console.log(req.file)
     
     const emp_length = req.body.emp_length;
     const annual_income = req.body.annual_income;
@@ -109,6 +103,7 @@ router.post("/CompleteProfile",  function(req, res) {
     const month_req = req.body.month_req;
     const contact = req.body.contact;
     const email = req.body.email;
+    const filename = req.file.filename;
     // console.log(req.body);
     // console.log("Hiii")
 
@@ -182,8 +177,8 @@ router.post("/CompleteProfile",  function(req, res) {
                 console.log(GRADE);
             
                 connection.query(
-                    "UPDATE person SET emp_length = ?, annual_income = ?, purpose = ?,collateral = ?,age=?,collateral_value=?,amount_req = ?,month_req = ?, contact = ?,GRADE = ?,Loan_Cap = ? where email = ? ;",
-                    [emp_length, annual_income,purpose,collateral,age,collateral_value,amount_req,month_req,contact,GRADE,Loan_Cap,email],
+                    "UPDATE person SET emp_length = ?, annual_income = ?, purpose = ?,collateral = ?,age=?,collateral_value=?,amount_req = ?,month_req = ?, contact = ?,GRADE = ?,Loan_Cap = ?,filename=? where email = ? ;",
+                    [emp_length, annual_income,purpose,collateral,age,collateral_value,amount_req,month_req,contact,GRADE,Loan_Cap,filename,email],
                     (err, result)=> {
                         if(err){
                             console.log(err);
@@ -239,7 +234,6 @@ router.post("/CompleteProfile",  function(req, res) {
             }
         }
     })
-// }
 });
 
 router.post("/profile_info", function(req, res, next) {

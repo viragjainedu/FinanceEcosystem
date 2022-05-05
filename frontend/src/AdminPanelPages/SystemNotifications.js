@@ -4,15 +4,38 @@ import TopNavbarAdmin from '../AdminPanelComponents/TopNavbarAdmin'
 import LeftNavbarAdmin from '../AdminPanelComponents/LeftNavbarAdmin'
 // import { Link } from 'react-router-dom';
 import Axios from 'axios';
-
+import moment from 'moment'
 
 class App extends Component {
   
   constructor(props) {
 		super(props);
-		this.state = { SystemNotification: "",  message : ""  };
+		this.state = { SystemNotification: "",  message : "" , notifications:[]};
+	}
+  
+  callAPI() {
+    Axios.get("http://localhost:9000/SystemNotifications/notifications", {
+    }).then((response) => {
+    
+      console.log(response.data)
+      if(response.data.length === 0){
+        this.setState({
+          ...this.state,
+          message : "You've no notifications yet"
+        })
+      }
+
+      this.setState({
+        ...this.state,
+        notifications : response.data
+      })
+
+    })
 	}
 	
+	componentWillMount() {
+		this.callAPI();
+  }
 
   //All the handle INput functions for forms 
   handleInputChanged(event) {
@@ -64,7 +87,7 @@ class App extends Component {
                       </p>
                         
                         <div className="form-group">
-                          <label htmlFor="exampleTextarea1">Textarea</label>
+                          <label htmlFor="exampleTextarea1">Message</label>
                           <input className="form-control" id="exampleTextarea1" rows={4}  value={this.state.SystemNotification} onChange={this.handleInputChanged.bind(this)} name="SystemNotification"  type="textarea" />
                         </div>
                         <button type="submit" onClick={this.handleButtonClicked.bind(this)}  className="btn btn-primary me-2">Submit</button>
@@ -72,6 +95,40 @@ class App extends Component {
                     </div>
                   </div>
                 </div>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">Notifications</h4>
+                        <p class="card-description text-danger">
+                          {this.state.message}
+                        </p>
+                        <p class="card-description text-success">
+                          
+                        </p>
+                        <div class="table-responsive">
+                          <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th>Message</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {this.state.notifications.map( (item) => 
+                                <tr>
+                                  <td>{item.message}</td>
+                                  <td>{moment(item.not_time).format('DD-MM-YYYY')}</td>
+                                  <td>{moment(item.not_time).format('HH:mm:ss')}</td>
+                                </tr>                                                                    
+                                )}
+
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
               </div>              
             </div>
           </div>

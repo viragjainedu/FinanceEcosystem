@@ -120,7 +120,7 @@ class App extends Component {
         // Update the state 
         this.setState({ 
             ...this.state,
-            selectedFile: event.target.files,
+            selectedFile: event.target.files[0],
         }); 
       }; 
 
@@ -155,13 +155,20 @@ class App extends Component {
             //         message: "Please upload files"
             //     })
             }else{
-                // const data = new FormData();
+                const data = new FormData();
 
-                // for (let i = 0; i < this.state.selectedFile.length; i++) {
-                //     data.append("myFiles", this.state.selectedFile[i]);
-                // }
-                // data.append("Name", "Virag");
-                
+                data.append("myFile", this.state.selectedFile);
+                data.append("emp_length",this.state.emp_length );
+                data.append("purpose", this.state.purpose);
+                data.append("contact", this.state.contact);
+                data.append("collateral", this.state.collateral);
+                data.append("collateral_value", this.state.collateral_value);
+                data.append("amount_req", this.state.amount_req);
+                data.append("month_req", this.state.month_req);
+                data.append("age", this.state.age);
+                data.append("annual_income", this.state.annual_income);
+                data.append("email", localStorage.getItem('emailReg')); 
+
                 // for (var key of data.keys()) {
                 //     console.log(key); 
                 // }
@@ -169,18 +176,7 @@ class App extends Component {
                 // console.log("Hey")
 
                 //Axios ka post request daalna hai 
-                Axios.post("http://localhost:9000/borrowing/CompleteProfile", {
-                    emp_length : this.state.emp_length,
-                    purpose : this.state.purpose,
-                    contact : this.state.contact,
-                    collateral : this.state.collateral,
-                    collateral_value : this.state.collateral_value,
-                    amount_req : this.state.amount_req,
-                    month_req : this.state.month_req,
-                    age : this.state.age,
-                    annual_income : this.state.annual_income,
-                    email : localStorage.getItem('emailReg'),
-                }).then((response) => {
+                Axios.post("http://localhost:9000/borrowing/CompleteProfile", data).then((response) => {
                     console.log(response);
                     // console.log("Hiiii")
                 if(response.data.success){
@@ -490,7 +486,7 @@ class App extends Component {
                                                         <div className="form-group row">
                                                         <label className="col-sm-3 col-form-label">Collateral Documents</label>
                                                         <div className="col-sm-9">
-                                                            <input type="file"  onChange={this.onFileChange.bind(this)} name="myFiles" className="form-control" placeholder='Upload Collateral Documents' multiple/>
+                                                            <input type="file"  onChange={this.onFileChange.bind(this)} name="myFile" className="form-control" placeholder='Upload Collateral Documents'/>
                                                         </div>
                                                         </div>
                                                     </div>

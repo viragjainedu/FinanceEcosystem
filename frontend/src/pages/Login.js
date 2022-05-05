@@ -25,6 +25,7 @@ function Login(){
           localStorage.setItem("usernameReg", response.data.message.username);
 
           if(response.data.message.isAdmin === 1){
+            
             localStorage.setItem("emailReg", emailReg);
             localStorage.setItem("passwordReg", passwordReg);
             localStorage.setItem("usernameReg", response.data.message.username);
