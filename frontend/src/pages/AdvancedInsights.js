@@ -13,7 +13,7 @@ class App extends Component {
   
   constructor(props) {
 		super(props);
-		this.state = { insights : [], message: "",months:[],fixed_amount:0 , interests:[]};
+		this.state = { insights : [], message: "",months:[], fixed_amount:0 , interests:[]};
 	}
 	
 	callAPI() {
@@ -35,11 +35,13 @@ class App extends Component {
         Axios.post("http://localhost:9000/advanceInsights/fixed_amount_and_months", {
           email: localStorage.getItem('emailReg'),
         }).then((res) => {
-          this.setState({
-            ...this.state,
-            months: res.data.months,
-            fixed_amount: res.data.fixed_lending_amount,
-          })
+          if(res.data.length > 0 ){
+            this.setState({
+              ...this.state,
+              months: res.data.months,
+              fixed_amount: res.data.fixed_lending_amount,
+            })
+          }
         })
       })
     })
@@ -105,6 +107,7 @@ class App extends Component {
                                 <th>Fixed Amount</th>
                                 {console.log(this.state)}
                                 {
+                                  
                                   this.state.months.map((item,i)=>{
                                     return(
                                     <th key={i}> Installment No {item}</th>

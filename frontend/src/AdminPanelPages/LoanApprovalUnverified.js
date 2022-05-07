@@ -173,7 +173,7 @@ class App extends Component {
                         (()=>{
                           return(
                             <td>
-                            <a href={'http://localhost:9000/uploads/'+ item.filename} target="_blank"><i className="icon-file" /></a>
+                            <a href={'http://localhost:9000/uploads/'+ item.filename} target="_blank"><i className="icon-file"/></a>
                             </td>
                       
                           )

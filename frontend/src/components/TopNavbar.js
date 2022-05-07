@@ -8,7 +8,11 @@ function TopNavbar (){
 
   const signout = (e) => {
     e.preventDefault();
-    localStorage.clear();
+    Axios.post("http://localhost:9000/login/logout",{
+      email : localStorage.getItem('emailReg')
+    }).then(res =>{
+      localStorage.clear();
+    })
     window.location.href = "/Login";
   };
 

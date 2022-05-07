@@ -33,7 +33,7 @@ router.post("/total_money_lent", function(req, res, next) {
             if(err){
                 console.log(err);
             }else if(result.length > 0){
-                console.log(result)
+                // console.log(result)
                 res.send({total : result[0].total})
             }
         }
@@ -52,7 +52,7 @@ router.post("/balance", function(req, res, next) {
             if(err){
                 console.log(err);
             }else if(result.length > 0){
-                console.log(result)
+                // console.log(result)
                 res.send({total : result[0].balance})
             }else
                 res.send({total:0})
