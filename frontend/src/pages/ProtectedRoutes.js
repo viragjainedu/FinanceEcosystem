@@ -1,9 +1,8 @@
 
 import  Axios from "axios";
 import { Outlet } from "react-router-dom";
-import Login from './Login';
 import React, { useState } from 'react';
-
+import Loader from './Loader'
 
 // const useAuth = () => {
 
@@ -32,20 +31,19 @@ const ProtectedRoutes = () => {
         })
     }
     else{
-        console.log("Hiii")
+        console.log("Hey")
         setIsAuth(false);
     }
 
     if(isAuth === null){
         // console.log("Now NUll")
-        return <p>Loading</p>
+        return <Loader />
     }else{
         // console.log("Now Not")
         if(isAuth){
             return <Outlet/>
         }else{
-            alert('session time out')
-            return <Login/>
+            window.location.href = "/Login";
         }
     }
 }

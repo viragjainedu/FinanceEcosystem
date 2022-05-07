@@ -30,6 +30,7 @@ import Faqs from './pages/Faqs';
 import Withdrawal from './pages/Withdrawal'
 import Fico from './pages/Fico';  
 import TestReact from './pages/TestReact';  
+import Loader from './pages/Loader';  
 
 import AdminPanel from './pages/AdminPanel';  
 import SystemNotifications from './AdminPanelPages/SystemNotifications'
@@ -83,6 +84,7 @@ ReactDOM.render(
       <Route path="Login" element={<Login />} />
       <Route path="Register" element={<Register />} />
       <Route path="ForgotPassword" element={<ForgotPassword />} />
+      <Route path="Loader" element={<Loader />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

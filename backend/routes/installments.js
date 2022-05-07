@@ -76,8 +76,8 @@ router.post("/pay", function(req, res) {
 
 
                                 //adding transactions in returns for lender;
-                                 connection.query("INSERT INTO returns (email,borrower_email,return_amount,principal,interest,date_of_payment) values(?,?,?,?,?,?);",
-                                    [result.email,email,cut_for_lender,principal_for_lender,interest_for_lender,moment(new Date()).format('YYYY-MM-DD HH:mm:ss')],
+                                 connection.query("INSERT INTO returns (lenders_id,email,borrower_email,return_amount,principal,interest,date_of_payment) values(?,?,?,?,?,?,?);",
+                                    [result['lenders_id'],result.email,email,cut_for_lender,principal_for_lender,interest_for_lender,moment(new Date()).format('YYYY-MM-DD HH:mm:ss')],
                                     (err,output) => {
                                         if(err){console.log(err)}
                                         else{

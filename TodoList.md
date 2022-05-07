@@ -11,20 +11,23 @@ Cannot lend more than once
 
 Deployment - https://stackoverflow.com/questions/63552490/deploy-reactjs-mysql-nodejs-express-project
 
-Security Steps - 
-1) Common OTP page 
+Security Steps Implemented - 
+<!-- 1) Common OTP page  -->
 <!-- 2) Session Handling max 30 mins. -->
-3) Sql injections method , 
-4) Password Hashing
-5) Cross site scripting
+<!-- 3) Sql injections prevention ,  -->
+<!-- 4) Password Hashing -->
+<!-- 5) Cross site scripting -->
 
+React automatically prevents Sql injections and auto-escape scripting code.
+React by default will escape the content that it renders, treating all data like a text string
 
-Password Hashing 
+<!-- Password Hashing  -->
 server side validations for every input
-prepared statement for sql injection
-session handling for financial transaction
+<!-- prepared statement for sql injection -->
+<!-- session handling for financial transaction -->
 proper authentication for change password and forgot password
 MITM attack during financial transaction
 prevent XSS (cross site scripting) in react js
 
 https://www.youtube.com/watch?v=bWaucYA1YRI
+https://www.youtube.com/watch?v=lwOsI8LtVEQ
