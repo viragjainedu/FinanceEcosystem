@@ -4,7 +4,6 @@ import TopNavbar from '../components/TopNavbar'
 import LeftNavbar from '../components/LeftNavbar'
 import RightNavbar from '../components/RightNavbar'
 import MainHeader from '../components/MainHeader'
-import { Link } from 'react-router-dom';
 
 
 class App extends Component {
@@ -15,9 +14,9 @@ class App extends Component {
 	}
 	
 	callAPI() {
-		fetch("http://localhost:9000/balance")
-			.then(res => res.text())
-			.then(res => this.setState({ apiResponse: res }));
+		// fetch("http://localhost:9000/balance")
+			// .then(res => res.text())
+			// .then(res => this.setState({ apiResponse: res }));
 	}
 	
 	componentWillMount() {

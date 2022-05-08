@@ -80,4 +80,80 @@ router.post("/prev_transactions", function(req, res, next) {
 
 });
 
+router.post("/admin_stats", function(req, res, next) {
+    
+    var data = {}
+    getCompletedLoans((CompletedLoans)=>{
+        data['CompletedLoans'] = CompletedLoans
+        getDefaultLoans((DefaultLoans)=>{
+            data['DefaultLoans'] = DefaultLoans
+            getTotalLoans((TotalLoans)=>{
+                data['TotalLoans'] = TotalLoans
+                data['ActiveLoans'] = TotalLoans - parseInt(data['CompletedLoans']) - parseInt(data['DefaultLoans'])
+                getTotalLenders((TotalLenders)=>{
+                    data['TotalLenders'] = TotalLenders
+                    getTotalBorrowers((TotalBorrowers)=>{
+                        data['TotalBorrowers'] = TotalBorrowers
+                        res.send(data)
+                    })
+                })  
+            })    
+        })
+    })
+
+    
+});
+
+function getDefaultLoans(callback){
+
+    connection.query("Select * from (select * from installments where status = 'Defaulted') a group by a.email;",(err, result)=> {
+        if(err){
+            console.log(err);
+        }else{
+            callback(result.length)
+        }
+    });
+
+}
+function getCompletedLoans(callback){
+    connection.query("Select * from completedloans group by email",(err, result)=> {
+        if(err){
+            console.log(err);
+        }else{
+            callback(result.length)
+        }
+    });
+}
+
+function getTotalLoans(callback){
+    connection.query("Select * from installments group by email",(err, result)=> {
+        if(err){
+            console.log(err);
+        }else{
+            callback(result.length)
+        }
+    });
+}
+
+function getTotalLenders(callback){
+    connection.query("Select * from lenders_data",(err, result)=> {
+        if(err){
+            console.log(err);
+        }else{
+            callback(result.length)
+        }
+    });
+}
+
+function getTotalBorrowers(callback){
+    connection.query("Select * from borrowing_transactions",(err, result)=> {
+        if(err){
+            console.log(err);
+        }else{
+            callback(result.length)
+        }
+    });
+}
+
+
 module.exports = router;

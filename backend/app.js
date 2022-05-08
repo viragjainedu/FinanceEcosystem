@@ -38,6 +38,7 @@ var SystemNotifications = require("./routesAdmin/SystemNotifications");
 var Mails = require("./routesAdmin/Mails");
 var AddRemoveBlogs = require('./routesAdmin/AddRemoveBlogs');
 var LoanDefault = require('./routesAdmin/LoanDefault');
+var LoanCompleted = require('./routesAdmin/LoanCompleted');
 
 var app = express();
 const jwt = require('jsonwebtoken');
@@ -88,6 +89,7 @@ app.use("/withdrawal", withdrawal);
 app.use("/SystemNotifications", SystemNotifications);
 app.use("/AddRemoveBlogs", AddRemoveBlogs);
 app.use("/LoanDefault", LoanDefault);
+app.use("/LoanCompleted", LoanCompleted);
 
 app.use("/Mails", Mails);
 

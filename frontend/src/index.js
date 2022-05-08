@@ -37,6 +37,7 @@ import SystemNotifications from './AdminPanelPages/SystemNotifications'
 import LoanApprovalUnverified from './AdminPanelPages/LoanApprovalUnverified'
 import LoanApprovalVerified from './AdminPanelPages/LoanApprovalVerified'
 import LoanDefaulted from './AdminPanelPages/LoanDefaulted'
+import LoanCompleted from './AdminPanelPages/LoanCompleted'
 import AddRemoveBlogs from './AdminPanelPages/AddRemoveBlogs'
 import ProtectedRoutes from './pages/ProtectedRoutes';
 
@@ -75,6 +76,7 @@ ReactDOM.render(
         <Route path="LoanApprovalUnverified" element={<LoanApprovalUnverified />} />
         <Route path="LoanApprovalVerified" element={<LoanApprovalVerified />} />
         <Route path="LoanDefaulted" element={<LoanDefaulted />} />
+        <Route path="LoanCompleted" element={<LoanCompleted />} />
         <Route path="AddRemoveBlogs" element={<AddRemoveBlogs />} />
         
         <Route path="404" element={<NotFoundPage />} />

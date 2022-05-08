@@ -4,7 +4,7 @@ import TopNavbar from '../components/TopNavbar'
 import LeftNavbar from '../components/LeftNavbar'
 import RightNavbar from '../components/RightNavbar'
 import MainHeader from '../components/MainHeader'
-import Axios from 'axios';
+// import Axios from 'axios';
 import Faq from "react-faq-component";
 
 const data = {
