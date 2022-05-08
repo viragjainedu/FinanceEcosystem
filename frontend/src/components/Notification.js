@@ -68,7 +68,7 @@ class App extends Component {
                     return(
                         <a className="dropdown-item preview-item">
                             <div className="preview-thumbnail">
-                            <img src="images/faces/Virag.jpg" alt="image" className="img-sm profile-pic" />
+                            <img src="images/faces/face8.jpg" alt="image" className="img-sm profile-pic" />
                             </div>
                             <div className="preview-item-content flex-grow py-2">
                             <p className="preview-subject ellipsis font-weight-medium text-dark">{moment(item.not_time).format('DD/MM/YYYY') }</p>
@@ -87,7 +87,7 @@ class App extends Component {
                     return(
                         <a className="dropdown-item preview-item">
                             <div className="preview-thumbnail">
-                            <img src="images/faces/Virag.jpg" alt="image" className="img-sm profile-pic" />
+                            <img src="images/faces/face8.jpg" alt="image" className="img-sm profile-pic" />
                             </div>
                             <div className="preview-item-content flex-grow py-2">
                             <p className="preview-subject ellipsis font-weight-medium text-dark">{moment(item.not_time).format('DD/MM/YYYY HH:mm:ss') }</p>

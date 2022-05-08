@@ -22,9 +22,9 @@ router.post('/', async (req, res) => {
                 const validPassword = await bcrypt.compare(password, result[0].password);
                 if(validPassword){
                     
-                    connection.query("update last_login set isLoggedIn = true, last_login = now() where email = ?",[email],(err,output)=>{
+                    connection.query("update last_login set isLoggedIn = true, last_login = ? where email = ?",[moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),email],(err,output)=>{
                         if(err){console.log(err)}else{
-                            // console.log(output)
+                            console.log(output)
                             res.send({message:result[0]});
                         }
                     })
@@ -41,16 +41,16 @@ router.post('/', async (req, res) => {
 
 router.post('/last_login', function(req,res){ 
     const email = req.body.email
-    // console.log(req.body)
+    console.log(req.body)
     connection.query("select * from last_login where email = ?",[email],(err,result)=>{
         if(err){console.log(err)}
         else if(result.length > 0){
             var todays_date = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
             var difference = moment.duration(moment(todays_date).diff(moment(result[0].last_login))).asMinutes();
-            // console.log(difference)
+            console.log(difference)
             if(result[0].isLoggedIn){
                 if(difference < 30){
-                    // console.log(difference)
+                    console.log(difference)
                     res.send({success:true})
                 }else{
                     // console.log(difference)
