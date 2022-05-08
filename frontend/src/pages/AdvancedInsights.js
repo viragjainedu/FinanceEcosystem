@@ -97,7 +97,7 @@ class App extends Component {
                   </p>
                   {
                     this.state.data.map((item,i)=>{
-                      {console.log(i)}  
+                      // {console.log(i)}  
                       return(
                         <div class="col-lg-12 grid-margin stretch-card">
                           <div class="card">

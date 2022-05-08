@@ -80,48 +80,51 @@ class App extends Component {
       role="tabpanel"
       aria-labelledby="overview"
     >
+
+      <div className="container">
       <div className="row">
-        <div className="col-sm-12">
-          <div className="statistics-details d-flex align-items-center justify-content-between">
-            <div>
+        {/* <div className="col-sm-12"> */}
+          {/* <div className="statistics-details d-flex align-items-center justify-content-between"> */}
+            <div className='col-lg-2' >
               <p className="statistics-title">Balance</p>
               <h4 className="rate-percentage">₹ {this.state.balance}</h4>
               <p className="text-danger d-flex">
               </p>
             </div>
-            <div>
+            <div className='col-lg-2'>
               <p className="statistics-title">Total money Lent</p>
               <h4 className="rate-percentage">₹ {this.state.total_money_lent}</h4>
               <p className="text-success d-flex">
               </p>
             </div>
-            <div>
+            <div className='col-lg-2'>
               <p className="statistics-title">Total money Borrowed</p>
               <h4 className="rate-percentage">₹ {this.state.total_money_borrowed}</h4>
               <p className="text-success d-flex">
               </p>
             </div>
-            <div>
+            <div className='col-lg-2'>
               <p className="statistics-title">Total Interest Received</p>
               <h4 className="rate-percentage">₹ {this.state.total_interest_received}</h4>
               <p className="text-success d-flex">
               </p>
             </div>
-            <div>
+            <div className='col-lg-2'>
               <p className="statistics-title">Total Interest Paid</p>
               <h4 className="rate-percentage">₹ {this.state.total_interest_paid}</h4>
               <p className="text-success d-flex">
               </p>
             </div>
-            <div>
+            <div className='col-lg-2'>
               <p className="statistics-title">Total Money Withdrawn</p>
               <h4 className="rate-percentage">₹ {this.state.total_money_withdrawn}</h4>
               <p className="text-success d-flex">
               </p>
             </div>
             
-          </div>
-        </div>
+          {/* </div> */}
+        {/* </div> */}
+      </div>
       </div>
     </div>
   </div>

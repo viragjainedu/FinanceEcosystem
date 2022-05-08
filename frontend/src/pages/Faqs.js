@@ -57,31 +57,6 @@ class App extends Component {
 		this.state = { returns: [], message : ""};
 	}
 	
-	callAPI() {
-    Axios.post("http://localhost:9000/interests/getReturns", {
-      email: localStorage.getItem('emailReg'),
-    }).then((response) => {
-    
-      console.log(response.data)
-      if(response.data.length === 0){
-        this.setState({
-          ...this.state,
-          message : "You've not lent any loan yet"
-        })
-      }
-      this.setState({
-        ...this.state,
-        returns : response.data
-      })
-    })
-
-  }
-	
-	componentWillMount() {
-		this.callAPI();
-	}
-
-
   render() {
   return (
     <>

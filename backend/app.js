@@ -82,10 +82,8 @@ app.use("/interests", interests);
 app.use("/myProfile", myProfile);
 app.use("/faqs", faqs);
 
-
 app.use("/Fico", Fico);
 app.use("/withdrawal", withdrawal);
-
 
 app.use("/SystemNotifications", SystemNotifications);
 app.use("/AddRemoveBlogs", AddRemoveBlogs);

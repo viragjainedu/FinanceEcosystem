@@ -1,8 +1,20 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 function LeftNavbar (){
+  
+  const signout = (e) => {
+    e.preventDefault();
+    Axios.post("http://localhost:9000/login/logout",{
+      email : localStorage.getItem('emailReg')
+    }).then(res =>{
+      localStorage.clear();
+    })
+    window.location.href = "/Login";
+  };
+
 	return (
         <>
                 <nav className="sidebar sidebar-offcanvas" id="sidebar">
@@ -32,10 +44,11 @@ function LeftNavbar (){
                     <li className="nav-item"> <Link to="/Installments"><a className="nav-link" href="pages/ui-features/buttons.html">Installments</a></Link></li>
                     <li className="nav-item"> <Link to="/Interests"><a className="nav-link" href="pages/ui-features/buttons.html">Returns</a></Link></li> */}
                     <li className="nav-item"> <Link to="/AdvancedInsights"><a className="nav-link" href="pages/ui-features/buttons.html">Advanced Insights</a></Link></li>
-                    <li className="nav-item"> <a className="nav-link" href='http://localhost:8080/'>Expense Analyser</a></li>
                     <li className="nav-item"> <Link to="/Blogs"><a className="nav-link" href="pages/ui-features/buttons.html">Blogs</a></Link></li>
                     <li className="nav-item"> <Link to="/News"><a className="nav-link" href="pages/ui-features/buttons.html">News</a></Link></li>
                     <li className="nav-item"> <Link to="/Faqs"><a className="nav-link" href="pages/ui-features/buttons.html">FAQs</a></Link></li>
+                    <li className="nav-item"> <Link to="/myProfile"><a className="nav-link" href="pages/ui-features/buttons.html">My Profile</a></Link></li>
+                    <li className="nav-item"><a onClick={signout} className="nav-link" href="">Sign Out</a></li>
                   </ul>
                 </div>
               </li>

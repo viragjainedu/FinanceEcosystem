@@ -31,3 +31,9 @@ prevent XSS (cross site scripting) in react js
 
 https://www.youtube.com/watch?v=bWaucYA1YRI
 https://www.youtube.com/watch?v=lwOsI8LtVEQ
+
+These properties are important to maintain a tight transactional integration. There are some industries like banking, retail, etc., where each transaction requires ACID properties. In bank transactions, if one account is credited, another should be debited
+
+Bootstrap fix.
+
+

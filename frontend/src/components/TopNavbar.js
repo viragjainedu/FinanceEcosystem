@@ -83,13 +83,13 @@ function TopNavbar (){
                   <img className="img-xs rounded-circle" src="images/faces/face8.jpg" alt="Profile image" /> </a>
                 <div className="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                   <div className="dropdown-header text-center">
-                    <img className="img-md rounded-circle" src="images/faces/face8.jpg" alt="Profile image" />
+                    <img className="img-md rounded-circle" style={{"height": "50px", "width": "50px" }} src="images/faces/face8.jpg" alt="Profile image" />
                     <p className="mb-1 mt-3 font-weight-semibold">{localStorage.getItem('usernameReg')}</p>
                     <p className="fw-light text-muted mb-0">{localStorage.getItem('emailReg')}</p>
                   </div>
-                  <a className="dropdown-item" href='/myProfile'><i className="dropdown-item-icon mdi mdi-account-outline text-primary me-2" /> My Profile <span className="badge badge-pill badge-danger">1</span></a>
-                  <Link to="/Activity"><a className="dropdown-item"><i className="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2" /> Activity</a></Link>
-                  <Link to="/testReact"><a className="dropdown-item"><i className="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2" /> Test Page</a></Link>
+                  <a className="dropdown-item" href='/myProfile'><i className="dropdown-item-icon mdi mdi-account-outline text-primary me-2" /> My Profile</a>
+                  {/* <Link to="/Activity"><a className="dropdown-item"><i className="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2" /> Activity</a></Link> */}
+                  {/* <Link to="/testReact"><a className="dropdown-item"><i className="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2" /> Test Page</a></Link> */}
                   <a onClick={signout} className="dropdown-item"><i className="dropdown-item-icon mdi mdi-power text-primary me-2" />Sign Out</a>
                 </div>
               </li>

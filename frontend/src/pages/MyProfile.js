@@ -133,7 +133,7 @@ class MyProfile extends Component {
             <div className="main-panel">
               <div className="content-wrapper">  
               <MainHeader name="My Profile"/>
-           
+                <br></br>
                 <div className="col-12 grid-margin stretch-card">
                   <div className="card">
                     <div className="card-body">
@@ -153,10 +153,6 @@ class MyProfile extends Component {
                     </div>
                   </div>
                 </div>
-              </div>              
-            </div>
-            <div className="main-panel">
-              <div className="content-wrapper">             
                 <div className="col-12 grid-margin stretch-card">
                   <div className="card">
                     <div className="card-body">
@@ -192,6 +188,7 @@ class MyProfile extends Component {
                 </div>
               </div>              
             </div>
+
           </div>
          
         </div>

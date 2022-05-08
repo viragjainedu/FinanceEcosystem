@@ -199,7 +199,7 @@ class App extends Component {
         return(
     <>
     
-        <div class="col-3 grid-margin stretch-card">
+        <div class="col-12 grid-margin stretch-card">
             <div class="card card-rounded">
                 <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-3">
@@ -268,7 +268,7 @@ class App extends Component {
                                 }
                             })()}
                             <div className='row'>
-                            <div className="col-lg-9 grid-margin stretch-card">
+                            <div className="col-lg-12 grid-margin stretch-card">
                             <div className="card">
                                 <div className="card-body">
                                     <h4 className="card-title">Profile Information</h4><p>We've recieved your profile information and is under our evaluation.</p>
@@ -276,11 +276,11 @@ class App extends Component {
                                     
                                     </p>
                                     <div className="table-responsive">
-                                    <table className="table table-striped">
+                                    <table className="table table-striped" style={{"overflow-x":"hidden"}}>
                                         <thead>
                                         <tr>
                                             <th>
-                                            Employee Length
+                                            No of years worked
                                             </th>
                                             <th>
                                             Purpose
@@ -373,7 +373,7 @@ class App extends Component {
                         {/* <CompleteProfile/> */}
                         <br></br>
                         <div className='row'>
-                        <div className="col-9 grid-margin">
+                        <div className="col-12 grid-margin">
                             <div className="card">
                                 <div className="card-body">
                                 <h4 className="card-title">Enter Required Information</h4>

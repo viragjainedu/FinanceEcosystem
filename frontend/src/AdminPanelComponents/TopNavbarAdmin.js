@@ -82,7 +82,7 @@ function TopNavbar (){
                   <img className="img-xs rounded-circle" src="images/faces/face8.jpg" alt="Profile image" /> </a>
                 <div className="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                   <div className="dropdown-header text-center">
-                    <img className="img-md rounded-circle" src="images/faces/face8.jpg" alt="Profile image" />
+                    <img className="img-md rounded-circle"  style={{"height": "50px", "width": "50px" }} src="images/faces/face8.jpg" alt="Profile image" />
                   </div>
                   <a onClick={signout} className="dropdown-item"><i className="dropdown-item-icon mdi mdi-power text-primary me-2" />Sign Out</a>
                 </div>
