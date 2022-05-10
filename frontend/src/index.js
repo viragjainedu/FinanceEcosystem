@@ -41,6 +41,9 @@ import LoanCompleted from './AdminPanelPages/LoanCompleted'
 import AddRemoveBlogs from './AdminPanelPages/AddRemoveBlogs'
 import ProtectedRoutes from './pages/ProtectedRoutes';
 
+import LineGraph from './Graphs/LineGraph';
+import LineGraphWithdraw from './Graphs/LineGraphWithdraw';
+
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
@@ -57,7 +60,6 @@ ReactDOM.render(
         {/* <Route path="BudgetPlanner" element={<BudgetPlanner />} /> */}
         <Route path="SearchResult" element={<SearchResult />} />
         {/* <Route path="DocumentVerification" element={<DocumentVerification />} /> */}
-        <Route path="Activity" element={<Activity />} />
         <Route path="Blogs" element={<Blogs />} />
         <Route path="News" element={<News />} />
         <Route path="Payment" element={<Payment />} />
@@ -69,7 +71,7 @@ ReactDOM.render(
         <Route path="Fico" element={<Fico />} />
         <Route path="Withdrawal" element={<Withdrawal />} />
         <Route path="TestReact" element={<TestReact />} />
-        
+
         
         <Route path="AdminPanel" element={<AdminPanel />} />
         <Route path="SystemNotifications" element={<SystemNotifications />} />
@@ -79,6 +81,9 @@ ReactDOM.render(
         <Route path="LoanCompleted" element={<LoanCompleted />} />
         <Route path="AddRemoveBlogs" element={<AddRemoveBlogs />} />
         
+        <Route path="LineGraph" element={<LineGraph />} />
+        <Route path="LineGraphWithdraw" element={<LineGraphWithdraw />} />
+        
         <Route path="404" element={<NotFoundPage />} />
         <Route path="*" element={<NotFoundPage/>}/>  
 
@@ -87,6 +92,8 @@ ReactDOM.render(
       <Route path="Register" element={<Register />} />
       <Route path="ForgotPassword" element={<ForgotPassword />} />
       <Route path="Loader" element={<Loader />} />
+      <Route path="Activity" element={<Activity />} />
+
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

@@ -6,6 +6,7 @@ import RightNavbar from '../components/RightNavbar'
 import MainHeader from '../components/MainHeader'
 import Axios from 'axios';
 import moment from 'moment'
+import LineGraphWithdraw from '../Graphs/LineGraphWithdraw'
 
 class App extends Component {
   
@@ -205,6 +206,24 @@ class App extends Component {
                             </tbody>
                           </table>
                         </div>
+
+                        {
+                          (()=>{
+                            if(!this.state.message){
+                              return(
+                                <div className='container'>
+                                <div className='row'>
+                                  <div className='col-lg-12' >
+                                    <LineGraphWithdraw {...this.state} />
+                                    <p>Chart of Withdrawals</p>
+                                  </div>
+                                </div>
+                              </div>     
+                              )
+                            }
+                          })()
+                        }
+
                       </div>
                     </div>
                   </div>

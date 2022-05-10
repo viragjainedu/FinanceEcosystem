@@ -37,7 +37,7 @@ router.post("/withdraw", function(req, res) {
             res.send({message: err})
         }
         else{
-            connection.query("update account_stats set balance = ?, total_money_withdrawn = ? where email = ?" , [output[0].balance - withdrawal_amount, output[0].total_money_withdrawn + withdrawal_amount  , email], (err,rows) => {
+            connection.query("update account_stats set balance = ?, total_money_withdrawn = ? where email = ?" , [output[0].balance - withdrawal_amount, parseInt(output[0].total_money_withdrawn) + parseInt(withdrawal_amount)  , email], (err,rows) => {
                 if(err){
                     console.log(err)
                     res.send({message: err})

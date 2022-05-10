@@ -6,6 +6,7 @@ import RightNavbar from '../components/RightNavbar'
 import MainHeader from '../components/MainHeader'
 import Axios from 'axios';
 import moment from 'moment'
+import LineGraph from '../Graphs/LineGraph'
 
 class App extends Component {
   
@@ -150,6 +151,24 @@ class App extends Component {
                             </tbody>
                           </table>
                         </div>
+                        
+                        {
+                          (()=>{
+                            if(!this.state.message){
+                              return(
+                                <div className='container'>
+                                <div className='row'>
+                                  <div className='col-lg-12' >
+                                    <LineGraph {...this.state} />
+                                    <p>Chart of Installments</p>
+                                  </div>
+                                </div>
+                              </div>     
+                              )
+                            }
+                          })()
+                        }
+
                       </div>
                     </div>
                   </div>

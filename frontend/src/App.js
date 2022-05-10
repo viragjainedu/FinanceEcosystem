@@ -6,7 +6,6 @@ import RightNavbar from './components/RightNavbar'
 import MainHeader from './components/MainHeader'
 import Axios from 'axios';
 
-
 class App extends Component {
   
   constructor(props) {
@@ -128,7 +127,7 @@ class App extends Component {
       </div>
     </div>
   </div>
-  
+
   <div className="row">
     <div className="col-lg-12 grid-margin stretch-card">
       <div className="card">
@@ -157,7 +156,6 @@ class App extends Component {
                   </tr> 
                 )
                 }
-                
                 
               </tbody>
             </table>
