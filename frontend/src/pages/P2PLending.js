@@ -117,7 +117,8 @@ class App extends Component {
       } else {
         return (
           <>
-          <div className="col-md-8 grid-margin stretch-card">
+          <br></br>
+          <div className="col-md-12 grid-margin stretch-card">
               <div className="card">
                 <div className="card-body">
                   <h4 className="card-title">Lending</h4>

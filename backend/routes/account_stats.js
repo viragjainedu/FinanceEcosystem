@@ -94,7 +94,10 @@ router.post("/admin_stats", function(req, res, next) {
                     data['TotalLenders'] = TotalLenders
                     getTotalBorrowers((TotalBorrowers)=>{
                         data['TotalBorrowers'] = TotalBorrowers
-                        res.send(data)
+                        getTotalUsers((TotalUsers)=>{
+                            data['TotalUsers'] = TotalUsers
+                            res.send(data)
+                        })
                     })
                 })  
             })    
@@ -147,6 +150,16 @@ function getTotalLenders(callback){
 
 function getTotalBorrowers(callback){
     connection.query("Select * from borrowing_transactions",(err, result)=> {
+        if(err){
+            console.log(err);
+        }else{
+            callback(result.length)
+        }
+    });
+}
+
+function getTotalUsers(callback){
+    connection.query("Select * from person",(err, result)=> {
         if(err){
             console.log(err);
         }else{

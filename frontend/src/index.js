@@ -43,6 +43,8 @@ import ProtectedRoutes from './pages/ProtectedRoutes';
 
 import LineGraph from './Graphs/LineGraph';
 import LineGraphWithdraw from './Graphs/LineGraphWithdraw';
+import PieGraphLoans from './Graphs/PieGraphLoans';
+import PieGraphUsers from './Graphs/PieGraphUsers';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -83,6 +85,8 @@ ReactDOM.render(
         
         <Route path="LineGraph" element={<LineGraph />} />
         <Route path="LineGraphWithdraw" element={<LineGraphWithdraw />} />
+        <Route path="PieGraphLoans" element={<PieGraphLoans />} />
+        <Route path="PieGraphUsers" element={<PieGraphUsers />} />
         
         <Route path="404" element={<NotFoundPage />} />
         <Route path="*" element={<NotFoundPage/>}/>  

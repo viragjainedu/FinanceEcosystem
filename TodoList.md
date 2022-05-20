@@ -36,4 +36,22 @@ These properties are important to maintain a tight transactional integration. Th
 
 Bootstrap fix.
 
+Delete users ...Create users ... update Database inline
+Loading page ..change...
+Update changes in frontend and backend heroku(graphical changes)
+Check if file upload works in heroku
 
+Database scalability ?
+
+Lenders - 10,000 - 3 months   
+Lenders - 20,000 - 3 months  
+Lenders - 30,000 - 3 months  
+Lenders - 40,000 - 3 months  
+Lenders - 50,000 - 3 months 
+Lenders - 60,000 - 3 months 
+
+Lenders - 20,000 - 6 months 
+Lenders - 30,000 - 12 months 
+Lenders - 40,000 - 18 months 
+
+Completed loans date problem
